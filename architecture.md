@@ -10,7 +10,7 @@
 
 PATHFINDER is an agentic, graph-orchestrated decision system designed to recommend where groups should go—not just based on availability, but on vibe, accessibility, cost realism, and failure risk.
 
-The system is built around a multi-agent LangGraph workflow, coordinated by a central Orchestrator (the Commander), with Snowflake acting as long-term memory and predictive intelligence.
+The system is built around a multi-agent LangGraph workflow, coordinated by a central Orchestrator (the Commander).
 
 ### Core Design Philosophy
 
@@ -23,9 +23,10 @@ The system is built around a multi-agent LangGraph workflow, coordinated by a ce
 ### Node 1: The COMMANDER (Orchestrator Node)
 
 **Status:** ✅ Implemented
-- **Intent Parsing:** Uses Gemini 1.5 Flash to extract JSON intent (`activity`, `group_size`, `budget`, etc.).
-- **Complexity Tiering:** Maps queries to `tier_1`, `tier_2`, or `tier_3` and assigns active agents and weights based on the tier.
-- **Snowflake Pre-Check:** Integrates with `SnowflakeService.cortex_search()` to inject historical risk context.
+- **Fallback Heuristics:** Keyword-based intent extraction when LLM services are unavailable.
+- **Planned: Auth0 Identity & Personalization:** Will use Auth0 Universal Login to identify the user and pull their "Identity Profile" (e.g., "Student budget", "Senior").
+  - **The Benefit:** Dynamically adjusts agent weights based on profile metadata.
+  - **Logic:** *"I know this is User A, who prefers low-cost venues. Setting Cost Analyst weight to 0.9."*
 
 **Role:** Central brain and LangGraph Supervisor.
 **Model:** Gemini 1.5 Flash
@@ -61,9 +62,6 @@ The system is built around a multi-agent LangGraph workflow, coordinated by a ce
   - "Aesthetic" / "vibe" / "cozy" → Vibe Matcher ↑
   - "Outdoor" / "weather" → Critic ↑
   - "Near me" / "transit" → Access Analyst ↑
-
-- **Snowflake Pre-Check:**
-  Queries Snowflake Cortex for historical risk patterns (e.g., weather failures, noise complaints) and preemptively boosts the Critic's priority if needed.
 
 **Output:**
 A fully weighted execution plan passed into LangGraph.
@@ -103,44 +101,8 @@ A fully weighted execution plan passed into LangGraph.
 **Tools:** Google Places API, Yelp Fusion
 
 **Responsibilities:**
-
 - Discovers 5–10 candidate venues based on the Commander's intent.
-
-- Collects:
-  - Coordinates
-  - Ratings & reviews
-  - Photos
-  - Category metadata
-
-- **Snowflake Enrichment:**
-  Immediately enriches candidates with internal intelligence:
-  - Past noise complaints
-  - Seasonal closures
-  - Known operational issues not visible on Maps/Yelp
-
-**Output:**
-A shortlist of enriched candidate venues.
-
-**Structured Output Schema:**
-```json
-{
-  "candidates": [
-    {
-      "venue_id": "gp_abc123",
-      "name": "West End Courts",
-      "address": "123 King St W, Toronto",
-      "lat": 43.6452,
-      "lng": -79.3961,
-      "rating": 4.3,
-      "review_count": 87,
-      "photos": ["url1", "url2"],
-      "category": "sports_complex",
-      "source": "google_places",
-      "snowflake_flags": ["seasonal_closure_dec"]
-    }
-  ]
-}
-```
+- Collects coordinates, ratings, reviews, photos, and category metadata.
 
 ---
 
@@ -195,15 +157,15 @@ A normalized Vibe Score per venue + qualitative descriptors.
 ### Node 4: The ACCESS ANALYST (Logistics Node)
 
 **Status:** ✅ Implemented
-- **Mapbox Isochrone API:** Fetches GeoJSON travel-time polygons (default: 15-min driving contour) for each candidate venue concurrently via `asyncio.gather()`.
-- **Member Reachability:** If group member locations are provided, uses ray-casting point-in-polygon test to count how many members fall within each venue's isochrone.
 - **Composite Scoring:** Blends distance from group centre (40%), isochrone availability (30%), and member reachability (30%) into a 0.0–1.0 accessibility score.
-- **Graceful Fallback:** Missing `MAPBOX_ACCESS_TOKEN` or API failures degrade gracefully — venues still receive distance-based scores without isochrone data.
+- **Graceful Fallback:** Missing `MAPBOX_ACCESS_TOKEN` or API failures degrade gracefully.
+- **Planned: Auth0 Token Vault:** Will securely retrieve OAuth Access Tokens for the user's Google/Outlook calendars.
+  - **The Benefit:** Checks the group's real-time schedule without managing third-party API keys directly.
 
 **Role:** Spatial reality check.
 **Tools:**
 - Mapbox Isochrone API
-- Google Distance Matrix
+- Mapbox Matrix API
 
 **Responsibilities:**
 
@@ -229,8 +191,11 @@ Accessibility scores + map-ready spatial data.
     "gp_abc123": {
       "score": 0.81,
       "avg_travel_min": 18,
-      "max_travel_min": 32,
-      "transit_accessible": true
+      "max_travel_min": 18,
+      "distance_m": 5000,
+      "transit_accessible": true,
+      "travel_mode": "driving",
+      "status": "OK"
     }
   },
   "isochrones": {
@@ -244,9 +209,9 @@ Accessibility scores + map-ready spatial data.
 ### Node 5: The COST ANALYST (Financial Node)
 
 **Status:** ✅ Implemented
-- **Firecrawl Pipeline:** Uses `/map` to discover pricing pages, `/scrape` to extract content as markdown.
-- **Gemini Extraction:** Feeds up to 50k chars of scraped content into Gemini 2.5 Flash for structured pricing extraction.
 - **Confidence Tiers:** Confirmed pricing keeps Gemini's value_score; estimated pricing caps at 0.5; unknown pricing defaults to 0.3 with uncertainty warnings.
+- **Planned: Auth0 Secure Action Layer (CIBA):** Will implement a "Human-in-the-Loop" gate for real-world transactions.
+  - **The Flow:** Triggers a push notification (e.g., *"Authorize $20 for HoopDome?"*). Execution pauses until the user taps Approve.
 
 **Role:** "No-surprises" auditor.
 **Model:** Gemini 2.5 Flash
@@ -280,7 +245,8 @@ Transparent, normalized cost profiles per venue.
       "total_cost_of_attendance": 50.00,
       "per_person": 5.00,
       "value_score": 0.78,
-      "price_trend": "stable"
+      "pricing_confidence": "confirmed",
+      "notes": "Explicitly listed as $25/hr on the booking page."
     }
   }
 }
@@ -321,46 +287,9 @@ Risk flags, veto signals, and explicit warnings.
 
 **Structured Output Schema:**
 ```json
-{
-  "risk_flags": {
-    "gp_abc123": [
-      {
-        "type": "weather",
-        "severity": "high",
-        "detail": "80% chance of rain Saturday afternoon",
-        "source": "openweather"
-      }
-    ]
-  },
-  "veto": false,
-  "veto_reason": null
 }
 ```
 
----
-
-### Node 7: SNOWFLAKE (Memory & Intelligence Layer)
-
-**Status:** ✅ Implemented
-- **Connection Engine:** Uses `snowflake-connector-python` to establish sessions using configured credentials.
-- **Memory Tools:** Implemented `log_risk` and `get_risks` to persist and retrieve historical anomalies.
-- **RAG Engine:** Implemented `cortex_search` using `SEARCH_MATCH` to extract relevant context based on queries.
-
-**Role:** Long-term memory and predictive intelligence.
-
-**Functions:**
-
-- **Risk Storage:** Logs historical failures
-  (e.g., "Park floods after 5mm rain")
-
-- **RAG Engine:** Snowflake Cortex Search powers:
-  - Scout enrichment
-  - Critic forecasting
-
-- **Trend Analysis:** Seasonal pricing surges, congestion patterns
-
-**Value Proposition:**
-Transforms PATHFINDER from reactive to predictive.
 
 ---
 
@@ -404,9 +333,9 @@ The Commander collects all node outputs, applies final dynamic weights, and emit
   Cache Google/Yelp results for popular queries to reduce cost and latency.
 
 - **FAISS:**
-  Local similarity scoring for fast pre-ranking before Snowflake persistence.
+  Local similarity scoring for fast pre-ranking of candidates.
 
-- **Auth0 Favorites:**
+- **User Favorites:**
   Save "High Vibe" locations and feed them back into Commander weight personalization.
 
 ### 👥 Crowd Analyst — Social Proof Node (Optional)
@@ -465,9 +394,25 @@ Host the multi-agent system on Vultr's cloud compute for production-grade perfor
 
 **Integration Point:** Infrastructure layer — backend hosting, GPU compute, and deployment pipeline.
 
+### ❄️ Snowflake — Persistence & RAG (Optional)
+Move the intelligence layer to a persistent database like Snowflake for long-term risk storage and predictive analysis.
+  - **Memory Tools:** Implement `log_risk` and `get_risks` to persist and retrieve historical anomalies.
+  - **RAG Engine:** Use Snowflake Cortex Search to power scout enrichment and critic forecasting.
+  - **Auth0 FGA Integration:** Ensure fine-grained data access using Auth0 FGA to filter results.
+Knowledge memory and long-term risk logging.
+
+- **Historical Logic:** Will pull past results (e.g., *"Park A has been flooded 2 times this month"*).
+- **Core Strategy:** Uses Snowflake Cortex Search to power scout enrichment and critic forecasting.
+- **Planned: Auth0 Fine-Grained Authorization (FGA):** Ensures agents only retrieve "Risk Data" the specific user is authorized to see (e.g., student vs. admin access levels).
+
+**Role:** Long-term memory.
+**Tools:** Snowflake, Snowflake Cortex, Auth0 FGA
+
 ---
 
-## 🛠️ Troubleshooting
+---
+
+## �🛠️ Troubleshooting
 
 ### 1. "No Results / Empty Map"
 
@@ -501,7 +446,6 @@ Host the multi-agent system on Vultr's cloud compute for production-grade perfor
 - A recommended venue is closed, flooded, or inaccessible.
 
 **Checks:**
-- Confirm Snowflake Cortex is reachable and returning RAG context.
 - Inspect Critic node execution — ensure veto conditions are not disabled.
 - Check PredictHQ quota and response validity for event congestion data.
 
@@ -528,7 +472,6 @@ Host the multi-agent system on Vultr's cloud compute for production-grade perfor
 **Checks:**
 - Verify Firecrawl selectors are still valid.
 - Confirm Cost Analyst is computing Total Cost of Attendance, not just entry price.
-- Check Snowflake historical pricing baseline is populated.
 
 ---
 
@@ -539,11 +482,11 @@ Host the multi-agent system on Vultr's cloud compute for production-grade perfor
 | Commander | Gemini 1.5 Flash | Intent parsing, complexity tiering, dynamic agent activation & weighting |
 | Scout | Google Places API, Yelp Fusion | Venue discovery and raw metadata collection |
 | Vibe Matcher | Gemini 1.5 Pro (Multimodal) | Aesthetic, photo-based, and sentiment-driven vibe analysis |
-| Access Analyst | Mapbox Isochrone API, Google Distance Matrix | Travel-time feasibility and spatial scoring |
-| Cost Analyst | Firecrawl + Snowflake Cortex | True cost extraction and pricing anomaly detection |
-| Crowd Analyst *(optional)* | Google Places Reviews, Yelp Reviews + Snowflake | Review aggregation, competitor density, social proof scoring |
+| Access Analyst | Mapbox Isochrone & Matrix APIs | Travel-time feasibility and spatial scoring |
+| Cost Analyst | Firecrawl + Gemini | True cost extraction and pricing analysis |
+| Crowd Analyst *(optional)* | Google Places Reviews, Yelp Reviews | Review aggregation, competitor density, social proof scoring |
 | Critic | Gemini (Adversarial Reasoning) + OpenWeather, PredictHQ | Failure detection, risk forecasting, veto logic |
-| Memory & RAG | Snowflake + Snowflake Cortex Search | Historical risk storage and predictive intelligence |
+| Memory & RAG *(optional)* | Vector Database | Historical risk storage and predictive intelligence |
 | Orchestration | LangGraph | Execution order, shared state, conditional retries |
 | Frontend Mapping | Mapbox SDK | Interactive maps, pins, isochrone overlays |
 
@@ -630,6 +573,5 @@ For the live demo, use the three queries documented in the Demo Strategy section
 
 - **Gemini 1.5 Flash** is used where speed and classification matter.
 - **Gemini 1.5 Pro** is reserved for high-value multimodal reasoning (vibe).
-- **Snowflake Cortex** ensures the system improves over time instead of repeating failures.
 - **LangGraph** enables controlled retries without infinite loops or silent failures.
 - **Dynamic agent activation** means simple queries use 3–4 agents efficiently, while complex queries engage all 5 deeply — the activation itself is a demo-worthy feature.

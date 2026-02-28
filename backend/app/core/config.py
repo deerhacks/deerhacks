@@ -22,15 +22,6 @@ class Settings(BaseSettings):
     # ── PredictHQ ──
     PREDICTHQ_API_KEY: str = ""
 
-    # ── Snowflake ──
-    SNOWFLAKE_ACCOUNT: str = ""
-    SNOWFLAKE_USER: str = ""
-    SNOWFLAKE_PASSWORD: str = ""
-    SNOWFLAKE_DATABASE: str = "PATHFINDER"
-    SNOWFLAKE_SCHEMA: str = "PUBLIC"
-    SNOWFLAKE_WAREHOUSE: str = "COMPUTE_WH"
-    SNOWFLAKE_ROLE: str = "ACCOUNTADMIN"
-
     # ── Redis ──
     REDIS_URL: str = "redis://localhost:6379/0"
 
@@ -40,9 +31,11 @@ class Settings(BaseSettings):
     # ── CORS ──
     CORS_ORIGINS: List[str] = ["http://localhost:3000"]
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    model_config = {
+        "env_file": ".env",
+        "env_file_encoding": "utf-8",
+        "extra": "ignore"
+    }
 
 
 settings = Settings()

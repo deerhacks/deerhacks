@@ -1,177 +1,123 @@
 """
 Node 4 — The ACCESS ANALYST (Logistics)
 Spatial reality check: travel-time feasibility + isochrone generation.
+Tools: Mapbox Isochrone API, Google Distance Matrix
 
-For each candidate venue:
-  1. Fetch a Mapbox Isochrone polygon (reachable area within N minutes).
-  2. If member locations are provided, compute average straight-line distance
-     and estimate an accessibility score.
-  3. Return accessibility_scores + isochrones keyed by venue_id.
-
-Tools: Mapbox Isochrone API
+Responsibilities:
+  1. Compute travel-time feasibility for the entire group.
+  2. Penalise venues that are geographically close but chronologically far.
+  3. Generate GeoJSON isochrones for frontend map overlays.
+  4. Return accessibility_scores + isochrones to the shared state.
 """
 
 import asyncio
 import logging
-from math import radians, cos, sin, asin, sqrt
 
 from app.models.state import PathfinderState
-from app.services.mapbox import get_isochrone
+from app.services.mapbox import get_isochrone, get_distance_matrix
 
 logger = logging.getLogger(__name__)
 
-
-# ── Helpers ────────────────────────────────────────────────
-
-
-def _haversine_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
-    """Return distance in kilometres between two lat/lng points."""
-    lat1, lng1, lat2, lng2 = map(radians, [lat1, lng1, lat2, lng2])
-    dlat = lat2 - lat1
-    dlng = lng2 - lng1
-    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlng / 2) ** 2
-    return 6_371 * 2 * asin(sqrt(a))
-
-
-def _point_in_polygon(lat: float, lng: float, polygon_coords: list) -> bool:
-    """
-    Simple ray-casting point-in-polygon test.
-    polygon_coords is a list of [lng, lat] pairs (GeoJSON order).
-    """
-    n = len(polygon_coords)
-    inside = False
-    j = n - 1
-    for i in range(n):
-        xi, yi = polygon_coords[i]  # [lng, lat]
-        xj, yj = polygon_coords[j]
-        if ((yi > lat) != (yj > lat)) and (lng < (xj - xi) * (lat - yi) / (yj - yi) + xi):
-            inside = not inside
-        j = i
-    return inside
-
-
-def _members_reachable(
-    member_locations: list[dict],
-    isochrone_geojson: dict | None,
-) -> tuple[int, int]:
-    """
-    Count how many group members fall inside a venue's isochrone polygon.
-    Returns (reachable_count, total_count).
-    """
-    if not isochrone_geojson or not member_locations:
-        return 0, len(member_locations) if member_locations else 0
-
-    features = isochrone_geojson.get("features", [])
-    if not features:
-        return 0, len(member_locations)
-
-    # Use the first (largest) polygon
-    geometry = features[0].get("geometry", {})
-    coords = geometry.get("coordinates", [])
-    if not coords:
-        return 0, len(member_locations)
-
-    # For Polygon type, coords[0] is the outer ring
-    ring = coords[0] if geometry.get("type") == "Polygon" else (coords[0][0] if coords else [])
-
-    reachable = 0
-    for member in member_locations:
-        mlat = member.get("lat", 0)
-        mlng = member.get("lng", 0)
-        if _point_in_polygon(mlat, mlng, ring):
-            reachable += 1
-
-    return reachable, len(member_locations)
-
-
-def _compute_score(
-    venue: dict,
-    isochrone: dict | None,
-    member_locations: list[dict] | None,
-    center_lat: float,
-    center_lng: float,
-) -> dict:
-    """
-    Compute an accessibility score (0.0–1.0) for a single venue.
-
-    Scoring factors:
-      - Distance from group centre (closer = better)
-      - Member reachability within the isochrone polygon
-      - Whether the isochrone was successfully generated
-    """
-    vlat = venue.get("lat", 0)
-    vlng = venue.get("lng", 0)
-    dist_km = _haversine_km(center_lat, center_lng, vlat, vlng)
-
-    # Distance score: within 5 km = 1.0, linearly decays to 0.2 at 30 km+
-    if dist_km <= 5:
-        dist_score = 1.0
-    elif dist_km >= 30:
-        dist_score = 0.2
-    else:
-        dist_score = 1.0 - 0.8 * ((dist_km - 5) / 25)
-
-    # Isochrone bonus: having spatial data is valuable
-    iso_score = 0.8 if isochrone else 0.4
-
-    # Member reachability score
-    member_score = 0.5  # neutral default
-    reachable = 0
-    total = 0
-    transit_accessible = True  # assume true unless we have data to disprove
-
-    if member_locations and isochrone:
-        reachable, total = _members_reachable(member_locations, isochrone)
-        if total > 0:
-            member_score = reachable / total
-            transit_accessible = member_score >= 0.5
-
-    # Weighted composite
-    score = round(0.4 * dist_score + 0.3 * iso_score + 0.3 * member_score, 2)
-
-    # Rough travel time estimate from distance (avg 30 km/h city driving)
-    avg_travel_min = round(dist_km / 30 * 60)
-    max_travel_min = round(avg_travel_min * 1.8)  # account for worst-case
-
-    return {
-        "score": score,
-        "avg_travel_min": avg_travel_min,
-        "max_travel_min": max_travel_min,
-        "transit_accessible": transit_accessible,
-        "distance_km": round(dist_km, 1),
-        "members_reachable": reachable,
-        "members_total": total,
-    }
-
-
-# ── Per-venue pipeline ─────────────────────────────────────
+# ── Default origin when user doesn't specify ──
+# Downtown Toronto (CN Tower) as the baseline fallback
+_DEFAULT_ORIGIN = (43.6426, -79.3871)
 
 
 async def _analyze_venue_access(
     venue: dict,
-    member_locations: list[dict] | None,
-    center_lat: float,
-    center_lng: float,
-) -> tuple[str, dict, dict | None]:
+    origin: tuple[float, float],
+    profile: str = "driving",
+) -> dict:
     """
-    Full accessibility pipeline for a single venue:
-    1. Fetch Mapbox isochrone
-    2. Compute accessibility score
+    Run the full accessibility pipeline for a single venue.
+
+    Steps
+    -----
+    1. Fetch isochrone from Mapbox (10/20/30-minute contours).
+    2. Fetch distance-matrix entry from origin → venue via Google.
+    3. Compute a normalised score (0.0–1.0).
     """
-    venue_id = venue.get("venue_id", venue.get("name", "unknown"))
-    vlat = venue.get("lat", 0)
-    vlng = venue.get("lng", 0)
+    lat = venue.get("lat", 0)
+    lng = venue.get("lng", 0)
 
-    # Fetch isochrone (gracefully returns None on failure)
-    isochrone = await get_isochrone(lat=vlat, lng=vlng, profile="driving", contour_minutes=15)
+    # Run both API calls concurrently
+    isochrone_data, dm_results = await asyncio.gather(
+        get_isochrone(lat, lng, profile=profile, contours_minutes=[10, 20, 30]),
+        get_distance_matrix(origin[0], origin[1], [(lat, lng)], mode=profile),
+    )
 
-    # Score
-    score_data = _compute_score(venue, isochrone, member_locations, center_lat, center_lng)
+    # --- Parse distance-matrix result ---
+    dm = dm_results[0] if dm_results else {}
+    duration_sec = dm.get("duration_sec")
+    distance_m = dm.get("distance_m")
+    dm_status = dm.get("status", "UNKNOWN")
 
-    return venue_id, score_data, isochrone
+    # --- Compute accessibility score ---
+    if duration_sec is not None:
+        travel_min = duration_sec / 60.0
+        # Score: ≤10 min → 1.0, 30 min → 0.5, 60+ min → ~0.1
+        if travel_min <= 10:
+            score = 1.0
+        elif travel_min <= 60:
+            score = max(0.1, 1.0 - (travel_min - 10) / 55.0)
+        else:
+            score = 0.1
+        score = round(score, 2)
+        transit_accessible = profile == "transit" and dm_status == "OK"
+    else:
+        # API didn't return duration — neutral fallback
+        travel_min = None
+        score = 0.5
+        transit_accessible = False
+
+    accessibility_entry = {
+        "score": score,
+        "avg_travel_min": round(travel_min, 1) if travel_min else None,
+        "max_travel_min": round(travel_min, 1) if travel_min else None,  # single origin
+        "distance_m": distance_m,
+        "transit_accessible": transit_accessible,
+        "travel_mode": profile,
+        "status": dm_status,
+    }
+
+    return {
+        "accessibility": accessibility_entry,
+        "isochrone": isochrone_data,  # GeoJSON FeatureCollection or None
+    }
 
 
-# ── Node entry point ───────────────────────────────────────
+def _resolve_origin(state: dict) -> tuple[float, float]:
+    """
+    Try to determine the user's starting location from the parsed intent.
+    Falls back to downtown Toronto if not specified.
+    """
+    intent = state.get("parsed_intent", {})
+
+    # Check for explicit origin coordinates in intent
+    origin_lat = intent.get("origin_lat")
+    origin_lng = intent.get("origin_lng")
+    if origin_lat and origin_lng:
+        return (float(origin_lat), float(origin_lng))
+
+    return _DEFAULT_ORIGIN
+
+
+def _resolve_travel_mode(state: dict) -> str:
+    """
+    Infer the best travel mode from the user's intent.
+    """
+    intent = state.get("parsed_intent", {})
+    raw = state.get("raw_prompt", "").lower()
+
+    # Keywords that signal transit / walking / cycling
+    if any(kw in raw for kw in ["transit", "subway", "bus", "ttc", "public transport"]):
+        return "transit"
+    if any(kw in raw for kw in ["walk", "walking", "on foot"]):
+        return "walking"
+    if any(kw in raw for kw in ["bike", "cycling", "bicycle"]):
+        return "cycling"
+
+    return "driving"
 
 
 def access_analyst_node(state: PathfinderState) -> PathfinderState:
@@ -180,54 +126,54 @@ def access_analyst_node(state: PathfinderState) -> PathfinderState:
 
     Steps
     -----
-    1. Determine centre point (from member_locations or default Toronto).
-    2. For each candidate venue, fetch Mapbox isochrone + compute score.
-    3. Return updated state with accessibility_scores + isochrones.
+    1. Resolve the group's origin and preferred travel mode.
+    2. For each candidate venue, call Mapbox Isochrone + Google Distance Matrix.
+    3. Score accessibility (penalise "close but slow" venues).
+    4. Generate GeoJSON isochrone blobs for frontend rendering.
+    5. Return updated state with accessibility_scores + isochrones.
     """
     candidates = state.get("candidate_venues", [])
 
     if not candidates:
-        logger.info("Access Analyst: no candidates to evaluate")
+        logger.info("Access Analyst: no candidates to analyze")
         return {"accessibility_scores": {}, "isochrones": {}}
 
-    # Determine group centre
-    member_locations = state.get("member_locations") or []
-    if member_locations:
-        center_lat = sum(m.get("lat", 0) for m in member_locations) / len(member_locations)
-        center_lng = sum(m.get("lng", 0) for m in member_locations) / len(member_locations)
-    else:
-        # Fallback: use the centroid of the candidate venues themselves
-        center_lat = sum(v.get("lat", 0) for v in candidates) / len(candidates)
-        center_lng = sum(v.get("lng", 0) for v in candidates) / len(candidates)
+    origin = _resolve_origin(state)
+    travel_mode = _resolve_travel_mode(state)
 
-    # Analyze all venues concurrently
+    logger.info(
+        "Access Analyst: origin=%s, mode=%s, venues=%d",
+        origin, travel_mode, len(candidates),
+    )
+
     async def _analyze_all():
-        return await asyncio.gather(*[
-            _analyze_venue_access(v, member_locations or None, center_lat, center_lng)
-            for v in candidates
-        ])
+        return await asyncio.gather(
+            *[_analyze_venue_access(v, origin, profile=travel_mode) for v in candidates]
+        )
 
     try:
         results = asyncio.run(_analyze_all())
     except RuntimeError:
-        # If event loop is already running
+        # If event loop already running (e.g. inside LangGraph / Jupyter)
         import nest_asyncio
         nest_asyncio.apply()
         results = asyncio.run(_analyze_all())
     except Exception as exc:
         logger.error("Access Analyst failed: %s", exc)
-        results = []
+        results = [{"accessibility": {"score": 0.5, "status": "ERROR"}, "isochrone": None}] * len(candidates)
 
     accessibility_scores = {}
     isochrones = {}
 
-    for venue_id, score_data, isochrone in results:
-        accessibility_scores[venue_id] = score_data
-        if isochrone:
-            isochrones[venue_id] = isochrone
+    for venue, result in zip(candidates, results):
+        vid = venue.get("venue_id", "")
+        acc = result["accessibility"]
 
-    scored = sum(1 for v in accessibility_scores.values() if v.get("score", 0) > 0)
-    logger.info("Access Analyst scored %d/%d venues (%d with isochrones)",
-                scored, len(candidates), len(isochrones))
+        accessibility_scores[vid] = acc
+        if result["isochrone"]:
+            isochrones[vid] = result["isochrone"]
+
+    scored = sum(1 for v in accessibility_scores.values() if v.get("score", 0) != 0.5)
+    logger.info("Access Analyst scored %d/%d venues", scored, len(candidates))
 
     return {"accessibility_scores": accessibility_scores, "isochrones": isochrones}

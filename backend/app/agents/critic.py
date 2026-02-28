@@ -32,10 +32,7 @@ def critic_node(state: PathfinderState) -> PathfinderState:
     candidates = state.get("candidate_venues", [])
     if not candidates:
         logger.info("Critic: no candidates to evaluate.")
-        state["risk_flags"] = {}
-        state["veto"] = False
-        state["veto_reason"] = None
-        return state
+        return {"risk_flags": {}, "veto": False, "veto_reason": None}
 
     # Evaluate the top 3 candidates (to save time/tokens)
     top_candidates = candidates[:3]
@@ -120,8 +117,5 @@ def critic_node(state: PathfinderState) -> PathfinderState:
             overall_veto = True
             veto_reason = analysis.get("veto_reason")
 
-    state["risk_flags"] = risk_flags
-    state["veto"] = overall_veto
-    state["veto_reason"] = veto_reason
+    return {"risk_flags": risk_flags, "veto": overall_veto, "veto_reason": veto_reason}
 
-    return state
