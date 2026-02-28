@@ -3,6 +3,7 @@ import os
 import time
 import json
 import logging
+import asyncio
 
 logging.basicConfig(level=logging.INFO)
 
@@ -11,7 +12,9 @@ sys.path.insert(0, os.path.dirname(__file__))
 from app.graph import pathfinder_graph
 from app.models.state import PathfinderState
 
-def run_test_query(query: str):
+import asyncio
+
+async def run_test_query(query: str):
     print(f"\n{'='*60}")
     print(f"QUERY: '{query}'")
     print(f"{'='*60}")
@@ -28,7 +31,7 @@ def run_test_query(query: str):
         final_state = initial_state.copy()
         
         # Stream the graph to observe State updates
-        for event in pathfinder_graph.stream(initial_state):
+        async for event in pathfinder_graph.astream(initial_state):
             for node, state_update in event.items():
                 print(f"\n[EVENT] Node completed: {node}")
                 if state_update is None:
@@ -87,10 +90,7 @@ def run_test_query(query: str):
         import traceback
         traceback.print_exc()
 
-if __name__ == "__main__":
-    # Suppress httpx to avoid 100,000 line log files from image redirect tracking
-    logging.getLogger("httpx").setLevel(logging.WARNING)
-    
+async def main():
     test_queries = [
         "A cyberpunk or neon-themed arcade or bar in Toronto for 4 friends to hang out. Must look super cool and instagrammable.",
         "My friends and I (8 people) want to rent a basketball court this Saturday afternoon in downtown Toronto. Under $200.",
@@ -98,5 +98,14 @@ if __name__ == "__main__":
     ]
     
     for q in test_queries:
-        run_test_query(q)
+        await run_test_query(q)
+
+if __name__ == "__main__":
+    import nest_asyncio
+    nest_asyncio.apply()
+    
+    # Suppress httpx to avoid 100,000 line log files from image redirect tracking
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+    
+    asyncio.run(main())
 

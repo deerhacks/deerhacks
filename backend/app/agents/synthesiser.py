@@ -160,6 +160,10 @@ def synthesiser_node(state: PathfinderState) -> PathfinderState:
     agent_weights = state.get("agent_weights", {})
     raw_prompt = state.get("raw_prompt", "")
     isochrones = state.get("isochrones", {})
+    
+    requires_oauth = state.get("requires_oauth", False)
+    allowed_actions = state.get("allowed_actions", [])
+    oauth_scopes = state.get("oauth_scopes", [])
 
     # Step 1: Score all venues
     scored = []
@@ -222,4 +226,16 @@ def synthesiser_node(state: PathfinderState) -> PathfinderState:
 
     logger.info("Synthesiser ranked %d venues (top 3 explained)", len(scored))
 
-    return {"ranked_results": ranked_results}
+    action_request = None
+    if requires_oauth and allowed_actions:
+        actions_str = ", ".join(allowed_actions).replace("_", " ")
+        action_request = {
+            "type": "oauth_consent",
+            "reason": f"To execute the planned actions ({actions_str}), PATHFINDER requires your authorization.",
+            "scopes": oauth_scopes
+        }
+
+    return {
+        "ranked_results": ranked_results,
+        "action_request": action_request
+    }

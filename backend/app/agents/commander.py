@@ -277,6 +277,9 @@ def commander_node(state: PathfinderState) -> PathfinderState:
     3. Active Agents: List the agents to activate from: ["scout", "vibe_matcher", "access_analyst", "cost_analyst", "critic"]. Scout is always mandatory.
        IMPORTANT: DO NOT activate "vibe_matcher" unless the user's query specifically mentions aesthetics, vibes, beauty, theme, or atmosphere. For all other queries, omit it.
     4. Agent Weights: Assign a float (0.0 to 1.0) to each activated agent indicating its importance.
+    5. OAuth Requirements: Detect if this request requires acting on behalf of the user (e.g., booking, sending an email, checking a calendar).
+       - If yes, set "requires_oauth": true, and list the "oauth_scopes" (e.g., "email.send", "calendar.read") and "allowed_actions" (e.g., "send_email", "check_availability").
+       - If no, set "requires_oauth": false, and leave arrays empty.
     
     Output exactly in this JSON format:
     {{
@@ -292,7 +295,10 @@ def commander_node(state: PathfinderState) -> PathfinderState:
       "agent_weights": {{
         "scout": 1.0,
         ...
-      }}
+      }},
+      "requires_oauth": false,
+      "oauth_scopes": [],
+      "allowed_actions": []
     }}
     Do not output markdown code blocks. Only the raw JSON string.
     """
@@ -320,5 +326,8 @@ def commander_node(state: PathfinderState) -> PathfinderState:
         "complexity_tier": plan.get("complexity_tier", "tier_2"),
         "active_agents": plan.get("active_agents", ["scout"]),
         "agent_weights": plan.get("agent_weights", {"scout": 1.0}),
+        "requires_oauth": plan.get("requires_oauth", False),
+        "oauth_scopes": plan.get("oauth_scopes", []),
+        "allowed_actions": plan.get("allowed_actions", []),
         "user_profile": user_profile,  # Pass profile down to other agents
     }

@@ -44,14 +44,18 @@ async def _firecrawl_map(website_url: str) -> list[str]:
     max_retries = 3
     for attempt in range(max_retries):
         try:
-            async with httpx.AsyncClient(timeout=20) as client:
-                resp = await client.post(
-                    f"{_FIRECRAWL_BASE}/map",
-                    headers={"Authorization": f"Bearer {settings.FIRECRAWL_API_KEY}"},
-                    json={
-                        "url": website_url,
-                        "search": "pricing rates cost fees menu package book reserve",
-                    },
+            async with httpx.AsyncClient(timeout=15) as client:
+                # 10-second strict wrapper
+                resp = await asyncio.wait_for(
+                    client.post(
+                        f"{_FIRECRAWL_BASE}/map",
+                        headers={"Authorization": f"Bearer {settings.FIRECRAWL_API_KEY}"},
+                        json={
+                            "url": website_url,
+                            "search": "pricing rates cost fees menu package book reserve",
+                        },
+                    ),
+                    timeout=10.0
                 )
                 if resp.status_code == 429:
                     raise httpx.HTTPStatusError("429 Too Many Requests", request=resp.request, response=resp)
@@ -80,6 +84,12 @@ async def _firecrawl_map(website_url: str) -> list[str]:
         except httpx.HTTPError as exc:
             logger.warning("Firecrawl /map network error for %s: %s", website_url, exc)
             return []
+        except asyncio.TimeoutError:
+            logger.warning("⚠️ Firecrawl /map SKIPPED %s: Website took longer than 10 seconds.", website_url)
+            return []
+        except Exception as exc:
+            logger.warning("❌ Firecrawl /map error for %s: %s", website_url, exc)
+            return []
 
 
 async def _firecrawl_scrape(page_url: str) -> Optional[str]:
@@ -93,14 +103,18 @@ async def _firecrawl_scrape(page_url: str) -> Optional[str]:
     max_retries = 3
     for attempt in range(max_retries):
         try:
-            async with httpx.AsyncClient(timeout=20) as client:
-                resp = await client.post(
-                    f"{_FIRECRAWL_BASE}/scrape",
-                    headers={"Authorization": f"Bearer {settings.FIRECRAWL_API_KEY}"},
-                    json={
-                        "url": page_url,
-                        "formats": ["markdown"],
-                    },
+            async with httpx.AsyncClient(timeout=15) as client:
+                # 10-second strict wrapper
+                resp = await asyncio.wait_for(
+                    client.post(
+                        f"{_FIRECRAWL_BASE}/scrape",
+                        headers={"Authorization": f"Bearer {settings.FIRECRAWL_API_KEY}"},
+                        json={
+                            "url": page_url,
+                            "formats": ["markdown"],
+                        },
+                    ),
+                    timeout=10.0
                 )
                 if resp.status_code == 429:
                     raise httpx.HTTPStatusError("429 Too Many Requests", request=resp.request, response=resp)
@@ -120,6 +134,12 @@ async def _firecrawl_scrape(page_url: str) -> Optional[str]:
         except httpx.HTTPError as exc:
             logger.warning("Firecrawl /scrape network error for %s: %s", page_url, exc)
             return None
+        except asyncio.TimeoutError:
+            logger.warning("⚠️ Firecrawl /scrape SKIPPED %s: Website took longer than 10 seconds.", page_url)
+            return None
+        except Exception as exc:
+            logger.warning("❌ Firecrawl /scrape error for %s: %s", page_url, exc)
+            return None
 
 
 
@@ -138,13 +158,17 @@ INSTRUCTIONS:
 1. Search the text for ANY pricing signals: "$" signs, numbers, hourly rates, per-person fees, packages, menu prices, rental costs, booking rates, membership fees.
 2. Even if the text is messy or missing clear boundaries, if you see a price (e.g. "$25"), ASSUME it is the base cost unless context clearly says otherwise.
 3. Identify hidden costs: shoe rentals, equipment fees, minimum spends, service charges, cleaning fees, parking fees.
-4. If you find EXPLICIT prices on the page, use them and set pricing_confidence to "confirmed".
-5. If prices are NOT explicitly listed, or the text is a booking widget you can't read, ESTIMATE based on:
+4. If you find EXPLICIT prices on the page, use them and set pricing_confidence to "confirmed", and set price_source to "official_site".
+5. If the website content is empty, missing, or prices are NOT explicitly listed, ESTIMATE based on:
    - Typical Toronto market rates for this type of venue/activity
    - The venue's category and perceived quality
    - Group size of {group_size} people
-   Set pricing_confidence to "estimated".
-6. NEVER return base_cost as 0 unless you are confident the activity is genuinely free. Escape rooms in Toronto typically cost $30-$45 per person. Rock climbing typically costs $25-$35 for a day pass. Use your knowledge.
+   Set pricing_confidence to "estimated", and set price_source to "gemini_estimate".
+6. Set the recommended_action parameter based on Auth0 Secure Action Rules:
+   - Tier A (Confirmed): recommended_action = "authorize_payment"
+   - Tier B (Estimated): recommended_action = "prepare_outreach" (intent usually "booking_inquiry")
+   - Tier C (Unknown): recommended_action = "prepare_outreach" (intent usually "availability_check" or "commercial_leasing")
+7. NEVER return base_cost as 0 unless you are confident the activity is genuinely free. Escape rooms typically cost $30-$45 per person. Rock climbing typically costs $25-$35 for a day pass. Use your knowledge.
 
 Respond with ONLY a valid JSON object (no markdown, no extra text):
 {{
@@ -156,7 +180,10 @@ Respond with ONLY a valid JSON object (no markdown, no extra text):
   "per_person": <float, total / group_size>,
   "value_score": <float 0.0 to 1.0, subjective value for money>,
   "pricing_confidence": "<confirmed | estimated | unknown>",
-  "notes": "<pricing observations, source of estimates, or warnings>"
+  "price_source": "<official_site | flyer | gemini_estimate | none>",
+  "notes": "<pricing observations, source of estimates, or warnings>",
+  "recommended_action": "<authorize_payment | prepare_outreach | none>",
+  "outreach_intent": "<booking_inquiry | availability_check | commercial_leasing | none>"
 }}
 """
 
@@ -202,37 +229,62 @@ def _apply_confidence_tier(result: dict, venue: dict, group_size: int) -> dict:
     """
     confidence = result.get("pricing_confidence", "unknown")
     base = result.get("base_cost", 0)
+    if base is None:
+        base = 0
+        result["base_cost"] = 0
 
     if confidence == "unknown" or base == 0:
-        # -- Tier: No price found --
+        # -- Tier C: No price found --
         result["value_score"] = 0.3
         result["pricing_confidence"] = "unknown"
+        result["price_source"] = "none"
+        result["recommended_action"] = "prepare_outreach"
+        if not result.get("outreach_intent") or result.get("outreach_intent") == "none":
+            result["outreach_intent"] = "availability_check"
         result["notes"] = (
             "High uncertainty. Rates are quote-based or unlisted. "
             "Budget fit is unverified. Recommend contacting venue directly."
         )
 
     elif confidence == "estimated":
-        # -- Tier: Estimated price --
+        # -- Tier B: Estimated price --
         result["value_score"] = min(result.get("value_score", 0.5), 0.5)
+        result["price_source"] = result.get("price_source", "gemini_estimate")
+        result["recommended_action"] = "prepare_outreach"
+        if not result.get("outreach_intent") or result.get("outreach_intent") == "none":
+            result["outreach_intent"] = "booking_inquiry"
         est_note = result.get("notes", "")
         result["notes"] = (
             f"Estimated from Toronto market rates for {venue.get('category', 'this venue type')}. "
             f"{est_note}"
         ).strip()
 
-    # else: confirmed -> keep Gemini's original value_score and notes
+    else:
+        # -- Tier A: Confirmed --
+        result["recommended_action"] = "authorize_payment"
+        result["outreach_intent"] = "none"
 
     # Ensure per_person is always calculated
     tca = result.get("total_cost_of_attendance", 0)
+    if tca is None:
+        tca = 0
+        result["total_cost_of_attendance"] = 0
+        
+    value_score = result.get("value_score", 0.5)
+    if value_score is None:
+        value_score = 0.5
+        result["value_score"] = value_score
+        
     if tca > 0 and group_size > 0:
         result["per_person"] = round(tca / group_size, 2)
+    else:
+        result["per_person"] = 0
 
     return result
 
 
 def _no_data_fallback(venue: dict = None) -> dict:
-    """Fallback when scraping fails entirely -- no content was retrieved."""
+    """Fallback when scraping fails entirely -- mapped to Tier C Unknown."""
     name = venue.get("name", "This venue") if venue else "This venue"
     return {
         "base_cost": 0,
@@ -241,50 +293,140 @@ def _no_data_fallback(venue: dict = None) -> dict:
         "per_person": 0,
         "value_score": 0.3,
         "pricing_confidence": "unknown",
+        "price_source": "none",
+        "recommended_action": "prepare_outreach",
+        "outreach_intent": "availability_check",
         "notes": (
             f"High uncertainty. {name} does not publish rates online. "
             "Budget fit is unverified. Recommend contacting venue directly."
         ),
     }
 
-
 # -- Main pipeline per venue -------------------------------------------
+
+async def _guess_pricing_pages(website: str, venue_name: str, category: str) -> list[str]:
+    """Ask Gemini to guess common pricing URLs for a venue based on its main domain."""
+    base_url = website.rstrip('/')
+    
+    prompt = f"""
+    You are an expert web crawler. 
+    Venue Name: {venue_name}
+    Category: {category}
+    Main Website: {base_url}
+    
+    Predict the SINGLE most likely URL on this website where pricing, booking, or rate information would be found.
+    Common examples: {base_url}/pricing, {base_url}/rates, {base_url}/book-now, {base_url}/menu
+    
+    Return EXACTLY a JSON array of strings containing just that 1 URL (e.g., ["https://example.com/pricing"]), and nothing else.
+    """
+    try:
+        raw = await generate_content(prompt=prompt, model="gemini-2.5-flash")
+        if not raw:
+            return []
+            
+        cleaned = raw.strip()
+        if cleaned.startswith("```json"):
+            cleaned = cleaned.split("\n", 1)[-1]
+        elif cleaned.startswith("```"):
+            cleaned = cleaned.split("\n", 1)[-1]
+            
+        if cleaned.endswith("```"):
+            cleaned = cleaned.rsplit("```", 1)[0]
+            
+        urls = json.loads(cleaned.strip())
+        if isinstance(urls, list):
+            # Ensure they actually start with the base URL to prevent hallucinations
+            return [url for url in urls if url.startswith("http")]
+        return []
+        
+    except Exception as e:
+        logger.warning(f"Failed to guess pricing pages for {website}: {e}")
+        return []
+
+
+async def _is_website_alive(url: str) -> bool:
+    """Fast circuit breaker to check if a domain is reachable before firing expensive scrapes."""
+    try:
+        # Use a very short 3-second timeout just to check if the server exists
+        async with httpx.AsyncClient(timeout=3.0, verify=False) as client:
+            resp = await client.head(url, follow_redirects=True)
+            return resp.status_code < 400
+    except Exception as e:
+        logger.warning(f"Site {url} appears dead/unreachable ({e}). Tripping circuit breaker.")
+        return False
+
 
 async def _analyze_venue_cost(venue: dict, group_size: int) -> dict:
     """
     Full cost pipeline for a single venue:
-    1. Try Firecrawl /map to find pricing pages (may fail)
-    2. Firecrawl /scrape to get page content (always scrape website as fallback)
-    3. Use Gemini to extract structured pricing
+    1. Try Gemini pre-scoping to guess pricing URLs (cheap & fast)
+    2. Try Firecrawl /map to find pricing pages if guessing fails (expensive but thorough)
+    3. Firecrawl /scrape to get page content (always scrape website as fallback)
+    4. Use Gemini to extract structured pricing
     """
     website = venue.get("website", "")
     combined_content = ""
 
     if website:
-        # Step 1: Discover pricing pages
-        pricing_pages = await _firecrawl_map(website)
+        # Step 0: Check for social media links (Firecrawl gets 403 on these)
+        if any(domain in website.lower() for domain in ["instagram.com", "facebook.com", "fb.com", "tiktok.com", "twitter.com", "x.com"]):
+            logger.info("Skipping scraping for social media URL (Firecrawl 403 Forbidden): %s", website)
+            # Default to an estimated price fallback immediately
+            fallback = _no_data_fallback(venue)
+            fallback["notes"] = f"Estimated from typical market rates. The venue link provided ({website}) is a social media page, which cannot be scraped for pricing automatically. Recommend contacting venue directly via DM."
+            fallback["price_source"] = "gemini_estimate"
+            fallback["pricing_confidence"] = "estimated"
+            fallback["value_score"] = 0.5
+            return fallback
 
-        # Step 2: Scrape up to 3 pricing pages, plus always include the homepage
-        pages_to_scrape = pricing_pages[:3]
+        # Step 0.5: Circuit Breaker - Is the site even alive?
+        is_alive = await _is_website_alive(website)
+        if not is_alive:
+            logger.info("Circuit Breaker Tripped: Skipping %s entirely as base domain is dead.", website)
+            fallback = _no_data_fallback(venue)
+            fallback["notes"] = f"Estimated from typical market rates. The venue's official website ({website}) is unresponsive or down. Recommend calling to confirm."
+            fallback["price_source"] = "gemini_estimate"
+            fallback["pricing_confidence"] = "estimated"
+            fallback["value_score"] = 0.5
+            return fallback
+
+        # Step 1: Pre-scope with Gemini
+        logger.info(f"Gemini pre-scoping pricing URL for {website}")
+        pricing_pages = await _guess_pricing_pages(website, venue.get("name", ""), venue.get("category", ""))
+        
+        # Step 2: Fallback to Firecrawl map if no valid guesses
+        if not pricing_pages:
+            logger.info(f"Pre-scoping returned no results, falling back to Firecrawl /map for {website}")
+            pricing_pages = await _firecrawl_map(website)
+
+        # Step 3: Scrape up to 1 pricing page, plus always include the homepage
+        pages_to_scrape = pricing_pages[:1]
         if website not in pages_to_scrape:
             pages_to_scrape.append(website)
 
+        logger.info("Cost Analyst concurrently scraping pages: %s", pages_to_scrape)
+        
+        # We run the scrapes in parallel. The 10s wait_for wrapper inside _firecrawl_scrape
+        # will protect us from slow sites hanging this whole process. Using return_exceptions=True
+        # prevents one bad site link from interrupting the other healthy site links.
+        scrape_tasks = [_firecrawl_scrape(url) for url in pages_to_scrape]
+        scrape_results = await asyncio.gather(*scrape_tasks, return_exceptions=True)
+        
         content_parts = []
-        for target in pages_to_scrape:
-            logger.info("Cost Analyst scraping page: %s", target)
-            content = await _firecrawl_scrape(target) or ""
-            if content:
+        for target, content in zip(pages_to_scrape, scrape_results):
+            if isinstance(content, str) and content.strip():
                 content_parts.append(f"--- Content from {target} ---\n{content}\n")
+            elif isinstance(content, Exception):
+                logger.warning(f"Cost Analyst explicitly caught an exception scraping {target}: {content}")
 
         combined_content = "\n".join(content_parts)
 
     if not combined_content:
-        logger.warning("Venue %s had NO scraped content (Firecrawl returned nothing).", venue.get('name'))
-        return _no_data_fallback(venue)
+        logger.warning("Venue %s had NO scraped content (Firecrawl returned nothing). Forwarding to Gemini for pure estimation.", venue.get('name'))
     else:
         logger.debug("Venue %s scraped content length: %s", venue.get('name'), len(combined_content))
 
-    # Step 3: Extract pricing with Gemini
+    # Step 3: Extract pricing with Gemini (it will auto-estimate if combined_content is empty)
     return await _extract_pricing(venue, combined_content, group_size)
 
 
