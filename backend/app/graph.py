@@ -39,7 +39,6 @@ def build_graph() -> StateGraph:
     graph = StateGraph(PathfinderState)
 
     # ── Register nodes ──
-    # Commander & Scout always run; analysts are conditionally activated
     graph.add_node("commander", commander_node)
     graph.add_node("scout", scout_node)
     graph.add_node("vibe_matcher", _make_conditional_agent("vibe_matcher", vibe_matcher_node))
@@ -49,17 +48,13 @@ def build_graph() -> StateGraph:
     graph.add_node("synthesiser", synthesiser_node)
 
     # ── Define edges ──
+    # Sequential pipeline: Commander → Scout → analysts in series → Critic → Synthesiser
+    # (Running analysts sequentially avoids LangGraph's parallel write conflicts)
     graph.set_entry_point("commander")
     graph.add_edge("commander", "scout")
-
-    # Fan-out from Scout → all analysts in parallel
     graph.add_edge("scout", "vibe_matcher")
-    graph.add_edge("scout", "access_analyst")
-    graph.add_edge("scout", "cost_analyst")
-
-    # All analysts converge → Critic
-    graph.add_edge("vibe_matcher", "critic")
-    graph.add_edge("access_analyst", "critic")
+    graph.add_edge("vibe_matcher", "access_analyst")
+    graph.add_edge("access_analyst", "cost_analyst")
     graph.add_edge("cost_analyst", "critic")
 
     # ── Conditional retry or synthesis ──

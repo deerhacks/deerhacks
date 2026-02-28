@@ -1,0 +1,6154 @@
+﻿c:\Users\minif\deerhack
+s\backend\venv\Scripts\
+python.exe : C:\Users\m
+inif\deerhacks\backend\
+venv\Lib\site-packages\
+langchain_core\_api\dep
+recation.py:25: 
+UserWarning: Core 
+Pydantic V1 
+functionality isn't 
+compatible with Python 
+3.14 or greater.
+At line:1 char:1
++ c:\Users\minif\deerha
+cks\backend\venv\Script
+s\python.exe 
+test_pipelin ...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (C:\Users\mini   
+ f\....14 or greate    
+r.:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+  from 
+pydantic.v1.fields 
+import FieldInfo as 
+FieldInfoV1
+snowflake.connector.ssl
+_wrap_socket | DEBUG | 
+Injecting ssl_wrap_sock
+et_with_ocsp
+snowflake.connector.cur
+sor | DEBUG | Failed 
+to import pyarrow or 
+pandas. Cannot use 
+pandas fetch API. 
+Please install snowflak
+e-connector-python 
+with the `pandas` 
+extra to use these 
+features.
+asyncio | DEBUG | 
+Using proactor: 
+IocpProactor
+asyncio | DEBUG | 
+Using proactor: 
+IocpProactor
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='generativelanguage.g
+oogleapis.com' 
+port=443 
+local_address=None 
+timeout=30 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB19A56A0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB17EE3C0> ser
+ver_hostname='generativ
+elanguage.googleapis.co
+m' timeout=30
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB1995810>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=UTF-8'), 
+(b'Vary', b'Origin'), 
+(b'Vary', 
+b'X-Origin'), 
+(b'Vary', b'Referer'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Date', 
+b'Sat, 28 Feb 2026 
+10:38:37 GMT'), 
+(b'Server', 
+b'scaffolding on 
+HTTPServer2'), 
+(b'X-XSS-Protection', 
+b'0'), 
+(b'X-Frame-Options', 
+b'SAMEORIGIN'), (b'X-Co
+ntent-Type-Options', 
+b'nosniff'), 
+(b'Server-Timing', 
+b'gfet4t7; dur=5023'), 
+(b'Alt-Svc', 
+b'h3=":443"; ma=2592000
+,h3-29=":443"; 
+ma=2592000'), 
+(b'Transfer-Encoding', 
+b'chunked')])
+httpx | INFO | HTTP 
+Request: POST https://g
+enerativelanguage.googl
+eapis.com/v1beta/models
+/gemini-2.5-flash:gener
+ateContent?key=AIzaSyCv
+taEoT2pXU0lLaUHezC_lagd
+mK-CcAgU "HTTP/1.1 200 
+OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+snowflake.connector.con
+nection | INFO | 
+Snowflake Connector 
+for Python Version: 
+4.3.0, Python Version: 
+3.14.3, Platform: Windo
+ws-11-10.0.26200-SP0
+snowflake.connector.con
+nection | DEBUG | 
+connect
+snowflake.connector.con
+nection | DEBUG | 
+__config
+snowflake.connector.con
+nection | INFO | 
+Connecting to GLOBAL 
+Snowflake domain
+snowflake.connector.con
+nection | DEBUG | This 
+connection is in OCSP 
+Fail Open Mode. TLS 
+Certificates would be 
+checked for validity 
+and revocation status. 
+Any other Certificate 
+Revocation related 
+exceptions or OCSP 
+Responder failures 
+would be disregarded 
+in favor of 
+connectivity.
+snowflake.connector.con
+verter | DEBUG | 
+use_numpy: False
+snowflake.connector.con
+verter_issue23517 | 
+DEBUG | initialized
+snowflake.connector.con
+nection | DEBUG | REST 
+API object was 
+created: BR07012.snowfl
+akecomputing.com:443
+snowflake.connector.aut
+h._auth | DEBUG | 
+authenticate
+botocore.hooks | DEBUG 
+| Changing event name 
+from creating-client-cl
+ass.iot-data to creatin
+g-client-class.iot-data
+-plane
+botocore.hooks | DEBUG 
+| Changing event name 
+from 
+before-call.apigateway 
+to 
+before-call.api-gateway
+botocore.hooks | DEBUG 
+| Changing event name 
+from request-created.ma
+chinelearning.Predict 
+to request-created.mach
+ine-learning.Predict
+botocore.hooks | DEBUG 
+| Changing event name 
+from before-parameter-b
+uild.autoscaling.Create
+LaunchConfiguration to 
+before-parameter-build.
+auto-scaling.CreateLaun
+chConfiguration
+botocore.hooks | DEBUG 
+| Changing event name 
+from before-parameter-b
+uild.route53 to before-
+parameter-build.route-5
+3
+botocore.hooks | DEBUG 
+| Changing event name 
+from request-created.cl
+oudsearchdomain.Search 
+to request-created.clou
+dsearch-domain.Search
+botocore.hooks | DEBUG 
+| Changing event name 
+from docs.*.autoscaling
+.CreateLaunchConfigurat
+ion.complete-section 
+to docs.*.auto-scaling.
+CreateLaunchConfigurati
+on.complete-section
+botocore.hooks | DEBUG 
+| Changing event name 
+from before-parameter-b
+uild.logs.CreateExportT
+ask to before-parameter
+-build.cloudwatch-logs.
+CreateExportTask
+botocore.hooks | DEBUG 
+| Changing event name 
+from docs.*.logs.Create
+ExportTask.complete-sec
+tion to docs.*.cloudwat
+ch-logs.CreateExportTas
+k.complete-section
+botocore.hooks | DEBUG 
+| Changing event name 
+from before-parameter-b
+uild.cloudsearchdomain.
+Search to before-parame
+ter-build.cloudsearch-d
+omain.Search
+botocore.hooks | DEBUG 
+| Changing event name 
+from docs.*.cloudsearch
+domain.Search.complete-
+section to docs.*.cloud
+search-domain.Search.co
+mplete-section
+botocore.credentials | 
+DEBUG | Looking for 
+credentials via: env
+botocore.credentials | 
+DEBUG | Looking for 
+credentials via: 
+assume-role
+botocore.credentials | 
+DEBUG | Looking for 
+credentials via: assume
+-role-with-web-identity
+botocore.credentials | 
+DEBUG | Looking for 
+credentials via: sso
+botocore.credentials | 
+DEBUG | Looking for 
+credentials via: 
+shared-credentials-file
+botocore.credentials | 
+DEBUG | Looking for 
+credentials via: login
+botocore.credentials | 
+DEBUG | Looking for 
+credentials via: 
+custom-process
+botocore.credentials | 
+DEBUG | Looking for 
+credentials via: 
+config-file
+botocore.credentials | 
+DEBUG | Looking for 
+credentials via: 
+ec2-credentials-file
+botocore.credentials | 
+DEBUG | Looking for 
+credentials via: 
+boto-config
+botocore.credentials | 
+DEBUG | Looking for 
+credentials via: 
+container-role
+botocore.credentials | 
+DEBUG | Looking for 
+credentials via: 
+iam-role
+botocore.loaders | 
+DEBUG | Loading JSON 
+file: C:\Users\minif\de
+erhacks\backend\venv\Li
+b\site-packages\botocor
+e\data\endpoints.json
+botocore.loaders | 
+DEBUG | Loading JSON 
+file: C:\Users\minif\de
+erhacks\backend\venv\Li
+b\site-packages\botocor
+e\data\sdk-default-conf
+iguration.json
+botocore.hooks | DEBUG 
+| Event 
+choose-service-name: 
+calling handler 
+<function handle_servic
+e_name_alias at 
+0x0000028A909BA980>
+botocore.loaders | 
+DEBUG | Loading JSON 
+file: C:\Users\minif\de
+erhacks\backend\venv\Li
+b\site-packages\botocor
+e\data\sts\2011-06-15\s
+ervice-2.json.gz
+botocore.loaders | 
+DEBUG | Loading JSON 
+file: C:\Users\minif\de
+erhacks\backend\venv\Li
+b\site-packages\botocor
+e\data\sts\2011-06-15\e
+ndpoint-rule-set-1.json
+.gz
+botocore.loaders | 
+DEBUG | Loading JSON 
+file: C:\Users\minif\de
+erhacks\backend\venv\Li
+b\site-packages\botocor
+e\data\partitions.json
+botocore.hooks | DEBUG 
+| Event creating-client
+-class.sts: calling 
+handler <function add_g
+enerate_presigned_url 
+at 0x0000028A90932350>
+botocore.configprovider
+ | DEBUG | Looking for 
+endpoint for sts via: 
+environment_service
+botocore.configprovider
+ | DEBUG | Looking for 
+endpoint for sts via: 
+environment_global
+botocore.configprovider
+ | DEBUG | Looking for 
+endpoint for sts via: 
+config_service
+botocore.configprovider
+ | DEBUG | Looking for 
+endpoint for sts via: 
+config_global
+botocore.configprovider
+ | DEBUG | No 
+configured endpoint 
+found.
+botocore.endpoint | 
+DEBUG | Setting sts 
+timeout as (0.19, 0.19)
+botocore.loaders | 
+DEBUG | Loading JSON 
+file: C:\Users\minif\de
+erhacks\backend\venv\Li
+b\site-packages\botocor
+e\data\_retry.json
+botocore.client | 
+DEBUG | Registering 
+retry handlers for 
+service: sts
+botocore.hooks | DEBUG 
+| Event before-paramete
+r-build.sts.GetCallerId
+entity: calling 
+handler <function gener
+ate_idempotent_uuid at 
+0x0000028A909EC5C0>
+botocore.hooks | DEBUG 
+| Event before-paramete
+r-build.sts.GetCallerId
+entity: calling 
+handler <function _hand
+le_request_validation_m
+ode_member at 
+0x0000028A909EF5E0>
+botocore.regions | 
+DEBUG | Calling 
+endpoint provider with 
+parameters: {'Region': 
+'aws-global', 
+'UseDualStack': False, 
+'UseFIPS': False, 
+'UseGlobalEndpoint': 
+False}
+botocore.regions | 
+DEBUG | Endpoint 
+provider result: https:
+//sts.amazonaws.com
+botocore.regions | 
+DEBUG | Selecting from 
+endpoint provider's 
+list of auth schemes: 
+"sigv4". User selected 
+auth scheme is: "None"
+botocore.regions | 
+DEBUG | Selected auth 
+type "v4" as "v4" with 
+signing context 
+params: {'region': 
+'us-east-1', 
+'signing_name': 'sts'}
+botocore.hooks | DEBUG 
+| Event before-call.sts
+.GetCallerIdentity: 
+calling handler 
+<function add_recursion
+_detection_header at 
+0x0000028A909BAAE0>
+botocore.hooks | DEBUG 
+| Event before-call.sts
+.GetCallerIdentity: 
+calling handler 
+<function inject_api_ve
+rsion_header_if_needed 
+at 0x0000028A909EE350>
+botocore.endpoint | 
+DEBUG | Making request 
+for OperationModel(name
+=GetCallerIdentity) 
+with params: 
+{'url_path': '/', 
+'query_string': '', 
+'method': 'POST', 
+'headers': 
+{'Content-Type': 'appli
+cation/x-www-form-urlen
+coded; charset=utf-8', 
+'User-Agent': 
+'Boto3/1.42.59 
+md/Botocore#1.42.59 
+ua/2.1 os/windows#11 
+md/arch#amd64 
+lang/python#3.14.3 
+md/pyimpl#CPython 
+m/b,D,Z 
+cfg/retry-mode#legacy 
+Botocore/1.42.59'}, 
+'body': {'Action': 
+'GetCallerIdentity', 
+'Version': 
+'2011-06-15'}, 'url': '
+https://sts.amazonaws.c
+om/', 'context': 
+{'client_region': 
+'aws-global', 
+'client_config': <botoc
+ore.config.Config 
+object at 
+0x0000028AB1996350>, 
+'has_streaming_input': 
+False, 'auth_type': 
+'v4', 
+'unsigned_payload': 
+None, 'auth_options': 
+['aws.auth#sigv4'], 
+'signing': {'region': 
+'us-east-1', 
+'signing_name': 
+'sts'}, 
+'endpoint_properties': 
+{'authSchemes': 
+[{'name': 'sigv4', 
+'signingName': 'sts', 
+'signingRegion': 
+'us-east-1'}]}}}
+botocore.hooks | DEBUG 
+| Event request-created
+.sts.GetCallerIdentity:
+ calling handler 
+<bound method 
+RequestSigner.handler 
+of <botocore.signers.Re
+questSigner object at 
+0x0000028AB19A6900>>
+botocore.hooks | DEBUG 
+| Event choose-signer.s
+ts.GetCallerIdentity: 
+calling handler 
+<function set_operation
+_specific_signer at 
+0x0000028A909EC300>
+snowflake.connector.pla
+tform_detection | 
+DEBUG | Platform 
+detection completed. 
+Detected platforms: ['i
+s_ec2_instance_timeout'
+, 'has_aws_identity_tim
+eout', 
+'is_azure_vm_timeout', 
+'has_azure_managed_iden
+tity_timeout']
+snowflake.connector.aut
+h._auth | DEBUG | 
+account=BR07012, 
+user=deerhacks, 
+database=PATHFINDER, 
+schema=PUBLIC, 
+warehouse=COMPUTE_WH, 
+role=ACCOUNTADMIN, requ
+est_id=e964165c-1742-4b
+87-88bb-eace2d58b5c3
+snowflake.connector.aut
+h._auth | DEBUG | 
+body['data']: 
+{'CLIENT_APP_ID': 
+'PythonConnector', 
+'CLIENT_APP_VERSION': 
+'4.3.0', 
+'SVN_REVISION': None, 
+'ACCOUNT_NAME': 
+'BR07012', 
+'LOGIN_NAME': 
+'deerhacks', 
+'CLIENT_ENVIRONMENT': 
+{'APPLICATION': 
+'PythonConnector', 
+'APPLICATION_PATH': 'C:
+\\Python314\\Lib\\threa
+ding.py', 'OS': 
+'Windows', 
+'OS_VERSION': 'Windows-
+11-10.0.26200-SP0', 
+'PYTHON_VERSION': 
+'3.14.3', 
+'PYTHON_RUNTIME': 
+'CPython', 
+'PYTHON_COMPILER': 
+'MSC v.1944 64 bit 
+(AMD64)', 'OCSP_MODE': 
+'FAIL_OPEN', 'CERT_REVO
+CATION_CHECK_MODE': 
+'DISABLED', 'TRACING': 
+10, 'LOGIN_TIMEOUT': 
+None, 
+'NETWORK_TIMEOUT': 
+None, 
+'SOCKET_TIMEOUT': 
+None, 'PLATFORM': ['is_
+ec2_instance_timeout', 
+'has_aws_identity_timeo
+ut', 
+'is_azure_vm_timeout', 
+'has_azure_managed_iden
+tity_timeout'], 
+'OS_DETAILS': None, 
+'ISA': 'AMD64', 
+'CORE_VERSION': None, 
+'CORE_FILE_NAME': 'C:\\
+Users\\minif\\deerhacks
+\\backend\\venv\\Lib\\s
+ite-packages\\snowflake
+\\connector\\minicore\\
+windows_x86_64\\sf_mini
+_core.dll'}, 
+'PASSWORD': '******', 
+'SESSION_PARAMETERS': {
+'CLIENT_PREFETCH_THREAD
+S': 4}}
+snowflake.connector.ven
+dored.urllib3.util.retr
+y | DEBUG | Converted 
+retries value: 1 -> 
+Retry(total=1, 
+connect=None, 
+read=None, 
+redirect=None, 
+status=None)
+snowflake.connector.net
+work | DEBUG | 
+remaining request 
+timeout: N/A ms, retry 
+cnt: 1
+snowflake.connector.net
+work | DEBUG | Request 
+guid: 3f574258-f9f6-497
+8-a2d1-9480c67a6c58
+snowflake.connector.net
+work | DEBUG | socket 
+timeout: 60
+snowflake.connector.ven
+dored.urllib3.connectio
+npool | DEBUG | 
+Starting new HTTPS 
+connection (1): br07012
+.snowflakecomputing.com
+:443
+snowflake.connector.ssl
+_wrap_socket | DEBUG | 
+CRL Check Mode: 
+DISABLED
+snowflake.connector.ssl
+_wrap_socket | DEBUG | 
+OCSP Mode: FAIL_OPEN, 
+OCSP response cache 
+file name: None
+snowflake.connector.ocs
+p_snowflake | DEBUG | 
+cache directory: C:\Use
+rs\minif\AppData\Local\
+Snowflake\Caches
+snowflake.connector.ocs
+p_snowflake | DEBUG | o
+csp_response_cache_uri:
+ file://C:/Users/minif/
+AppData/Local/Snowflake
+/Caches/ocsp_response_c
+ache.json
+snowflake.connector.ocs
+p_snowflake | DEBUG | 
+OCSP_VALIDATION_CACHE 
+size: 327
+snowflake.connector.ocs
+p_snowflake | DEBUG | 
+OCSP response cache 
+server is enabled: http
+://ocsp.snowflakecomput
+ing.com/ocsp_response_c
+ache.json
+snowflake.connector.ocs
+p_snowflake | DEBUG | 
+OCSP dynamic cache 
+server RETRY URL: None
+snowflake.connector.ocs
+p_snowflake | DEBUG | 
+validating 
+certificate: br07012.sn
+owflakecomputing.com
+snowflake.connector.ocs
+p_asn1crypto | DEBUG | 
+# of certificates: 3
+snowflake.connector.ocs
+p_asn1crypto | DEBUG | 
+reading certificate 
+bundle: C:\Users\minif\
+deerhacks\backend\venv\
+Lib\site-packages\certi
+fi\cacert.pem
+snowflake.connector.ocs
+p_asn1crypto | DEBUG | 
+subject: OrderedDict({'
+country_name': 'US', 's
+tate_or_province_name':
+ 'Montana', 
+'locality_name': 
+'Bozeman', 
+'organization_name': 
+'Snowflake Inc.', 
+'common_name': '*.prod3
+.us-west-2.aws.snowflak
+ecomputing.com'}), 
+issuer: OrderedDict({'c
+ountry_name': 'US', 
+'organization_name': 
+'DigiCert Inc', 
+'common_name': 
+'DigiCert Global G2 
+TLS RSA SHA256 2020 
+CA1'})
+snowflake.connector.ocs
+p_asn1crypto | DEBUG | 
+subject: OrderedDict({'
+country_name': 'US', 
+'organization_name': 
+'DigiCert Inc', 
+'common_name': 
+'DigiCert Global G2 
+TLS RSA SHA256 2020 
+CA1'}), issuer: Ordered
+Dict({'country_name': 
+'US', 
+'organization_name': 
+'DigiCert Inc', 'organi
+zational_unit_name': 
+'www.digicert.com', 
+'common_name': 
+'DigiCert Global Root 
+G2'})
+snowflake.connector.ocs
+p_asn1crypto | DEBUG | 
+A trusted root 
+certificate found: Orde
+redDict({'country_name'
+: 'US', 
+'organization_name': 
+'DigiCert Inc', 
+'common_name': 
+'DigiCert Global G2 
+TLS RSA SHA256 2020 
+CA1'}), stopping chain 
+traversal here
+snowflake.connector.ocs
+p_asn1crypto | DEBUG | 
+not found issuer_der: O
+rderedDict({'country_na
+me': 'US', 
+'organization_name': 
+'DigiCert Inc', 'organi
+zational_unit_name': 
+'www.digicert.com', 
+'common_name': 
+'DigiCert Global Root 
+G2'})
+snowflake.connector.ocs
+p_snowflake | DEBUG | 
+hit cache for subject: 
+OrderedDict({'country_n
+ame': 'US', 'state_or_p
+rovince_name': 
+'Montana', 
+'locality_name': 
+'Bozeman', 
+'organization_name': 
+'Snowflake Inc.', 
+'common_name': '*.prod3
+.us-west-2.aws.snowflak
+ecomputing.com'})
+snowflake.connector.ocs
+p_snowflake | DEBUG | 
+hit cache for subject: 
+OrderedDict({'country_n
+ame': 'US', 
+'organization_name': 
+'DigiCert Inc', 
+'common_name': 
+'DigiCert Global G2 
+TLS RSA SHA256 2020 
+CA1'})
+snowflake.connector.ocs
+p_snowflake | DEBUG | 
+ok
+snowflake.connector.ven
+dored.urllib3.connectio
+npool | DEBUG | https:/
+/br07012.snowflakecompu
+ting.com:443 "POST /ses
+sion/v1/login-request?r
+equest_id=e964165c-1742
+-4b87-88bb-eace2d58b5c3
+&databaseName=PATHFINDE
+R&schemaName=PUBLIC&war
+ehouse=COMPUTE_WH&roleN
+ame=ACCOUNTADMIN&reques
+t_guid=3f574258-f9f6-49
+78-a2d1-9480c67a6c58 
+HTTP/1.1" 404 14838
+app.services.snowflake 
+| ERROR | Cortex 
+search failed: 290404 
+(08001): None: 404 Not 
+Found: post BR07012.sno
+wflakecomputing.com:443
+/session/v1/login-reque
+st
+asyncio | DEBUG | 
+Using proactor: 
+IocpProactor
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='places.googleapis.co
+m' port=443 
+local_address=None 
+timeout=15 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started 
+host='api.yelp.com' 
+port=443 
+local_address=None 
+timeout=15 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E15BD0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB180BC50> ser
+ver_hostname='places.go
+ogleapis.com' 
+timeout=15
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028A90253360>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB193C610> ser
+ver_hostname='api.yelp.
+com' timeout=15
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB1BE7E10>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'GET']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB1BED490>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Vary', 
+b'*'), 
+(b'Content-Type', 
+b'application/json; 
+charset=UTF-8'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Date', 
+b'Sat, 28 Feb 2026 
+10:38:40 GMT'), 
+(b'Server', 
+b'scaffolding on 
+HTTPServer2'), 
+(b'X-XSS-Protection', 
+b'0'), 
+(b'X-Frame-Options', 
+b'SAMEORIGIN'), (b'X-Co
+ntent-Type-Options', 
+b'nosniff'), 
+(b'Server-Timing', 
+b'gfet4t7; dur=389'), 
+(b'Alt-Svc', 
+b'h3=":443"; ma=2592000
+,h3-29=":443"; 
+ma=2592000'), 
+(b'Transfer-Encoding', 
+b'chunked')])
+httpx | INFO | HTTP 
+Request: POST https://p
+laces.googleapis.com/v1
+/places:searchText 
+"HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Connection', 
+b'keep-alive'), 
+(b'content-type', 
+b'application/json'), (
+b'ratelimit-dailylimit'
+, b'300'), (b'access-co
+ntrol-allow-headers', 
+b'Origin, 
+Content-Type, Accept, 
+Authorization'), (b'rat
+elimit-remaining', 
+b'218'), (b'access-cont
+rol-max-age', 
+b'1728000'), (b'ratelim
+it-resettime', b'2026-0
+3-01T00:00:00+00:00'), 
+(b'x-ctx-guv', b'p|iQs_
+m8gdC41iyFDqXExXIQ|2591
+078b-ba19-4a64-9624-1f8
+455823143'), 
+(b'server', b'envoy'), 
+(b'access-control-allow
+-origin', b'*'), 
+(b'x-routing-service', 
+b'routing-main--useast1
+-66d7c45447-kvdt6; 
+site=public_api_v3'), (
+b'access-control-allow-
+methods', b'POST,OPTION
+S,GET,DELETE,PUT,PATCH'
+), (b'set-cookie', 
+b'pid=; 
+Domain=.yelp.com; 
+Max-Age=0; Path=/; 
+expires=Wed, 31-Dec-97 
+23:59:59 GMT'), (b'acce
+ss-control-allow-creden
+tials', b'true'), 
+(b'x-zipkin-id', b'c14d
+e8e4fdc007830a4da872603
+53aa4'), 
+(b'content-encoding', 
+b'gzip'), (b'x-mode', 
+b'ro'), (b'x-proxied', 
+b'10-65-90-161-useast1a
+prod'), (b'x-extlb', b'
+10-65-90-161-useast1apr
+od'), 
+(b'cache-control', 
+b'max-age=0, no-store, 
+private, 
+no-transform'), 
+(b'Accept-Ranges', 
+b'bytes'), (b'Date', 
+b'Sat, 28 Feb 2026 
+10:38:41 GMT'), 
+(b'Via', b'1.1 
+varnish'), 
+(b'X-Served-By', 
+b'cache-yyz4550-YYZ'), 
+(b'X-Cache', b'MISS'), 
+(b'X-Cache-Hits', 
+b'0'), (b'Vary', 
+b'Accept-Encoding'), 
+(b'alt-svc', b'h3=":443
+";ma=86400,h3-29=":443"
+;ma=86400,h3-27=":443";
+ma=86400'), 
+(b'transfer-encoding', 
+b'chunked')])
+httpx | INFO | HTTP 
+Request: GET https://ap
+i.yelp.com/v3/businesse
+s/search?term=coffee+sh
+op&location=Toronto&lim
+it=8 "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.scout | 
+INFO | Scout found 10 
+candidates (8 Google, 
+8 Yelp, 16 after dedup)
+asyncio | DEBUG | 
+Using proactor: 
+IocpProactor
+asyncio | DEBUG | 
+Using proactor: 
+IocpProactor
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started 
+host='api.mapbox.com' 
+port=443 
+local_address=None 
+timeout=15 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started 
+host='api.mapbox.com' 
+port=443 
+local_address=None 
+timeout=15 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started 
+host='api.mapbox.com' 
+port=443 
+local_address=None 
+timeout=15 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started 
+host='api.mapbox.com' 
+port=443 
+local_address=None 
+timeout=15 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started 
+host='api.mapbox.com' 
+port=443 
+local_address=None 
+timeout=15 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started 
+host='api.mapbox.com' 
+port=443 
+local_address=None 
+timeout=15 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started 
+host='api.mapbox.com' 
+port=443 
+local_address=None 
+timeout=15 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started 
+host='api.mapbox.com' 
+port=443 
+local_address=None 
+timeout=15 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started 
+host='api.mapbox.com' 
+port=443 
+local_address=None 
+timeout=15 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started 
+host='api.mapbox.com' 
+port=443 
+local_address=None 
+timeout=15 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB3560F30>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E50F50> ser
+ver_hostname='api.mapbo
+x.com' timeout=15
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB35605A0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB193E720> ser
+ver_hostname='api.mapbo
+x.com' timeout=15
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB2514E50>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB19A74D0> ser
+ver_hostname='api.mapbo
+x.com' timeout=15
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB2516750>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB19A6CF0> ser
+ver_hostname='api.mapbo
+x.com' timeout=15
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E49E50>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E61A90> ser
+ver_hostname='api.mapbo
+x.com' timeout=15
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB356C7D0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E408A0> ser
+ver_hostname='api.mapbo
+x.com' timeout=15
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB358B850>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1BEFD10> ser
+ver_hostname='api.mapbo
+x.com' timeout=15
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1EED9B0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1EE6390> ser
+ver_hostname='api.mapbo
+x.com' timeout=15
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E13AD0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E11F30> ser
+ver_hostname='api.mapbo
+x.com' timeout=15
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E75790>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E4E030> ser
+ver_hostname='api.mapbo
+x.com' timeout=15
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E77410>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB184F070> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E2F070>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E575B0> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E2EBA0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E4E360> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E380F0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E14910> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E394F0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E409D0> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E64F80>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E5C3B0> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB3546B50>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB184F750> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB3547050>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E57BD0> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E1FD90>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E12270> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E1F3F0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E51250> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB3585310>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'GET']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB3584CB0>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'GET']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB1EDFF70>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'GET']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB1EDEE90>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB1EDF930>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'GET']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB1EDEE40>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'GET']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB1EDF8E0>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB1EDF890>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB1EDFE80>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'GET']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB3550CD0>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'GET']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB3550AA0>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB3552350>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Transfer-Encoding', 
+b'chunked'), 
+(b'Connection', 
+b'keep-alive'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:37:18 
+GMT'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Access-Con
+trol-Allow-Origin', 
+b'*'), (b'x-mapbox-requ
+est-id', b'0tf81maLjJJE
+xMexVPLj0u-zL1UeLxodk5l
+4dK6i1Sox-0eZWQPm1Q==')
+, (b'X-Rate-Limit-Limit
+', b'300'), (b'X-Rate-L
+imit-Interval', 
+b'60'), (b'X-Rate-Limit
+-Reset', 
+b'1772275098'), 
+(b'Cache-Control', 
+b'max-age=3600'), 
+(b'Vary', 
+b'Accept-Encoding'), 
+(b'X-Cache', b'Hit 
+from cloudfront'), 
+(b'Via', b'1.1 448b6952
+3e9e6d19ed8280b1c8be22c
+8.cloudfront.net 
+(CloudFront)'), 
+(b'X-Amz-Cf-Pop', 
+b'YTO50-P3'), 
+(b'Alt-Svc', 
+b'h3=":443"; 
+ma=86400'), 
+(b'X-Amz-Cf-Id', b'mAdR
+1lssCjiVLqaNybaZS2cDA2Z
+azUhEmjqb5bGL80TuA4g75C
+MeaQ=='), (b'Age', 
+b'85')])
+httpx | INFO | HTTP 
+Request: GET https://ap
+i.mapbox.com/isochrone/
+v1/mapbox/driving/-79.3
+788897,43.6511749?conto
+urs_minutes=15&polygons
+=true&access_token=pk.e
+yJ1IjoiYWRvbmRvdGRldiIs
+ImEiOiJjbW01d2Z0M3AwYXl
+uMnBvbXdrbDJzdjNhIn0.CX
+eJWBFl-1LmH2ZHHJdMgw 
+"HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'GET']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB35523A0>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Transfer-Encoding', 
+b'chunked'), 
+(b'Connection', 
+b'keep-alive'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:37:18 
+GMT'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Access-Con
+trol-Allow-Origin', 
+b'*'), (b'x-mapbox-requ
+est-id', b'VtHCRP5H2Ncn
+RfZNvgyuPJumEet9f99ROmD
+ycUSIKvFmVlo5NelWVw==')
+, (b'X-Rate-Limit-Limit
+', b'300'), (b'X-Rate-L
+imit-Interval', 
+b'60'), (b'X-Rate-Limit
+-Reset', 
+b'1772275098'), 
+(b'Cache-Control', 
+b'max-age=3600'), 
+(b'Vary', 
+b'Accept-Encoding'), 
+(b'X-Cache', b'Hit 
+from cloudfront'), 
+(b'Via', b'1.1 d762ba83
+2d000aaf46f07846ce2996f
+c.cloudfront.net 
+(CloudFront)'), 
+(b'X-Amz-Cf-Pop', 
+b'YTO50-P3'), 
+(b'Alt-Svc', 
+b'h3=":443"; 
+ma=86400'), 
+(b'X-Amz-Cf-Id', b'I4Cq
+ElaFbTXFAyczeDL7HptWai8
+T-2lud0AmdlIRPM7T1QGySx
+emFg=='), (b'Age', 
+b'85')])
+httpx | INFO | HTTP 
+Request: GET https://ap
+i.mapbox.com/isochrone/
+v1/mapbox/driving/-79.3
+944412,43.6450333999999
+96?contours_minutes=15&
+polygons=true&access_to
+ken=pk.eyJ1IjoiYWRvbmRv
+dGRldiIsImEiOiJjbW01d2Z
+0M3AwYXluMnBvbXdrbDJzdj
+NhIn0.CXeJWBFl-1LmH2ZHH
+JdMgw "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Transfer-Encoding', 
+b'chunked'), 
+(b'Connection', 
+b'keep-alive'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:37:18 
+GMT'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Access-Con
+trol-Allow-Origin', 
+b'*'), (b'x-mapbox-requ
+est-id', b'EXm4VbopITLZ
+MtNfHvRL1jBftO86tmkIeAA
+mQCc_p06y4Po-CWCxDA==')
+, (b'X-Rate-Limit-Limit
+', b'300'), (b'X-Rate-L
+imit-Interval', 
+b'60'), (b'X-Rate-Limit
+-Reset', 
+b'1772275098'), 
+(b'Cache-Control', 
+b'max-age=3600'), 
+(b'Vary', 
+b'Accept-Encoding'), 
+(b'X-Cache', b'Hit 
+from cloudfront'), 
+(b'Via', b'1.1 64909529
+c4e581ad4c88eb71f591fbc
+8.cloudfront.net 
+(CloudFront)'), 
+(b'X-Amz-Cf-Pop', 
+b'YTO50-P3'), 
+(b'Alt-Svc', 
+b'h3=":443"; 
+ma=86400'), 
+(b'X-Amz-Cf-Id', b'hrGK
+Nsl1unpWHI98vCejK2uahRS
+tWybnpTIHL0cG8lR_8472G3
+EAMw=='), (b'Age', 
+b'85')])
+httpx | INFO | HTTP 
+Request: GET https://ap
+i.mapbox.com/isochrone/
+v1/mapbox/driving/-79.3
+691669,43.6506513?conto
+urs_minutes=15&polygons
+=true&access_token=pk.e
+yJ1IjoiYWRvbmRvdGRldiIs
+ImEiOiJjbW01d2Z0M3AwYXl
+uMnBvbXdrbDJzdjNhIn0.CX
+eJWBFl-1LmH2ZHHJdMgw 
+"HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB1EDC410>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB35503C0>
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Transfer-Encoding', 
+b'chunked'), 
+(b'Connection', 
+b'keep-alive'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:37:18 
+GMT'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Access-Con
+trol-Allow-Origin', 
+b'*'), (b'x-mapbox-requ
+est-id', b'sOyqocFQRzUO
+BmvFc2BfFXg64A1d0iMhh6J
+1NoMs90wnBMmtl1NRKw==')
+, (b'X-Rate-Limit-Limit
+', b'300'), (b'X-Rate-L
+imit-Interval', 
+b'60'), (b'X-Rate-Limit
+-Reset', 
+b'1772275098'), 
+(b'Cache-Control', 
+b'max-age=3600'), 
+(b'Vary', 
+b'Accept-Encoding'), 
+(b'X-Cache', b'Hit 
+from cloudfront'), 
+(b'Via', b'1.1 448b6952
+3e9e6d19ed8280b1c8be22c
+8.cloudfront.net 
+(CloudFront)'), 
+(b'X-Amz-Cf-Pop', 
+b'YTO50-P3'), 
+(b'Alt-Svc', 
+b'h3=":443"; 
+ma=86400'), 
+(b'X-Amz-Cf-Id', b'V4F4
+M8G6tsOi55TlfVRMU5aGRX2
+TiR8E3CRY1uKXoveHBI92Bt
+Pa4w=='), (b'Age', 
+b'85')])
+httpx | INFO | HTTP 
+Request: GET https://ap
+i.mapbox.com/isochrone/
+v1/mapbox/driving/-79.3
+908424,43.6543249?conto
+urs_minutes=15&polygons
+=true&access_token=pk.e
+yJ1IjoiYWRvbmRvdGRldiIs
+ImEiOiJjbW01d2Z0M3AwYXl
+uMnBvbXdrbDJzdjNhIn0.CX
+eJWBFl-1LmH2ZHHJdMgw 
+"HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB35520D0>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Transfer-Encoding', 
+b'chunked'), 
+(b'Connection', 
+b'keep-alive'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:37:18 
+GMT'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Access-Con
+trol-Allow-Origin', 
+b'*'), (b'x-mapbox-requ
+est-id', b'QrAaI-JziuBg
+6FPss_tYSAA3eiG4-LAhvsx
+a3wYj7BkIrpNGWw2o1A==')
+, (b'X-Rate-Limit-Limit
+', b'300'), (b'X-Rate-L
+imit-Interval', 
+b'60'), (b'X-Rate-Limit
+-Reset', 
+b'1772275098'), 
+(b'Cache-Control', 
+b'max-age=3600'), 
+(b'Vary', 
+b'Accept-Encoding'), 
+(b'X-Cache', b'Hit 
+from cloudfront'), 
+(b'Via', b'1.1 dfad4856
+f54b4c20fafa3bbb02106dc
+e.cloudfront.net 
+(CloudFront)'), 
+(b'X-Amz-Cf-Pop', 
+b'YTO50-P3'), 
+(b'Alt-Svc', 
+b'h3=":443"; 
+ma=86400'), 
+(b'X-Amz-Cf-Id', b'2YZF
+gDcggb7mw_NQEhB2HefHgR9
+beu0mF9aNYsiU4bGrWh6DWH
+9SmQ=='), (b'Age', 
+b'85')])
+httpx | INFO | HTTP 
+Request: GET https://ap
+i.mapbox.com/isochrone/
+v1/mapbox/driving/-79.3
+72932326803,43.65244524
+304?contours_minutes=15
+&polygons=true&access_t
+oken=pk.eyJ1IjoiYWRvbmR
+vdGRldiIsImEiOiJjbW01d2
+Z0M3AwYXluMnBvbXdrbDJzd
+jNhIn0.CXeJWBFl-1LmH2ZH
+HJdMgw "HTTP/1.1 200 
+OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB3551E50>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Transfer-Encoding', 
+b'chunked'), 
+(b'Connection', 
+b'keep-alive'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:37:18 
+GMT'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Access-Con
+trol-Allow-Origin', 
+b'*'), (b'x-mapbox-requ
+est-id', b'T15rHBDxt6Ty
+Roln2FYNgzAxs-nsl74c3nW
+XcC3X5YJiLZaRpVHcEw==')
+, (b'X-Rate-Limit-Limit
+', b'300'), (b'X-Rate-L
+imit-Interval', 
+b'60'), (b'X-Rate-Limit
+-Reset', 
+b'1772275098'), 
+(b'Cache-Control', 
+b'max-age=3600'), 
+(b'Vary', 
+b'Accept-Encoding'), 
+(b'X-Cache', b'Hit 
+from cloudfront'), 
+(b'Via', b'1.1 ede5c8e7
+b29cc9290d2f384042d7842
+8.cloudfront.net 
+(CloudFront)'), 
+(b'X-Amz-Cf-Pop', 
+b'YTO50-P3'), 
+(b'Alt-Svc', 
+b'h3=":443"; 
+ma=86400'), 
+(b'X-Amz-Cf-Id', b'XOII
+EzjgEMKOwUhu8ZaIwM1u9Yz
+Z0Ndatwpnh6k5oWhqsClAvK
+AU9A=='), (b'Age', 
+b'85')])
+httpx | INFO | HTTP 
+Request: GET https://ap
+i.mapbox.com/isochrone/
+v1/mapbox/driving/-79.3
+669735,43.6445264?conto
+urs_minutes=15&polygons
+=true&access_token=pk.e
+yJ1IjoiYWRvbmRvdGRldiIs
+ImEiOiJjbW01d2Z0M3AwYXl
+uMnBvbXdrbDJzdjNhIn0.CX
+eJWBFl-1LmH2ZHHJdMgw 
+"HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'GET']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB3578690>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB35787D0>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB3578BE0>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Transfer-Encoding', 
+b'chunked'), 
+(b'Connection', 
+b'keep-alive'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:37:18 
+GMT'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Access-Con
+trol-Allow-Origin', 
+b'*'), (b'x-mapbox-requ
+est-id', b'7U3Q72r1wQcK
+6ZiKjO4PYGaRw-ZfJ0DkhHf
+ydqNZAu0rLvWGe14M2g==')
+, (b'X-Rate-Limit-Limit
+', b'300'), (b'X-Rate-L
+imit-Interval', 
+b'60'), (b'X-Rate-Limit
+-Reset', 
+b'1772275098'), 
+(b'Cache-Control', 
+b'max-age=3600'), 
+(b'Vary', 
+b'Accept-Encoding'), 
+(b'X-Cache', b'Hit 
+from cloudfront'), 
+(b'Via', b'1.1 fe5c0b9f
+43ae01762b72e245c0496ac
+6.cloudfront.net 
+(CloudFront)'), 
+(b'X-Amz-Cf-Pop', 
+b'YTO50-P3'), 
+(b'Alt-Svc', 
+b'h3=":443"; 
+ma=86400'), 
+(b'X-Amz-Cf-Id', b'Xoyo
+9yx39oOBq00kM3_gXMXrdAn
+s_V4qqgENk8cHScHvTR1G4r
+UaNg=='), (b'Age', 
+b'85')])
+httpx | INFO | HTTP 
+Request: GET https://ap
+i.mapbox.com/isochrone/
+v1/mapbox/driving/-79.3
+925864,43.6560582000000
+04?contours_minutes=15&
+polygons=true&access_to
+ken=pk.eyJ1IjoiYWRvbmRv
+dGRldiIsImEiOiJjbW01d2Z
+0M3AwYXluMnBvbXdrbDJzdj
+NhIn0.CXeJWBFl-1LmH2ZHH
+JdMgw "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Transfer-Encoding', 
+b'chunked'), 
+(b'Connection', 
+b'keep-alive'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:37:18 
+GMT'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Access-Con
+trol-Allow-Origin', 
+b'*'), (b'x-mapbox-requ
+est-id', b'8xqJqADCKm-_
+UPM1VqXLPBUUH6T0nxx7Irs
+C6mI3oLSevWMHyWfAlg==')
+, (b'X-Rate-Limit-Limit
+', b'300'), (b'X-Rate-L
+imit-Interval', 
+b'60'), (b'X-Rate-Limit
+-Reset', 
+b'1772275098'), 
+(b'Cache-Control', 
+b'max-age=3600'), 
+(b'Vary', 
+b'Accept-Encoding'), 
+(b'X-Cache', b'Hit 
+from cloudfront'), 
+(b'Via', b'1.1 baea19e5
+7b5c9a39539925530919350
+8.cloudfront.net 
+(CloudFront)'), 
+(b'X-Amz-Cf-Pop', 
+b'YTO50-P3'), 
+(b'Alt-Svc', 
+b'h3=":443"; 
+ma=86400'), 
+(b'X-Amz-Cf-Id', b'No8R
+CkOmSNCEl7J_9jlFQ-ljDb4
+-d2iMBl5BgnhF-tCKVQF28W
+1JFg=='), (b'Age', 
+b'85')])
+httpx | INFO | HTTP 
+Request: GET https://ap
+i.mapbox.com/isochrone/
+v1/mapbox/driving/-79.3
+8518,43.64452?contours_
+minutes=15&polygons=tru
+e&access_token=pk.eyJ1I
+joiYWRvbmRvdGRldiIsImEi
+OiJjbW01d2Z0M3AwYXluMnB
+vbXdrbDJzdjNhIn0.CXeJWB
+Fl-1LmH2ZHHJdMgw 
+"HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Transfer-Encoding', 
+b'chunked'), 
+(b'Connection', 
+b'keep-alive'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:37:18 
+GMT'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Access-Con
+trol-Allow-Origin', 
+b'*'), (b'x-mapbox-requ
+est-id', b'uPREhTBQVZC1
+3AKwfcy6NiUDLV1KaT9qgSP
+Rl2tdciVGpOkuk0pb6g==')
+, (b'X-Rate-Limit-Limit
+', b'300'), (b'X-Rate-L
+imit-Interval', 
+b'60'), (b'X-Rate-Limit
+-Reset', 
+b'1772275098'), 
+(b'Cache-Control', 
+b'max-age=3600'), 
+(b'Vary', 
+b'Accept-Encoding'), 
+(b'X-Cache', b'Hit 
+from cloudfront'), 
+(b'Via', b'1.1 fa47844f
+402887bc1d75e95a7ddca79
+8.cloudfront.net 
+(CloudFront)'), 
+(b'X-Amz-Cf-Pop', 
+b'YTO50-P3'), 
+(b'Alt-Svc', 
+b'h3=":443"; 
+ma=86400'), 
+(b'X-Amz-Cf-Id', b'YL-E
+emXIIhrcWA6N2WxJqBUD5zn
+ovjMPOZAXSJDB9lxdPQzFt7
+BYmQ=='), (b'Age', 
+b'86')])
+httpx | INFO | HTTP 
+Request: GET https://ap
+i.mapbox.com/isochrone/
+v1/mapbox/driving/-79.3
+8562290000002,43.666070
+6?contours_minutes=15&p
+olygons=true&access_tok
+en=pk.eyJ1IjoiYWRvbmRvd
+GRldiIsImEiOiJjbW01d2Z0
+M3AwYXluMnBvbXdrbDJzdjN
+hIn0.CXeJWBFl-1LmH2ZHHJ
+dMgw "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+403, b'Forbidden', [(b'
+Access-Control-Allow-Or
+igin', b'*'), 
+(b'Content-Length', 
+b'263'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:44 
+GMT'), (b'Etag', b'W/"1
+07-teteoNOPJdU5Wl+oacnC
+xzqcyTk"'), 
+(b'X-Response-Time', 
+b'3.625ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/map
+ "HTTP/1.1 403 
+Forbidden"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Firecrawl 
+/map failed for https:/
+/www.instagram.com/lazy
+_barista/: Client 
+error '403 Forbidden' 
+for url 'https://api.fi
+recrawl.dev/v1/map'
+For more information 
+check: https://develope
+r.mozilla.org/en-US/doc
+s/Web/HTTP/Status/403
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Transfer-Encoding', 
+b'chunked'), 
+(b'Connection', 
+b'keep-alive'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:44 
+GMT'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Access-Con
+trol-Allow-Origin', 
+b'*'), (b'x-mapbox-requ
+est-id', b'DXg4srogQDef
+7rFXEN4gUUciKerFYycR1ms
+UbPMmn-cxHAdPmgnWkg==')
+, (b'X-Rate-Limit-Limit
+', b'300'), (b'X-Rate-L
+imit-Interval', 
+b'60'), (b'X-Rate-Limit
+-Reset', 
+b'1772275184'), 
+(b'Cache-Control', 
+b'max-age=3600'), 
+(b'Vary', 
+b'Accept-Encoding'), 
+(b'X-Cache', b'Miss 
+from cloudfront'), 
+(b'Via', b'1.1 7ca36b6b
+f02ca67a6dcfb5a418d25d5
+e.cloudfront.net 
+(CloudFront)'), 
+(b'X-Amz-Cf-Pop', 
+b'YTO50-P3'), 
+(b'Alt-Svc', 
+b'h3=":443"; 
+ma=86400'), 
+(b'X-Amz-Cf-Id', b'DXg4
+srogQDef7rFXEN4gUUciKer
+FYycR1msUbPMmn-cxHAdPmg
+nWkg==')])
+httpx | INFO | HTTP 
+Request: GET https://ap
+i.mapbox.com/isochrone/
+v1/mapbox/driving/-79.4
+0082950000001,43.645791
+9?contours_minutes=15&p
+olygons=true&access_tok
+en=pk.eyJ1IjoiYWRvbmRvd
+GRldiIsImEiOiJjbW01d2Z0
+M3AwYXluMnBvbXdrbDJzdjN
+hIn0.CXeJWBFl-1LmH2ZHHJ
+dMgw "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'GET']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.access_analy
+st | INFO | Access 
+Analyst scored 10/10 
+venues (10 with 
+isochrones)
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+429, b'Too Many 
+Requests', [(b'Access-C
+ontrol-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'272'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:44 
+GMT'), (b'Etag', b'W/"1
+10-IueZdDjWgHhmObT4q3M2
+UlMLxhg"'), 
+(b'X-Response-Time', 
+b'2.274ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/map
+ "HTTP/1.1 429 Too 
+Many Requests"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+429, b'Too Many 
+Requests', [(b'Access-C
+ontrol-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'272'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:44 
+GMT'), (b'Etag', b'W/"1
+10-2OdcieJu3TlGv36eBAsD
+QHCuhrY"'), 
+(b'X-Response-Time', 
+b'2.359ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/map
+ "HTTP/1.1 429 Too 
+Many Requests"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+429, b'Too Many 
+Requests', [(b'Access-C
+ontrol-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'272'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:44 
+GMT'), (b'Etag', b'W/"1
+10-8AJUMo5XpZWCnnBN28gD
+JyuGMnk"'), 
+(b'X-Response-Time', 
+b'2.421ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/map
+ "HTTP/1.1 429 Too 
+Many Requests"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+429, b'Too Many 
+Requests', [(b'Access-C
+ontrol-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'272'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:44 
+GMT'), (b'Etag', b'W/"1
+10-52mjidXX4ct+tCTKFt9u
+nDSdQks"'), 
+(b'X-Response-Time', 
+b'2.377ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/map
+ "HTTP/1.1 429 Too 
+Many Requests"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+429, b'Too Many 
+Requests', [(b'Access-C
+ontrol-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'273'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:44 
+GMT'), (b'Etag', b'W/"1
+11-wC4VM9yTQUNOGKTk0lUq
+7tX/G3I"'), 
+(b'X-Response-Time', 
+b'3.722ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/map
+ "HTTP/1.1 429 Too 
+Many Requests"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Firecrawl 
+/map failed for http://
+www.nabulucoffee.ca/: 
+Client error '429 Too 
+Many Requests' for url 
+'https://api.firecrawl.
+dev/v1/map'
+For more information 
+check: https://develope
+r.mozilla.org/en-US/doc
+s/Web/HTTP/Status/429
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Firecrawl 
+/map failed for https:/
+/www.butterandblue.ca/:
+ Client error '429 Too 
+Many Requests' for url 
+'https://api.firecrawl.
+dev/v1/map'
+For more information 
+check: https://develope
+r.mozilla.org/en-US/doc
+s/Web/HTTP/Status/429
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Firecrawl 
+/map failed for https:/
+/www.yelp.com/biz/found
+-coffee-front-toronto-5
+?adjust_creative=iQs_m8
+gdC41iyFDqXExXIQ&utm_ca
+mpaign=yelp_api_v3&utm_
+medium=api_v3_business_
+search&utm_source=iQs_m
+8gdC41iyFDqXExXIQ: 
+Client error '429 Too 
+Many Requests' for url 
+'https://api.firecrawl.
+dev/v1/map'
+For more information 
+check: https://develope
+r.mozilla.org/en-US/doc
+s/Web/HTTP/Status/429
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Firecrawl 
+/map failed for https:/
+/www.yelp.com/biz/fahre
+nheit-coffee-toronto?ad
+just_creative=iQs_m8gdC
+41iyFDqXExXIQ&utm_campa
+ign=yelp_api_v3&utm_med
+ium=api_v3_business_sea
+rch&utm_source=iQs_m8gd
+C41iyFDqXExXIQ: Client 
+error '429 Too Many 
+Requests' for url 'http
+s://api.firecrawl.dev/v
+1/map'
+For more information 
+check: https://develope
+r.mozilla.org/en-US/doc
+s/Web/HTTP/Status/429
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Firecrawl 
+/map failed for https:/
+/www.neocoffeebar.com/l
+ocation/king-x-spadina/
+: Client error '429 
+Too Many Requests' for 
+url 'https://api.firecr
+awl.dev/v1/map'
+For more information 
+check: https://develope
+r.mozilla.org/en-US/doc
+s/Web/HTTP/Status/429
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'53'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:44 
+GMT'), (b'Etag', b'W/"3
+5-QgaPIo43iZVboSCLIELz1
+KL9nxI"'), 
+(b'X-Response-Time', 
+b'502.559ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/map
+ "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'1821'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:45 
+GMT'), (b'Etag', b'W/"7
+1d-qlWPfRYOqxvAwBk/1PQG
+Jvs9Vmo"'), 
+(b'X-Response-Time', 
+b'1147.096ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/map
+ "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1758BE0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E76E10> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1EDD130>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E75FD0> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1EDE260>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E768D0> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1EDD090>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E74890> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB3578FA0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1EE59D0> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1E3CEB0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E747D0> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB3579130>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E77D10> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB1EDE9E0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E76090> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB357B930>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB357BA70>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB1EDE260>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB357BBB0>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB3579130>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB357BCA0>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB3578FA0>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB357BE30>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+403, b'Forbidden', [(b'
+Access-Control-Allow-Or
+igin', b'*'), 
+(b'Content-Length', 
+b'263'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:45 
+GMT'), (b'Etag', b'W/"1
+07-teteoNOPJdU5Wl+oacnC
+xzqcyTk"'), 
+(b'X-Response-Time', 
+b'1.961ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 403 
+Forbidden"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Firecrawl 
+/scrape failed for http
+s://www.instagram.com/l
+azy_barista/: Client 
+error '403 Forbidden' 
+for url 'https://api.fi
+recrawl.dev/v1/scrape'
+For more information 
+check: https://develope
+r.mozilla.org/en-US/doc
+s/Web/HTTP/Status/403
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'2144'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:45 
+GMT'), (b'Etag', b'W/"8
+60-jB5FQLXSXGYQ7nDL3q8l
+h/ajwg0"'), 
+(b'X-Response-Time', 
+b'126.954ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='generativelanguage.g
+oogleapis.com' 
+port=443 
+local_address=None 
+timeout=30 
+socket_options=None
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'88213'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:45 
+GMT'), (b'Etag', b'W/"1
+5895-MqBPCcpleMLdr3bQ7f
+9CMVFd4qg"'), 
+(b'X-Response-Time', 
+b'200.685ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'3641'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:45 
+GMT'), (b'Etag', b'W/"e
+39-QzGAwLlB5am9rjtPWBnW
+bimnT4E"'), 
+(b'X-Response-Time', 
+b'240.049ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'45652'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:45 
+GMT'), (b'Etag', b'W/"b
+254-SlOTeDfZpSxutcvNk/m
+pzNeRNRs"'), 
+(b'X-Response-Time', 
+b'439.543ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'8403'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:46 
+GMT'), (b'Etag', b'W/"2
+0d3-LT5UeRptAWHF5b6jK5H
+mOgVQwXY"'), 
+(b'X-Response-Time', 
+b'420.752ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='generativelanguage.g
+oogleapis.com' 
+port=443 
+local_address=None 
+timeout=30 
+socket_options=None
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'4005'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:46 
+GMT'), (b'Etag', b'W/"f
+a5-5yOkxcjf83JmW+tly9hI
+SAAdovg"'), 
+(b'X-Response-Time', 
+b'701.086ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47A81E0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E76990> ser
+ver_hostname='generativ
+elanguage.googleapis.co
+m' timeout=30
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='generativelanguage.g
+oogleapis.com' 
+port=443 
+local_address=None 
+timeout=30 
+socket_options=None
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'58466'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:46 
+GMT'), (b'Etag', b'W/"e
+462-3tvtN1+JpWRaLLs8KDt
+3HrNM5yc"'), 
+(b'X-Response-Time', 
+b'765.399ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='generativelanguage.g
+oogleapis.com' 
+port=443 
+local_address=None 
+timeout=30 
+socket_options=None
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='generativelanguage.g
+oogleapis.com' 
+port=443 
+local_address=None 
+timeout=30 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47A8C30>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E74AD0> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47AB8E0>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47ABB10>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E74A10> ser
+ver_hostname='generativ
+elanguage.googleapis.co
+m' timeout=30
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47AA440>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E75610> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47AA530>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E74950> ser
+ver_hostname='generativ
+elanguage.googleapis.co
+m' timeout=30
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47AAD50>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E77590> ser
+ver_hostname='generativ
+elanguage.googleapis.co
+m' timeout=30
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB3579090>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1EE5490> ser
+ver_hostname='generativ
+elanguage.googleapis.co
+m' timeout=30
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47A9770>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47AAC60>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47AB700>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47ABB10>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47AB570>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47AB160>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'3478'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:47 
+GMT'), (b'Etag', b'W/"d
+96-IwMb0EFgSGwkTR0VYZQN
+0sSj7Lc"'), 
+(b'X-Response-Time', 
+b'91.393ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='generativelanguage.g
+oogleapis.com' 
+port=443 
+local_address=None 
+timeout=30 
+socket_options=None
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'867'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:47 
+GMT'), (b'Etag', b'W/"3
+63-KFLOTq2JoyNGCkn92WB7
++hP72aI"'), 
+(b'X-Response-Time', 
+b'129.700ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47C8050>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1EE7710> ser
+ver_hostname='generativ
+elanguage.googleapis.co
+m' timeout=30
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47C88C0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1EE7D10> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47C80A0>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47C8C30>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'464'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:47 
+GMT'), (b'Etag', b'W/"1
+d0-2+ovGaySaJaNqkdWo0mx
+n5ua/TI"'), 
+(b'X-Response-Time', 
+b'61.731ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47C9130>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1EE5C10> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47C9310>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'8235'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:48 
+GMT'), (b'Etag', b'W/"2
+02b-VtghXIcjwDUfBNJectQ
+OfA9qnLY"'), 
+(b'X-Response-Time', 
+b'336.013ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='generativelanguage.g
+oogleapis.com' 
+port=443 
+local_address=None 
+timeout=30 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47C99F0>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1EE7110> ser
+ver_hostname='generativ
+elanguage.googleapis.co
+m' timeout=30
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47C9A40>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'83'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:50 
+GMT'), (b'Etag', b'W/"5
+3-YbIoGNZgxEtGqhfTUlEA6
+EepXlo"'), 
+(b'X-Response-Time', 
+b'6556.347ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/map
+ "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47CA440>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1EE7590> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47CA620>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'2127'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:38:51 
+GMT'), (b'Etag', b'W/"8
+4f-ASt3uP8RVf15U21eARne
+NaeG8Ck"'), 
+(b'X-Response-Time', 
+b'150.959ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='generativelanguage.g
+oogleapis.com' 
+port=443 
+local_address=None 
+timeout=30 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47CAD00>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1EE7890> ser
+ver_hostname='generativ
+elanguage.googleapis.co
+m' timeout=30
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47CAD50>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=UTF-8'), 
+(b'Vary', b'Origin'), 
+(b'Vary', 
+b'X-Origin'), 
+(b'Vary', b'Referer'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Date', 
+b'Sat, 28 Feb 2026 
+10:38:53 GMT'), 
+(b'Server', 
+b'scaffolding on 
+HTTPServer2'), 
+(b'X-XSS-Protection', 
+b'0'), 
+(b'X-Frame-Options', 
+b'SAMEORIGIN'), (b'X-Co
+ntent-Type-Options', 
+b'nosniff'), 
+(b'Server-Timing', 
+b'gfet4t7; dur=6159'), 
+(b'Alt-Svc', 
+b'h3=":443"; ma=2592000
+,h3-29=":443"; 
+ma=2592000'), 
+(b'Transfer-Encoding', 
+b'chunked')])
+httpx | INFO | HTTP 
+Request: POST https://g
+enerativelanguage.googl
+eapis.com/v1beta/models
+/gemini-2.5-flash:gener
+ateContent?key=AIzaSyCv
+taEoT2pXU0lLaUHezC_lagd
+mK-CcAgU "HTTP/1.1 200 
+OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Cost 
+extraction failed for 
+NEO COFFEE BAR KING X 
+SPADINA: '>' not 
+supported between 
+instances of 
+'NoneType' and 'int'
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=UTF-8'), 
+(b'Vary', b'Origin'), 
+(b'Vary', 
+b'X-Origin'), 
+(b'Vary', b'Referer'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Date', 
+b'Sat, 28 Feb 2026 
+10:38:53 GMT'), 
+(b'Server', 
+b'scaffolding on 
+HTTPServer2'), 
+(b'X-XSS-Protection', 
+b'0'), 
+(b'X-Frame-Options', 
+b'SAMEORIGIN'), (b'X-Co
+ntent-Type-Options', 
+b'nosniff'), 
+(b'Server-Timing', 
+b'gfet4t7; dur=6392'), 
+(b'Alt-Svc', 
+b'h3=":443"; ma=2592000
+,h3-29=":443"; 
+ma=2592000'), 
+(b'Transfer-Encoding', 
+b'chunked')])
+httpx | INFO | HTTP 
+Request: POST https://g
+enerativelanguage.googl
+eapis.com/v1beta/models
+/gemini-2.5-flash:gener
+ateContent?key=AIzaSyCv
+taEoT2pXU0lLaUHezC_lagd
+mK-CcAgU "HTTP/1.1 200 
+OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Cost 
+extraction failed for 
+Found Coffee - Front: 
+'>' not supported 
+between instances of 
+'NoneType' and 'int'
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=UTF-8'), 
+(b'Vary', b'Origin'), 
+(b'Vary', 
+b'X-Origin'), 
+(b'Vary', b'Referer'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Date', 
+b'Sat, 28 Feb 2026 
+10:38:55 GMT'), 
+(b'Server', 
+b'scaffolding on 
+HTTPServer2'), 
+(b'X-XSS-Protection', 
+b'0'), 
+(b'X-Frame-Options', 
+b'SAMEORIGIN'), (b'X-Co
+ntent-Type-Options', 
+b'nosniff'), 
+(b'Server-Timing', 
+b'gfet4t7; dur=6370'), 
+(b'Alt-Svc', 
+b'h3=":443"; ma=2592000
+,h3-29=":443"; 
+ma=2592000'), 
+(b'Transfer-Encoding', 
+b'chunked')])
+httpx | INFO | HTTP 
+Request: POST https://g
+enerativelanguage.googl
+eapis.com/v1beta/models
+/gemini-2.5-flash:gener
+ateContent?key=AIzaSyCv
+taEoT2pXU0lLaUHezC_lagd
+mK-CcAgU "HTTP/1.1 200 
+OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Cost 
+extraction failed for 
+Library Coffee: '>' 
+not supported between 
+instances of 
+'NoneType' and 'int'
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=UTF-8'), 
+(b'Vary', b'Origin'), 
+(b'Vary', 
+b'X-Origin'), 
+(b'Vary', b'Referer'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Date', 
+b'Sat, 28 Feb 2026 
+10:38:55 GMT'), 
+(b'Server', 
+b'scaffolding on 
+HTTPServer2'), 
+(b'X-XSS-Protection', 
+b'0'), 
+(b'X-Frame-Options', 
+b'SAMEORIGIN'), (b'X-Co
+ntent-Type-Options', 
+b'nosniff'), 
+(b'Server-Timing', 
+b'gfet4t7; dur=7869'), 
+(b'Alt-Svc', 
+b'h3=":443"; ma=2592000
+,h3-29=":443"; 
+ma=2592000'), 
+(b'Transfer-Encoding', 
+b'chunked')])
+httpx | INFO | HTTP 
+Request: POST https://g
+enerativelanguage.googl
+eapis.com/v1beta/models
+/gemini-2.5-flash:gener
+ateContent?key=AIzaSyCv
+taEoT2pXU0lLaUHezC_lagd
+mK-CcAgU "HTTP/1.1 200 
+OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Cost 
+extraction failed for 
+Dineen Coffee Co.: '>' 
+not supported between 
+instances of 
+'NoneType' and 'int'
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=UTF-8'), 
+(b'Vary', b'Origin'), 
+(b'Vary', 
+b'X-Origin'), 
+(b'Vary', b'Referer'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Date', 
+b'Sat, 28 Feb 2026 
+10:38:56 GMT'), 
+(b'Server', 
+b'scaffolding on 
+HTTPServer2'), 
+(b'X-XSS-Protection', 
+b'0'), 
+(b'X-Frame-Options', 
+b'SAMEORIGIN'), (b'X-Co
+ntent-Type-Options', 
+b'nosniff'), 
+(b'Server-Timing', 
+b'gfet4t7; dur=9264'), 
+(b'Alt-Svc', 
+b'h3=":443"; ma=2592000
+,h3-29=":443"; 
+ma=2592000'), 
+(b'Transfer-Encoding', 
+b'chunked')])
+httpx | INFO | HTTP 
+Request: POST https://g
+enerativelanguage.googl
+eapis.com/v1beta/models
+/gemini-2.5-flash:gener
+ateContent?key=AIzaSyCv
+taEoT2pXU0lLaUHezC_lagd
+mK-CcAgU "HTTP/1.1 200 
+OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Cost 
+extraction failed for 
+Butter & Blue: '>' not 
+supported between 
+instances of 
+'NoneType' and 'int'
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=UTF-8'), 
+(b'Vary', b'Origin'), 
+(b'Vary', 
+b'X-Origin'), 
+(b'Vary', b'Referer'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Date', 
+b'Sat, 28 Feb 2026 
+10:38:57 GMT'), 
+(b'Server', 
+b'scaffolding on 
+HTTPServer2'), 
+(b'X-XSS-Protection', 
+b'0'), 
+(b'X-Frame-Options', 
+b'SAMEORIGIN'), (b'X-Co
+ntent-Type-Options', 
+b'nosniff'), 
+(b'Server-Timing', 
+b'gfet4t7; 
+dur=10425'), 
+(b'Alt-Svc', 
+b'h3=":443"; ma=2592000
+,h3-29=":443"; 
+ma=2592000'), 
+(b'Transfer-Encoding', 
+b'chunked')])
+httpx | INFO | HTTP 
+Request: POST https://g
+enerativelanguage.googl
+eapis.com/v1beta/models
+/gemini-2.5-flash:gener
+ateContent?key=AIzaSyCv
+taEoT2pXU0lLaUHezC_lagd
+mK-CcAgU "HTTP/1.1 200 
+OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Cost 
+extraction failed for 
+Nabulu Coffee: '>' not 
+supported between 
+instances of 
+'NoneType' and 'int'
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=UTF-8'), 
+(b'Vary', b'Origin'), 
+(b'Vary', 
+b'X-Origin'), 
+(b'Vary', b'Referer'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Date', 
+b'Sat, 28 Feb 2026 
+10:38:58 GMT'), 
+(b'Server', 
+b'scaffolding on 
+HTTPServer2'), 
+(b'X-XSS-Protection', 
+b'0'), 
+(b'X-Frame-Options', 
+b'SAMEORIGIN'), (b'X-Co
+ntent-Type-Options', 
+b'nosniff'), 
+(b'Server-Timing', 
+b'gfet4t7; dur=7006'), 
+(b'Alt-Svc', 
+b'h3=":443"; ma=2592000
+,h3-29=":443"; 
+ma=2592000'), 
+(b'Transfer-Encoding', 
+b'chunked')])
+httpx | INFO | HTTP 
+Request: POST https://g
+enerativelanguage.googl
+eapis.com/v1beta/models
+/gemini-2.5-flash:gener
+ateContent?key=AIzaSyCv
+taEoT2pXU0lLaUHezC_lagd
+mK-CcAgU "HTTP/1.1 200 
+OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Cost 
+extraction failed for 
+NEO COFFEE BAR: '>' 
+not supported between 
+instances of 
+'NoneType' and 'int'
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'1920'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:39:00 
+GMT'), (b'Etag', b'W/"7
+80-fNNyb/f5QSPxBXdtR6lK
+i5krZ7Q"'), 
+(b'X-Response-Time', 
+b'16458.427ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/map
+ "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47CBC50>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E753D0> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47CBE30>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'3353'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:39:03 
+GMT'), (b'Etag', b'W/"d
+19-PoAfM0FFuawHeHyplQIo
+F6mEK08"'), 
+(b'X-Response-Time', 
+b'2041.467ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47E0500>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E75250> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47E06E0>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=UTF-8'), 
+(b'Vary', b'Origin'), 
+(b'Vary', 
+b'X-Origin'), 
+(b'Vary', b'Referer'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Date', 
+b'Sat, 28 Feb 2026 
+10:39:03 GMT'), 
+(b'Server', 
+b'scaffolding on 
+HTTPServer2'), 
+(b'X-XSS-Protection', 
+b'0'), 
+(b'X-Frame-Options', 
+b'SAMEORIGIN'), (b'X-Co
+ntent-Type-Options', 
+b'nosniff'), 
+(b'Server-Timing', 
+b'gfet4t7; 
+dur=16593'), 
+(b'Alt-Svc', 
+b'h3=":443"; ma=2592000
+,h3-29=":443"; 
+ma=2592000'), 
+(b'Transfer-Encoding', 
+b'chunked')])
+httpx | INFO | HTTP 
+Request: POST https://g
+enerativelanguage.googl
+eapis.com/v1beta/models
+/gemini-2.5-flash:gener
+ateContent?key=AIzaSyCv
+taEoT2pXU0lLaUHezC_lagd
+mK-CcAgU "HTTP/1.1 200 
+OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Cost 
+extraction failed for 
+Fahrenheit Coffee: '>' 
+not supported between 
+instances of 
+'NoneType' and 'int'
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'86894'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:39:06 
+GMT'), (b'Etag', b'W/"1
+536e-DfoX7oxWYlyIawHsdj
+bnebneKa4"'), 
+(b'X-Response-Time', 
+b'2754.928ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47E0E60>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E75490> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47E1040>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'79576'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:39:09 
+GMT'), (b'Etag', b'W/"1
+36d8-s0TSeiJl8+1mNmNizx
+R0UIWtVQA"'), 
+(b'X-Response-Time', 
+b'2511.131ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='api.firecrawl.dev' 
+port=443 
+local_address=None 
+timeout=20 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47E1810>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E77410> ser
+ver_hostname='api.firec
+rawl.dev' timeout=20
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47E1770>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', [(b'Access-
+Control-Allow-Origin', 
+b'*'), 
+(b'Content-Length', 
+b'86848'), 
+(b'Content-Type', 
+b'application/json; 
+charset=utf-8'), 
+(b'Date', b'Sat, 28 
+Feb 2026 10:39:10 
+GMT'), (b'Etag', b'W/"1
+5340-HNSM2uX4w+ECMaPH3r
+rmDVcBvTQ"'), 
+(b'X-Response-Time', 
+b'156.135ms')])
+httpx | INFO | HTTP 
+Request: POST https://a
+pi.firecrawl.dev/v1/scr
+ape "HTTP/1.1 200 OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+httpcore.connection | 
+DEBUG | 
+connect_tcp.started hos
+t='generativelanguage.g
+oogleapis.com' 
+port=443 
+local_address=None 
+timeout=30 
+socket_options=None
+httpcore.connection | 
+DEBUG | 
+connect_tcp.complete re
+turn_value=<httpcore._b
+ackends.anyio.AnyIOStre
+am object at 
+0x0000028AB47E1F90>
+httpcore.connection | 
+DEBUG | 
+start_tls.started ssl_c
+ontext=<ssl.SSLContext 
+object at 
+0x0000028AB1E77650> ser
+ver_hostname='generativ
+elanguage.googleapis.co
+m' timeout=30
+httpcore.connection | 
+DEBUG | 
+start_tls.complete retu
+rn_value=<httpcore._bac
+kends.anyio.AnyIOStream
+ object at 
+0x0000028AB47E1FE0>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_he
+aders.complete
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | send_request_bo
+dy.complete
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_headers.complete retu
+rn_value=(b'HTTP/1.1', 
+200, b'OK', 
+[(b'Content-Type', 
+b'application/json; 
+charset=UTF-8'), 
+(b'Vary', b'Origin'), 
+(b'Vary', 
+b'X-Origin'), 
+(b'Vary', b'Referer'), 
+(b'Content-Encoding', 
+b'gzip'), (b'Date', 
+b'Sat, 28 Feb 2026 
+10:39:19 GMT'), 
+(b'Server', 
+b'scaffolding on 
+HTTPServer2'), 
+(b'X-XSS-Protection', 
+b'0'), 
+(b'X-Frame-Options', 
+b'SAMEORIGIN'), (b'X-Co
+ntent-Type-Options', 
+b'nosniff'), 
+(b'Server-Timing', 
+b'gfet4t7; dur=8786'), 
+(b'Alt-Svc', 
+b'h3=":443"; ma=2592000
+,h3-29=":443"; 
+ma=2592000'), 
+(b'Transfer-Encoding', 
+b'chunked')])
+httpx | INFO | HTTP 
+Request: POST https://g
+enerativelanguage.googl
+eapis.com/v1beta/models
+/gemini-2.5-flash:gener
+ateContent?key=AIzaSyCv
+taEoT2pXU0lLaUHezC_lagd
+mK-CcAgU "HTTP/1.1 200 
+OK"
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.started 
+request=<Request 
+[b'POST']>
+httpcore.http11 | 
+DEBUG | receive_respons
+e_body.complete
+httpcore.http11 | 
+DEBUG | 
+response_closed.started
+httpcore.http11 | 
+DEBUG | response_closed
+.complete
+httpcore.connection | 
+DEBUG | close.started
+httpcore.connection | 
+DEBUG | close.complete
+app.agents.cost_analyst
+ | WARNING | Cost 
+extraction failed for 
+Forget Me Not Coffee: 
+'>' not supported 
+between instances of 
+'NoneType' and 'int'
+app.agents.cost_analyst
+ | INFO | Cost Analyst 
+priced 0/10 venues
+Traceback (most recent 
+call last):
+  File "C:\Users\minif\
+deerhacks\backend\test_
+pipeline.py", line 30, 
+in <module>
+    result = asyncio.ru
+n(pathfinder_graph.ainv
+oke(state))
+  File "C:\Python314\Li
+b\asyncio\runners.py", 
+line 204, in run
+    return 
+runner.run(main)
+           
+~~~~~~~~~~^^^^^^
+  File "C:\Python314\Li
+b\asyncio\runners.py", 
+line 127, in run
+    return self._loop.r
+un_until_complete(task)
+           ~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Python314\Li
+b\asyncio\base_events.p
+y", line 719, in 
+run_until_complete
+    return 
+future.result()
+           
+~~~~~~~~~~~~~^^
+  File "C:\Users\minif\
+deerhacks\backend\venv\
+Lib\site-packages\langg
+raph\pregel\main.py", 
+line 3184, in ainvoke
+    async for chunk in 
+self.astream(
+    ...<29 lines>...
+            
+chunks.append(chunk)
+  File "C:\Users\minif\
+deerhacks\backend\venv\
+Lib\site-packages\langg
+raph\pregel\main.py", 
+line 3012, in astream
+    loop.after_tick()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\minif\
+deerhacks\backend\venv\
+Lib\site-packages\langg
+raph\pregel\_loop.py", 
+line 542, in after_tick
+    
+self.updated_channels 
+= apply_writes(
+                       
+     ~~~~~~~~~~~~^
+        
+self.checkpoint,
+        
+^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        
+self.trigger_to_nodes,
+        
+^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\minif\
+deerhacks\backend\venv\
+Lib\site-packages\langg
+raph\pregel\_algo.py", 
+line 296, in 
+apply_writes
+    if channels[chan].u
+pdate(vals) and 
+next_version is not 
+None:
+       ~~~~~~~~~~~~~~~~
+~~~~~^^^^^^
+  File "C:\Users\minif\
+deerhacks\backend\venv\
+Lib\site-packages\langg
+raph\channels\last_valu
+e.py", line 64, in 
+update
+    raise 
+InvalidUpdateError(msg)
+langgraph.errors.Invali
+dUpdateError: At key 'a
+ccessibility_scores': 
+Can receive only one 
+value per step. Use an 
+Annotated key to 
+handle multiple values.
+For troubleshooting, 
+visit: https://docs.lan
+gchain.com/oss/python/l
+anggraph/errors/INVALID
+_CONCURRENT_GRAPH_UPDAT
+E
+
+=== ERROR ===
