@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        /* @apply bg-background text-foreground; */
+        /* font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif; */
+    }
+
+
+}
+
+@theme inline {
+  --font-italic: var(--font-pt-serif), ui-serif, system-ui, serif;
+}

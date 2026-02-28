@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect, useRef, useState } from 'react'
 
 const STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400&display=swap');
@@ -51,6 +52,132 @@ function CrosshairIcon({ size = 14, color = 'currentColor' }) {
   )
 }
 
+function makeTrailData() {
+  const vw = window.innerWidth
+  const vh = window.innerHeight
+  const starts = [
+    [Math.random() * vw * 0.40, -30],
+    [-30, Math.random() * vh * 0.60],
+    [Math.random() * vw * 0.30, vh + 30],
+    [vw + 30, Math.random() * vh * 0.35],
+  ]
+  const [sx, sy] = starts[Math.floor(Math.random() * starts.length)]
+  const ex = vw * (0.1 + Math.random() * 0.8)
+  const ey = vh * (0.1 + Math.random() * 0.8)
+  return {
+    d: `M ${sx} ${sy} C ${vw * Math.random()} ${vh * Math.random()}, ${vw * Math.random()} ${vh * Math.random()}, ${ex} ${ey}`,
+    ex, ey, vw, vh,
+  }
+}
+
+// Animated dashed trail that draws itself in toward an X mark, then loops.
+function Trail() {
+  const svgRef = useRef(null)
+  const visPathRef = useRef(null)
+  const maskPathRef = useRef(null)
+  const xRef = useRef(null)
+  const [trail, setTrail] = useState(null)
+  const maskId = useRef(`tm-${Math.random().toString(36).slice(2, 8)}`).current
+
+  useEffect(() => { setTrail(makeTrailData()) }, [])
+
+  useEffect(() => {
+    if (!trail || !visPathRef.current || !maskPathRef.current) return
+
+    // Snap SVG back to visible with no transition
+    const svg = svgRef.current
+    if (svg) { svg.style.transition = 'none'; svg.style.opacity = '1' }
+
+    // Reset X mark
+    const x = xRef.current
+    if (x) { x.style.transition = 'none'; x.style.opacity = '0' }
+
+    // Set up mask path: fully hidden, ready to draw in
+    const len = visPathRef.current.getTotalLength()
+    const mp = maskPathRef.current
+    mp.style.transition = 'none'
+    mp.style.strokeDasharray = `${len} ${len}`
+    mp.style.strokeDashoffset = String(len)
+
+    // Draw trail (0.5s delay, 2.8s duration)
+    const raf = requestAnimationFrame(() => {
+      mp.style.transition = `stroke-dashoffset 2.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s`
+      mp.style.strokeDashoffset = '0'
+    })
+
+    // X fades in after trail is drawn
+    const xTimer = setTimeout(() => {
+      if (xRef.current) {
+        xRef.current.style.transition = 'opacity 0.5s ease'
+        xRef.current.style.opacity = '1'
+      }
+    }, 3500)
+
+    // 2s after X is fully visible, fade everything out
+    const fadeTimer = setTimeout(() => {
+      if (svgRef.current) {
+        svgRef.current.style.transition = 'opacity 0.8s ease'
+        svgRef.current.style.opacity = '0'
+      }
+    }, 6000)
+
+    // After fade, generate a fresh trail
+    const restartTimer = setTimeout(() => {
+      setTrail(makeTrailData())
+    }, 6900)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      clearTimeout(xTimer)
+      clearTimeout(fadeTimer)
+      clearTimeout(restartTimer)
+    }
+  }, [trail])
+
+  if (!trail) return null
+
+  const { d, ex, ey, vw, vh } = trail
+  const xs = 13
+
+  return (
+    <svg
+      ref={svgRef}
+      style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none' }}
+      viewBox={`0 0 ${vw} ${vh}`}
+    >
+      <defs>
+        <mask id={maskId}>
+          <rect width={vw} height={vh} fill="black" />
+          <path
+            ref={maskPathRef}
+            d={d}
+            stroke="white"
+            strokeWidth="20"
+            strokeLinecap="round"
+            fill="none"
+          />
+        </mask>
+      </defs>
+
+      <path
+        ref={visPathRef}
+        d={d}
+        stroke="rgba(255,255,255,0.09)"
+        strokeWidth="5"
+        strokeDasharray="38 18"
+        strokeLinecap="round"
+        fill="none"
+        mask={`url(#${maskId})`}
+      />
+
+      <g ref={xRef} style={{ opacity: 0 }} transform={`translate(${ex},${ey})`}>
+        <line x1={-xs} y1={-xs} x2={xs} y2={xs} stroke="rgba(110,32,32,1)" strokeWidth="7" strokeLinecap="square" />
+        <line x1={xs}  y1={-xs} x2={-xs} y2={xs} stroke="rgba(110,32,32,1)" strokeWidth="7" strokeLinecap="square" />
+      </g>
+    </svg>
+  )
+}
+
 export default function Home() {
   const MONO = "'Barlow Condensed', 'Arial Narrow', sans-serif"
 
@@ -59,6 +186,9 @@ export default function Home() {
       <style dangerouslySetInnerHTML={{ __html: STYLES }} />
 
       <div style={{ position: 'fixed', inset: 0, background: '#0e0c0a' }} />
+      <div style={{ position: 'fixed', inset: 0, backgroundImage: 'url(/noise.svg)', backgroundRepeat: 'repeat', pointerEvents: 'none', zIndex: 9999 }} />
+
+      <Trail />
 
       <main style={{
         position: 'relative', zIndex: 10,
@@ -68,13 +198,13 @@ export default function Home() {
       }}>
 
         <div className="land-1" style={{ marginBottom: 28 }}>
-          <CrosshairIcon size={18} color="rgba(255,255,255,0.22)" />
+          <CrosshairIcon size={50} color="rgba(255,255,255,0.22)" />
         </div>
 
         <div className="land-2" style={{ marginBottom: 14 }}>
           <span style={{
             fontFamily: MONO, fontWeight: 400,
-            fontSize: 40, letterSpacing: '0.44em',
+            fontSize: 65, letterSpacing: '0.44em',
             color: 'rgba(255,255,255,0.92)', textTransform: 'uppercase',
           }}>
             LOCATR
@@ -83,12 +213,13 @@ export default function Home() {
 
         <div className="land-3" style={{ marginBottom: 40 }}>
           <p style={{
-            fontFamily: MONO, fontWeight: 300,
-            fontSize: 12, letterSpacing: '0.22em',
-            color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase',
+            fontFamily: "var(--font-pt-serif), ui-serif, system-ui, serif",
+            fontStyle: 'italic',
+            fontSize: 25, letterSpacing: '0.10em',
+            color: 'rgba(255,255,255,0.35)',
             margin: 0, textAlign: 'center',
           }}>
-            Explore your world in 3D
+            Find your perfect venue.
           </p>
         </div>
 
