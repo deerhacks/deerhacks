@@ -36,6 +36,9 @@ class PathfinderState(TypedDict, total=False):
     # ── Final ranked output ──
     ranked_results: List[dict]
 
+    # ── User-provided context ──
+    member_locations: List[dict]  # [{lat, lng}] for each group member
+
     # ── Snowflake context ──
     snowflake_context: Any
 

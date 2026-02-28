@@ -11,13 +11,14 @@ from app.agents.vibe_matcher import vibe_matcher_node
 from app.agents.access_analyst import access_analyst_node
 from app.agents.cost_analyst import cost_analyst_node
 from app.agents.critic import critic_node
+from app.agents.synthesiser import synthesiser_node
 
 
 def _should_retry(state: PathfinderState) -> str:
     """Conditional edge: retry if the Critic vetoed the plan."""
     if state.get("veto"):
         return "commander"
-    return "end"
+    return "synthesiser"
 
 
 def _make_conditional_agent(agent_name: str, agent_fn):
@@ -45,6 +46,7 @@ def build_graph() -> StateGraph:
     graph.add_node("access_analyst", _make_conditional_agent("access_analyst", access_analyst_node))
     graph.add_node("cost_analyst", _make_conditional_agent("cost_analyst", cost_analyst_node))
     graph.add_node("critic", _make_conditional_agent("critic", critic_node))
+    graph.add_node("synthesiser", synthesiser_node)
 
     # ── Define edges ──
     graph.set_entry_point("commander")
@@ -60,11 +62,14 @@ def build_graph() -> StateGraph:
     graph.add_edge("access_analyst", "critic")
     graph.add_edge("cost_analyst", "critic")
 
-    # ── Conditional retry ──
+    # ── Conditional retry or synthesis ──
     graph.add_conditional_edges("critic", _should_retry, {
         "commander": "commander",
-        "end": END,
+        "synthesiser": "synthesiser",
     })
+
+    # Synthesiser → END
+    graph.add_edge("synthesiser", END)
 
     return graph.compile()
 

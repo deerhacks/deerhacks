@@ -194,7 +194,11 @@ A normalized Vibe Score per venue + qualitative descriptors.
 
 ### Node 4: The ACCESS ANALYST (Logistics Node)
 
-**Status:** ⬜ Not Yet Implemented (stub — returns empty scores)
+**Status:** ✅ Implemented
+- **Mapbox Isochrone API:** Fetches GeoJSON travel-time polygons (default: 15-min driving contour) for each candidate venue concurrently via `asyncio.gather()`.
+- **Member Reachability:** If group member locations are provided, uses ray-casting point-in-polygon test to count how many members fall within each venue's isochrone.
+- **Composite Scoring:** Blends distance from group centre (40%), isochrone availability (30%), and member reachability (30%) into a 0.0–1.0 accessibility score.
+- **Graceful Fallback:** Missing `MAPBOX_ACCESS_TOKEN` or API failures degrade gracefully — venues still receive distance-based scores without isochrone data.
 
 **Role:** Spatial reality check.
 **Tools:**
