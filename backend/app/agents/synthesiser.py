@@ -54,7 +54,7 @@ def _compute_composite_score(
       vibe: 0.25, access: 0.25, cost: 0.30, risk_penalty: 0.20
     """
     # Get individual scores
-    vibe = vibe_scores.get(venue_id, {}).get("score")
+    vibe = vibe_scores.get(venue_id, {}).get("vibe_score")
     vibe_score = vibe if vibe is not None else 0.5
 
     access = accessibility_scores.get(venue_id, {}).get("score", 0.5)
@@ -216,7 +216,7 @@ def synthesiser_node(state: PathfinderState) -> PathfinderState:
             "address": venue.get("address", ""),
             "lat": venue.get("lat", 0.0),
             "lng": venue.get("lng", 0.0),
-            "vibe_score": vibe_entry.get("score"),
+            "vibe_score": vibe_entry.get("vibe_score"),
             "accessibility_score": access_entry.get("score"),
             "cost_profile": cost_entry if cost_entry else None,
             "why": explanation.get("why", ""),
