@@ -145,7 +145,7 @@ async def _firecrawl_scrape(page_url: str) -> Optional[str]:
 
 # -- Pricing extraction via Gemini --------------------------------------
 
-_COST_PROMPT = """You are a pricing analyst for a group activity planning app in Toronto, Canada. Your job is to extract or estimate costs.
+_COST_PROMPT = """You are the PATHFINDER Cost Analyst. You will be provided with Markdown text from a venue's website. Your job is to extract or estimate costs.
 
 Venue: {name}
 Category: {category}
@@ -154,25 +154,26 @@ Group size: {group_size}
 Website content:
 {content}
 
-INSTRUCTIONS:
-1. Search the text for ANY pricing signals: "$" signs, numbers, hourly rates, per-person fees, packages, menu prices, rental costs, booking rates, membership fees.
-2. Even if the text is messy or missing clear boundaries, if you see a price (e.g. "$25"), ASSUME it is the base cost unless context clearly says otherwise.
-3. Identify hidden costs: shoe rentals, equipment fees, minimum spends, service charges, cleaning fees, parking fees.
-4. If you find EXPLICIT prices on the page, use them and set pricing_confidence to "confirmed", and set price_source to "official_site".
-5. If the website content is empty, missing, or prices are NOT explicitly listed, ESTIMATE based on:
+CRITICAL INSTRUCTIONS:
+1. If the provided text is empty, truncated, or mentions "Access Denied/Timeout", you MUST return 0.0 for all numerical fields and set pricing_confidence to "unknown". NEVER return null or None for numerical values. Use 0.0.
+2. Search the text for ANY pricing signals: "$" signs, numbers, hourly rates, per-person fees, packages, menu prices, rental costs, booking rates, membership fees.
+3. Extract the base_cost (per person or per hour).
+4. Identify hidden_costs (service fees, minimum spends, shoe rentals, equipment fees, cleaning fees, parking fees).
+5. Calculate total_cost_of_attendance for a group of {group_size}.
+6. If you find EXPLICIT prices on the page, use them and set pricing_confidence to "confirmed", and set price_source to "official_site".
+7. If the website content is empty, missing, or prices are NOT explicitly listed, AND it's not an access denied/timeout case, ESTIMATE based on:
    - Typical Toronto market rates for this type of venue/activity
    - The venue's category and perceived quality
-   - Group size of {group_size} people
    Set pricing_confidence to "estimated", and set price_source to "gemini_estimate".
-6. Set the recommended_action parameter based on Auth0 Secure Action Rules:
+8. Set the recommended_action parameter based on Auth0 Secure Action Rules:
    - Tier A (Confirmed): recommended_action = "authorize_payment"
    - Tier B (Estimated): recommended_action = "prepare_outreach" (intent usually "booking_inquiry")
    - Tier C (Unknown): recommended_action = "prepare_outreach" (intent usually "availability_check" or "commercial_leasing")
-7. NEVER return base_cost as 0 unless you are confident the activity is genuinely free. Escape rooms typically cost $30-$45 per person. Rock climbing typically costs $25-$35 for a day pass. Use your knowledge.
 
+SCHEMA (STRICT JSON):
 Respond with ONLY a valid JSON object (no markdown, no extra text):
 {{
-  "base_cost": <float, primary cost for the group in CAD>,
+  "base_cost": <float, primary cost>
   "hidden_costs": [
     {{"label": "<fee name>", "amount": <float>}}
   ],
