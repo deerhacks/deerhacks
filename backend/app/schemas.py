@@ -35,11 +35,9 @@ class VenueResult(BaseModel):
     lat: float
     lng: float
     vibe_score: Optional[float] = None
-    accessibility_score: Optional[float] = None
     cost_profile: Optional[dict] = None
     why: str = ""
     watch_out: str = ""
-    isochrone_geojson: Optional[dict] = None
 
 
 class PlanResponse(BaseModel):

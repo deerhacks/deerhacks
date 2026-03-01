@@ -26,7 +26,6 @@ Category: {category}
 
 Vibe Analysis: {vibe_data}
 Cost Analysis: {cost_data}
-Accessibility: {access_data}
 Risk Flags: {risk_data}
 
 User's Original Query: {raw_prompt}
@@ -42,7 +41,6 @@ Respond with ONLY a valid JSON object (no markdown, no extra text):
 def _compute_composite_score(
     venue_id: str,
     vibe_scores: dict,
-    accessibility_scores: dict,
     cost_profiles: dict,
     risk_flags: dict,
     agent_weights: dict,
@@ -51,13 +49,11 @@ def _compute_composite_score(
     Compute a weighted composite score (0.0–1.0) from all agent outputs.
 
     Default weights if not specified by Commander:
-      vibe: 0.25, access: 0.25, cost: 0.30, risk_penalty: 0.20
+      vibe: 0.33, cost: 0.40, risk_penalty: 0.27
     """
     # Get individual scores
     vibe = vibe_scores.get(venue_id, {}).get("vibe_score")
     vibe_score = vibe if vibe is not None else 0.5
-
-    access = accessibility_scores.get(venue_id, {}).get("score", 0.5)
 
     cost_profile = cost_profiles.get(venue_id, {})
     cost_score = cost_profile.get("value_score", 0.5)
@@ -77,22 +73,19 @@ def _compute_composite_score(
     risk_score = 1.0 - risk_penalty
 
     # Apply Commander weights
-    w_vibe = agent_weights.get("vibe_matcher", 0.25)
-    w_access = agent_weights.get("access_analyst", 0.25)
-    w_cost = agent_weights.get("cost_analyst", 0.30)
-    w_risk = agent_weights.get("critic", 0.20)
+    w_vibe = agent_weights.get("vibe_matcher", 0.33)
+    w_cost = agent_weights.get("cost_analyst", 0.40)
+    w_risk = agent_weights.get("critic", 0.27)
 
     # Normalise weights
-    total_w = w_vibe + w_access + w_cost + w_risk
+    total_w = w_vibe + w_cost + w_risk
     if total_w > 0:
         w_vibe /= total_w
-        w_access /= total_w
         w_cost /= total_w
         w_risk /= total_w
 
     composite = (
         w_vibe * vibe_score +
-        w_access * access +
         w_cost * cost_score +
         w_risk * risk_score
     )
@@ -104,7 +97,6 @@ async def _generate_explanation(
     venue: dict,
     vibe_data: dict,
     cost_data: dict,
-    access_data: dict,
     risk_data: list,
     raw_prompt: str,
 ) -> dict:
@@ -115,7 +107,6 @@ async def _generate_explanation(
         category=venue.get("category", ""),
         vibe_data=json.dumps(vibe_data) if vibe_data else "N/A",
         cost_data=json.dumps(cost_data) if cost_data else "N/A",
-        access_data=json.dumps(access_data) if access_data else "N/A",
         risk_data=json.dumps(risk_data) if risk_data else "None",
         raw_prompt=raw_prompt,
     )
@@ -154,12 +145,10 @@ def synthesiser_node(state: PathfinderState) -> PathfinderState:
         return {"ranked_results": []}
 
     vibe_scores = state.get("vibe_scores", {})
-    accessibility_scores = state.get("accessibility_scores", {})
     cost_profiles = state.get("cost_profiles", {})
     risk_flags = state.get("risk_flags", {})
     agent_weights = state.get("agent_weights", {})
     raw_prompt = state.get("raw_prompt", "")
-    isochrones = state.get("isochrones", {})
     
     requires_oauth = state.get("requires_oauth", False)
     allowed_actions = state.get("allowed_actions", [])
@@ -170,7 +159,7 @@ def synthesiser_node(state: PathfinderState) -> PathfinderState:
     for venue in candidates:
         vid = venue.get("venue_id", venue.get("name", "unknown"))
         composite = _compute_composite_score(
-            vid, vibe_scores, accessibility_scores, cost_profiles, risk_flags, agent_weights
+            vid, vibe_scores, cost_profiles, risk_flags, agent_weights
         )
         scored.append((composite, venue, vid))
 
@@ -186,7 +175,6 @@ def synthesiser_node(state: PathfinderState) -> PathfinderState:
                 venue=venue,
                 vibe_data=vibe_scores.get(vid, {}),
                 cost_data=cost_profiles.get(vid, {}),
-                access_data=accessibility_scores.get(vid, {}),
                 risk_data=risk_flags.get(vid, []),
                 raw_prompt=raw_prompt,
             )
@@ -207,7 +195,6 @@ def synthesiser_node(state: PathfinderState) -> PathfinderState:
     ranked_results = []
     for rank, ((composite, venue, vid), explanation) in enumerate(zip(top_venues, explanations), 1):
         vibe_entry = vibe_scores.get(vid, {})
-        access_entry = accessibility_scores.get(vid, {})
         cost_entry = cost_profiles.get(vid, {})
 
         ranked_results.append({
@@ -217,11 +204,9 @@ def synthesiser_node(state: PathfinderState) -> PathfinderState:
             "lat": venue.get("lat", 0.0),
             "lng": venue.get("lng", 0.0),
             "vibe_score": vibe_entry.get("vibe_score"),
-            "accessibility_score": access_entry.get("score"),
             "cost_profile": cost_entry if cost_entry else None,
             "why": explanation.get("why", ""),
             "watch_out": explanation.get("watch_out", ""),
-            "isochrone_geojson": isochrones.get(vid),
         })
 
     logger.info("Synthesiser ranked %d venues (top 3 explained)", len(scored))

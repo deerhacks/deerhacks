@@ -29,10 +29,6 @@ class PathfinderState(TypedDict, total=False):
     # ── Vibe Matcher outputs ──
     vibe_scores: dict             # venue_id → score
 
-    # ── Access Analyst outputs ──
-    accessibility_scores: dict    # venue_id → score
-    isochrones: dict              # venue_id → GeoJSON
-
     # ── Cost & Security ──
     cost_profiles: dict
     payment_authorized: bool  # True if CIBA push Auth is complete

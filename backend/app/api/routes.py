@@ -2,7 +2,7 @@
 PATHFINDER API routes.
 """
 
-from fastapi import APIRouter
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
 from app.schemas import PlanRequest, PlanResponse
 
@@ -26,8 +26,6 @@ async def create_plan(request: PlanRequest):
         "agent_weights": {},
         "candidate_venues": [],
         "vibe_scores": {},
-        "accessibility_scores": {},
-        "isochrones": {},
         "cost_profiles": {},
         "risk_flags": {},
         "veto": False,
@@ -54,6 +52,61 @@ async def create_plan(request: PlanRequest):
         venues=result.get("ranked_results", []),
         execution_summary="Pipeline complete.",
     )
+
+
+@router.websocket("/ws/plan")
+async def websocket_plan(websocket: WebSocket):
+    from app.graph import pathfinder_graph
+    await websocket.accept()
+    try:
+        data = await websocket.receive_json()
+        initial_state = {
+            "raw_prompt": data.get("prompt", ""),
+            "parsed_intent": {},
+            "complexity_tier": "tier_2",
+            "active_agents": [],
+            "agent_weights": {},
+            "candidate_venues": [],
+            "vibe_scores": {},
+            "cost_profiles": {},
+            "risk_flags": {},
+            "veto": False,
+            "veto_reason": None,
+            "ranked_results": [],
+            "member_locations": data.get("member_locations", []),
+            "retry_count": 0,
+        }
+        NODE_LABELS = {
+            "commander": "Parsing your request...",
+            "scout": "Discovering venues...",
+            "vibe_matcher": "Analyzing vibes...",
+            "cost_analyst": "Calculating costs...",
+            "critic": "Running risk assessment...",
+            "synthesiser": "Ranking results...",
+        }
+        accumulated = {**initial_state}
+        async for event in pathfinder_graph.astream(initial_state):
+            node_name = list(event.keys())[0]
+            accumulated.update(event[node_name])
+            await websocket.send_json({
+                "type": "progress",
+                "node": node_name,
+                "label": NODE_LABELS.get(node_name, node_name),
+            })
+        await websocket.send_json({
+            "type": "result",
+            "data": PlanResponse(
+                venues=accumulated.get("ranked_results", []),
+                execution_summary="Pipeline complete.",
+            ).model_dump(),
+        })
+    except WebSocketDisconnect:
+        pass
+    finally:
+        try:
+            await websocket.close()
+        except Exception:
+            pass
 
 
 @router.get("/health")

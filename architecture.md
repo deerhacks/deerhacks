@@ -76,7 +76,6 @@ The system is built around a multi-agent LangGraph workflow, coordinated by a ce
   - "Cheap" / "budget" → Cost Analyst ↑
   - "Aesthetic" / "vibe" / "cozy" → Vibe Matcher ↑
   - "Outdoor" / "weather" → Critic ↑
-  - "Near me" / "transit" → Access Analyst ↑
 
 - **NEW: OAuth Requirement Detection:**
   Detects whether OAuth-backed actions (like sending emails or checking calendars) are required, and determines the minimum necessary scopes.
@@ -96,11 +95,10 @@ A fully weighted execution plan passed into LangGraph, annotated with OAuth requ
     "vibe": null
   },
   "complexity_tier": "tier_2",
-  "active_agents": ["scout", "cost_analyst", "access_analyst", "critic"],
+  "active_agents": ["scout", "cost_analyst", "critic"],
   "agent_weights": {
     "scout": 1.0,
     "vibe_matcher": 0.2,
-    "access_analyst": 0.8,
     "cost_analyst": 0.9,
     "critic": 0.7
   },
@@ -133,9 +131,8 @@ A fully weighted execution plan passed into LangGraph, annotated with OAuth requ
 **Nodes Executed in Parallel:**
 Once Scout completes, the following agents are launched concurrently using `asyncio.gather()`:
 - Node 3 — Vibe Matcher
-- Node 4 — Access Analyst
-- Node 5 — Cost Analyst (low priority)
-- Node 6 — Critic
+- Node 4 — Cost Analyst (low priority)
+- Node 5 — Critic
 
 **Design Principle:**
 Any agent that does not depend on another agent's output must run in parallel. The Commander decides which of these nodes to run and which ones to skip based on the prompt given to it.
@@ -190,59 +187,7 @@ A normalized Vibe Score per venue + qualitative descriptors.
 
 ---
 
-### Node 4: The ACCESS ANALYST (Logistics Node)
-
-**Status:** ✅ Implemented
-- **Composite Scoring:** Blends distance from group centre (40%), isochrone availability (30%), and member reachability (30%) into a 0.0–1.0 accessibility score.
-- **Graceful Fallback:** Missing `MAPBOX_ACCESS_TOKEN` or API failures degrade gracefully.
-- **Planned: Auth0 Token Vault:** Will securely retrieve OAuth Access Tokens for the user's Google/Outlook calendars.
-  - **The Benefit:** Checks the group's real-time schedule without managing third-party API keys directly.
-
-**Role:** Spatial reality check.
-**Tools:**
-- Mapbox Isochrone API
-- Mapbox Matrix API
-
-**Responsibilities:**
-
-- Computes travel-time feasibility for the entire group.
-
-- Penalizes venues that are:
-  - Close geographically
-  - Far chronologically (traffic, transit gaps)
-
-- Generates GeoJSON isochrones representing reachable areas.
-
-- **Frontend Integration:**
-  GeoJSON blobs are passed directly to the Mapbox SDK.
-  Rendered as interactive travel-time overlays on the user's map.
-
-**Output:**
-Accessibility scores + map-ready spatial data.
-
-**Structured Output Schema:**
-```json
-{
-  "accessibility_scores": {
-    "gp_abc123": {
-      "score": 0.81,
-      "avg_travel_min": 18,
-      "max_travel_min": 18,
-      "distance_m": 5000,
-      "transit_accessible": true,
-      "travel_mode": "driving",
-      "status": "OK"
-    }
-  },
-  "isochrones": {
-    "gp_abc123": { "type": "FeatureCollection", "features": ["..."] }
-  }
-}
-```
-
----
-
-### Node 5: The COST ANALYST (Financial Node)
+### Node 4: The COST ANALYST (Financial Node)
 
 **Status:** ✅ Implemented
 - **3️⃣ Auth0 Secure Actions — Human-in-the-Loop (REVISED):**
@@ -296,7 +241,7 @@ Cost profiles and recommended facilitation actions (payments or outreach payload
 
 ---
 
-### Node 6: The CRITIC (Adversarial Node)
+### Node 5: The CRITIC (Adversarial Node)
 
 **Status:** ✅ Implemented
 - **Async API Fetching:** Gathers real-time constraints concurrently using `OpenWeather API` and `PredictHQ API`.
@@ -345,7 +290,7 @@ Risk flags, veto signals, and explicit warnings.
 
 ---
 
-### Node 7: The SYNTHESISER (Final Ranking Node)
+### Node 6: The SYNTHESISER (Final Ranking Node)
 
 **Status:** ✅ Implemented
 
@@ -354,7 +299,7 @@ Risk flags, veto signals, and explicit warnings.
 
 **Responsibilities:**
 
-- Applies `agent_weights` to vibe, accessibility, cost, and critic scores → computes a composite ranked score per venue.
+- Applies `agent_weights` to vibe, cost, and critic scores → computes a composite ranked score per venue.
 - Runs `asyncio.gather()` with Gemini to generate `why` and `watch_out` text concurrently for all candidates.
 - **NEW: Chat Reprompting:** Facilitates a conversational loop. If the user provides feedback (e.g., "Do you have more budget-friendly options?"), this node triggers a reprompt back to Node 1 (The Commander) to restart the pipeline with the updated constraints.
 - **NEW: OAuth Interaction Layer:**
@@ -363,7 +308,7 @@ Risk flags, veto signals, and explicit warnings.
   - Triggers Auth0 OAuth or CIBA flows and pauses execution until user approval is granted.
 - Emits the final `ranked_results` list consumed by the `/plan` endpoint.
 
-**Note:** Commander, Scout, and Synthesiser always run. Vibe Matcher, Access Analyst, Cost Analyst, and Critic are conditionally activated based on `active_agents` from the Commander.
+**Note:** Commander, Scout, and Synthesiser always run. Vibe Matcher, Cost Analyst, and Critic are conditionally activated based on `active_agents` from the Commander.
 
 **Structured Output Schema:**
 ```json
@@ -376,11 +321,9 @@ Risk flags, veto signals, and explicit warnings.
       "lat": 43.65,
       "lng": -79.38,
       "vibe_score": 0.72,
-      "accessibility_score": 0.81,
       "cost_profile": { "per_person": 5.00, "total_cost_of_attendance": 50.00 },
-      "why": "Central location, confirmed $25/hr pricing, and high group accessibility.",
-      "watch_out": "No lights — book before 5:30 PM on Saturday.",
-      "isochrone_geojson": { "type": "FeatureCollection", "features": ["..."] }
+      "why": "Central location, confirmed $25/hr pricing, and great value for the group.",
+      "watch_out": "No lights — book before 5:30 PM on Saturday."
     }
   ],
   "action_request": {
@@ -416,14 +359,110 @@ The Synthesiser collects all node outputs, applies the Commander's dynamic weigh
 
 ### Tech Stack:
 - React + Next.js
-- Tailwind CSS
 - Mapbox SDK
 
 ### Map Experience:
 - Interactive Mapbox canvas (Google Maps–like UX)
-- Pins for ranked venues
+- Ranked pins for venues (gold #1, silver #2, bronze #3, grey rest)
 - Isochrone overlays for reachability
-- Hover & click interactions tied to agent explanations
+- Click interactions: marker or sidebar card → map flies to venue
+
+---
+
+## 🔌 API Reference
+
+### `GET /api/health`
+Health check. Returns `{ "status": "ok" }`.
+
+---
+
+### `POST /api/plan`
+Synchronous full-pipeline execution. Blocks until all agents complete.
+
+**Request body:** `PlanRequest`
+```json
+{
+  "prompt": "Basketball court for 10 people under $200",
+  "group_size": 1,
+  "budget": null,
+  "location": null,
+  "vibe": null,
+  "member_locations": []
+}
+```
+
+**Response:** `PlanResponse`
+```json
+{
+  "venues": [ /* VenueResult[] — see schema below */ ],
+  "execution_summary": "Pipeline complete."
+}
+```
+
+---
+
+### `WS /api/ws/plan`
+**Primary frontend endpoint.** Streams agent progress events in real time, then emits the final result.
+
+**Client sends (on connect):**
+```json
+{ "prompt": "...", "member_locations": [] }
+```
+
+**Server streams — `progress` events** (one per agent node as it completes):
+```json
+{
+  "type": "progress",
+  "node": "scout",
+  "label": "Discovering venues..."
+}
+```
+
+Node → label mapping:
+| `node` | `label` |
+|--------|---------|
+| `commander` | Parsing your request... |
+| `scout` | Discovering venues... |
+| `vibe_matcher` | Analyzing vibes... |
+| `cost_analyst` | Calculating costs... |
+| `critic` | Running risk assessment... |
+| `synthesiser` | Ranking results... |
+
+**Server sends — `result` event** (once, after all nodes complete):
+```json
+{
+  "type": "result",
+  "data": {
+    "venues": [ /* VenueResult[] */ ],
+    "execution_summary": "Pipeline complete."
+  }
+}
+```
+
+---
+
+### `VenueResult` Schema
+```json
+{
+  "rank": 1,
+  "name": "HoopDome",
+  "address": "123 Court St, Toronto",
+  "lat": 43.65,
+  "lng": -79.38,
+  "vibe_score": 0.72,
+  "cost_profile": {
+    "base_cost": null,
+    "per_person": 5.00,
+    "total_cost_of_attendance": 50.00,
+    "hidden_costs": null,
+    "value_score": 0.78,
+    "pricing_confidence": "estimated",
+    "notes": "Pricing estimated based on similar venues."
+  },
+  "why": "Central location, confirmed $25/hr pricing, and great value for the group.",
+  "watch_out": "No lights — book before 5:30 PM on Saturday."
+}
+```
 
 ---
 
@@ -540,20 +579,7 @@ Knowledge memory and long-term risk logging.
 
 ---
 
-### 2. "Map Loads but No Isochrone Overlays"
-
-**Symptoms:**
-- Mapbox renders, but no travel-time blobs appear.
-
-**Checks:**
-- Ensure `MAPBOX_ACCESS_TOKEN` is valid and scoped for Isochrone API usage.
-- Confirm the Access Analyst returned valid GeoJSON.
-- Verify the frontend Mapbox layer is added after the map `onLoad` event.
-- Check that coordinates are in `[longitude, latitude]` order (Mapbox requirement).
-
----
-
-### 3. "Results Look Good but Fail in Reality"
+### 2. "Results Look Good but Fail in Reality"
 
 **Symptoms:**
 - A recommended venue is closed, flooded, or inaccessible.
@@ -564,7 +590,7 @@ Knowledge memory and long-term risk logging.
 
 ---
 
-### 4. "High Latency or Timeouts"
+### 3. "High Latency or Timeouts"
 
 **Symptoms:**
 - Requests exceed acceptable response times.
@@ -577,7 +603,7 @@ Knowledge memory and long-term risk logging.
 
 ---
 
-### 5. "Pricing Seems Wrong or Incomplete"
+### 4. "Pricing Seems Wrong or Incomplete"
 
 **Symptoms:**
 - Users report unexpected fees.
@@ -595,7 +621,6 @@ Knowledge memory and long-term risk logging.
 | Commander | Gemini 1.5 Flash | Intent parsing, complexity tiering, dynamic agent activation & weighting |
 | Scout | Google Places API, Yelp Fusion | Venue discovery and raw metadata collection |
 | Vibe Matcher | Gemini 1.5 Pro (Multimodal) | Aesthetic, photo-based, and sentiment-driven vibe analysis |
-| Access Analyst | Mapbox Isochrone & Matrix APIs | Travel-time feasibility and spatial scoring |
 | Cost Analyst | Firecrawl + Gemini | True cost extraction and pricing analysis |
 | Crowd Analyst *(optional)* | Google Places Reviews, Yelp Reviews | Review aggregation, competitor density, social proof scoring |
 | Critic | Gemini (Adversarial Reasoning) + OpenWeather, PredictHQ | Failure detection, risk forecasting, veto logic |
@@ -620,7 +645,6 @@ Three pre-tested queries that showcase PATHFINDER's versatility — demonstratin
 |-------|--------|
 | SCOUT | Map shows 5–6 candidate courts |
 | COST ANALYST | Flags: "One court is $25/hr but requires a 2-hour minimum" |
-| ACCESS ANALYST | Shows drive-time isochrones from group's central location |
 | CRITIC | "This outdoor court has no lights — sunset is at 5:30 PM Saturday" |
 
 **Judge takeaway:** *"Oh, this is useful for regular people."*
@@ -653,7 +677,6 @@ Three pre-tested queries that showcase PATHFINDER's versatility — demonstratin
 | Agent | Output |
 |-------|--------|
 | SCOUT | Finds available retail spaces; maps competitor bakeries; identifies underserved zones |
-| ACCESS ANALYST | Shows foot traffic and transit data |
 | COST ANALYST | Compares lease rates against market averages |
 
 **Judge takeaway:** *"This is the same architecture handling wildly different problems."*

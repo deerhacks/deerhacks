@@ -40,16 +40,6 @@ _VIBE_KEYWORDS = {
     "likes", "dislikes", "prefers", "preference",
 }
 
-_ACCESS_KEYWORDS = {
-    "near", "nearby", "close", "closest", "walking distance", "transit",
-    "subway", "bus", "ttc", "streetcar", "drive", "driving", "commute",
-    "travel", "distance", "far", "location", "directions", "accessible",
-    "accessibility", "parking", "bike", "cycling", "walkable",
-    "downtown", "midtown", "uptown", "east end", "west end", "north",
-    "south", "neighbourhood", "neighborhood", "area", "district",
-    "central", "convenient", "easy to get to", "reachable",
-}
-
 _CRITIC_KEYWORDS = {
     "weather", "rain", "snow", "cold", "hot", "outdoor", "outside",
     "patio", "rooftop", "garden", "park", "beach", "pool",
@@ -134,7 +124,6 @@ def _keyword_fallback(raw_prompt: str) -> dict:
     # Check each agent's keywords against the prompt
     cost_hits = sum(1 for kw in _COST_KEYWORDS if kw in prompt_lower)
     vibe_hits = sum(1 for kw in _VIBE_KEYWORDS if kw in prompt_lower)
-    access_hits = sum(1 for kw in _ACCESS_KEYWORDS if kw in prompt_lower)
     critic_hits = sum(1 for kw in _CRITIC_KEYWORDS if kw in prompt_lower)
 
     if cost_hits > 0:
@@ -145,24 +134,20 @@ def _keyword_fallback(raw_prompt: str) -> dict:
         active_agents.append("vibe_matcher")
         agent_weights["vibe_matcher"] = min(0.4 + vibe_hits * 0.1, 1.0)
 
-    if access_hits > 0:
-        active_agents.append("access_analyst")
-        agent_weights["access_analyst"] = min(0.4 + access_hits * 0.1, 1.0)
-
     if critic_hits > 0:
         active_agents.append("critic")
         agent_weights["critic"] = min(0.4 + critic_hits * 0.1, 1.0)
 
-    # If group activity with multiple people, default-activate cost + access + critic
+    # If group activity with multiple people, default-activate cost + critic
     if group_size > 1:
-        for agent in ["cost_analyst", "access_analyst", "critic"]:
+        for agent in ["cost_analyst", "critic"]:
             if agent not in active_agents:
                 active_agents.append(agent)
                 agent_weights[agent] = 0.5
 
     # If nothing beyond scout matched, activate all with moderate weight
     if len(active_agents) == 1:
-        active_agents = ["scout", "vibe_matcher", "cost_analyst", "access_analyst", "critic"]
+        active_agents = ["scout", "vibe_matcher", "cost_analyst", "critic"]
         agent_weights = {a: 0.6 for a in active_agents}
         agent_weights["scout"] = 1.0
 
@@ -202,12 +187,6 @@ def _apply_user_profile_weights(
     if preferences.get("budget_sensitive"):
         agent_weights["cost_analyst"] = min(
             agent_weights.get("cost_analyst", 0.5) + 0.2, 1.0
-        )
-
-    # Accessibility priority
-    if preferences.get("accessibility_priority"):
-        agent_weights["access_analyst"] = min(
-            agent_weights.get("access_analyst", 0.5) + 0.2, 1.0
         )
 
     # Vibe-first user
@@ -287,7 +266,7 @@ Note: Skip COST if the intent is purely aesthetic and no booking is requested to
        - 'tier_1': Simple lookup (Scout only or light analysis)
        - 'tier_2': Multi-factor personal (Group activity, constraints -> Scout, Cost, Access, Critic, maybe Vibe)
        - 'tier_3': Strategic/Business (Deep research -> all 5 agents)
-    3. Active Agents: List the agents to activate from: ["scout", "vibe_matcher", "access_analyst", "cost_analyst", "critic"]. Scout is always mandatory.
+    3. Active Agents: List the agents to activate from: ["scout", "vibe_matcher", "cost_analyst", "critic"]. Scout is always mandatory.
        IMPORTANT: DO NOT activate "vibe_matcher" unless the user's query specifically mentions aesthetics, vibes, beauty, theme, or atmosphere. For all other queries, omit it.
        IMPORTANT: Skip "cost_analyst" if the intent is purely aesthetic and no booking is requested.
     4. Agent Weights: Assign a float (0.0 to 1.0) to each activated agent indicating its importance.
@@ -305,7 +284,7 @@ Note: Skip COST if the intent is purely aesthetic and no booking is requested to
         "vibe": "..."
       }},
       "complexity_tier": "tier_2",
-      "active_agents": ["scout", "cost_analyst", "access_analyst", "critic"],
+      "active_agents": ["scout", "cost_analyst", "critic"],
       "agent_weights": {{
         "scout": 1.0,
         ...

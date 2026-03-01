@@ -30,3 +30,6 @@ firecrawl-py==0.0.5
 # Utilities
 geojson==3.1.0
 nest_asyncio==1.6.0
+
+# WebSockets
+websockets

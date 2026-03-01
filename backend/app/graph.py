@@ -9,7 +9,6 @@ from app.models.state import PathfinderState
 from app.agents.commander import commander_node
 from app.agents.scout import scout_node
 from app.agents.vibe_matcher import vibe_matcher_node
-from app.agents.access_analyst import access_analyst_node
 from app.agents.cost_analyst import cost_analyst_node
 from app.agents.critic import critic_node
 from app.agents.synthesiser import synthesiser_node
@@ -24,7 +23,7 @@ def _should_retry(state: PathfinderState) -> str:
 
 async def parallel_analysts_node(state: PathfinderState) -> PathfinderState:
     """
-    Runs the Vibe Matcher, Access Analyst, Cost Analyst, and Critic concurrently.
+    Runs the Vibe Matcher, Cost Analyst, and Critic concurrently.
     Merges their returned states.
     If the Critic returns early with fast_fail, it overrides remaining long-running tasks.
     """
@@ -33,7 +32,6 @@ async def parallel_analysts_node(state: PathfinderState) -> PathfinderState:
     # Define mapping of agent names to their node functions
     agent_map = {
         "vibe_matcher": vibe_matcher_node,
-        "access_analyst": access_analyst_node,
         "cost_analyst": cost_analyst_node,
         "critic": critic_node
     }
