@@ -73,10 +73,13 @@ export default function AgentRow({ activeAgent, completedAgents = [], dismissed 
         {AGENTS.map((agent, i) => {
           const isActive = activeAgent === agent.key
           const isDone = completedAgents.includes(agent.key)
+          const statusLabel = isActive ? 'active' : isDone ? 'completed' : 'pending'
 
           return (
             <div
               key={agent.key}
+              role="status"
+              aria-label={`Agent ${agent.label}: ${statusLabel}`}
               style={{
                 display: 'flex',
                 flexDirection: 'column',

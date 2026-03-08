@@ -1,6 +1,7 @@
 import logging
 import httpx
 import base64
+import urllib.parse
 from email.message import EmailMessage
 from typing import Optional, Dict, Any
 from app.core.config import settings
@@ -46,7 +47,8 @@ class Auth0Service:
         if not token:
             return {}
 
-        url = f"https://{self.domain}/api/v2/users/{user_id}"
+        safe_user_id = urllib.parse.quote(user_id)
+        url = f"https://{self.domain}/api/v2/users/{safe_user_id}"
         headers = {"Authorization": f"Bearer {token}"}
 
         try:
@@ -75,7 +77,8 @@ class Auth0Service:
         if not token:
             return False
 
-        url = f"https://{self.domain}/api/v2/users/{user_id}"
+        safe_user_id = urllib.parse.quote(user_id)
+        url = f"https://{self.domain}/api/v2/users/{safe_user_id}"
         headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 
         try:
@@ -96,14 +99,16 @@ class Auth0Service:
         if not token:
             return None
             
-        url = f"https://{self.domain}/api/v2/users/{user_id}/identities"
+        safe_user_id = urllib.parse.quote(user_id)
+        url = f"https://{self.domain}/api/v2/users/{safe_user_id}"
         headers = {"Authorization": f"Bearer {token}"}
         
         try:
             async with httpx.AsyncClient(timeout=10) as client:
                 resp = await client.get(url, headers=headers)
                 resp.raise_for_status()
-                identities = resp.json()
+                user_data = resp.json()
+                identities = user_data.get("identities", [])
                 
                 # Find the requested identity provider
                 for ext_id in identities:

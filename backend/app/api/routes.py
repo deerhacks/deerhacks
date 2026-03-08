@@ -7,20 +7,30 @@ import io
 import logging
 import queue
 
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Depends, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 from typing import Optional
 
 from app.schemas import PlanRequest, PlanResponse
 from app.core.ws_log_handler import WebSocketLogHandler
+from app.core.auth import require_auth, optional_auth, get_ws_user
+
+limiter = Limiter(key_func=get_remote_address)
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
 @router.post("/plan", response_model=PlanResponse)
-async def create_plan(request: PlanRequest):
+@limiter.limit("10/minute")
+async def create_plan(
+    body: PlanRequest,
+    request: Request,
+    token_payload: Optional[dict] = Depends(optional_auth),
+):
     """
     Accept a natural-language activity request and return ranked venues.
 
@@ -28,8 +38,11 @@ async def create_plan(request: PlanRequest):
     """
     from app.graph import pathfinder_graph
 
+    auth_user_id = token_payload.get("sub") if token_payload else None
+
     initial_state = {
         "raw_prompt": request.prompt,
+        "auth_user_id": auth_user_id,
         "parsed_intent": {},
         "complexity_tier": "tier_2",
         "active_agents": [],
@@ -43,17 +56,17 @@ async def create_plan(request: PlanRequest):
         "ranked_results": [],
         "snowflake_context": None,
         # Forward request params for agents to use
-        "member_locations": request.member_locations or [],
-        "chat_history": request.chat_history or [],
+        "member_locations": body.member_locations or [],
+        "chat_history": body.chat_history or [],
     }
 
     # Inject explicit fields into parsed_intent if provided
-    if request.group_size > 1 or request.budget or request.location or request.vibe:
+    if body.group_size > 1 or body.budget or body.location or body.vibe:
         initial_state["parsed_intent"] = {
-            "group_size": request.group_size,
-            "budget": request.budget,
-            "location": request.location,
-            "vibe": request.vibe,
+            "group_size": body.group_size,
+            "budget": body.budget,
+            "location": body.location,
+            "vibe": body.vibe,
         }
 
     # Run the full LangGraph workflow
@@ -94,9 +107,14 @@ async def websocket_plan(websocket: WebSocket):
 
     try:
         data = await websocket.receive_json()
+
+        # Validate auth_user_id from JWT token if provided
+        ws_token = data.get("token")
+        auth_user_id = await get_ws_user(websocket, ws_token) if ws_token else None
+
         initial_state = {
             "raw_prompt": data.get("prompt", ""),
-            "auth_user_id": data.get("auth_user_id"),
+            "auth_user_id": auth_user_id,
             "parsed_intent": {},
             "complexity_tier": "tier_2",
             "active_agents": [],
@@ -184,23 +202,28 @@ async def websocket_plan(websocket: WebSocket):
 
 
 @router.get("/user/preferences")
-async def get_preferences(auth_user_id: str):
-    """Return the preferences stored in a user's Auth0 app_metadata."""
+async def get_preferences(token_payload: dict = Depends(require_auth)):
+    """Return the preferences stored in the authenticated user's Auth0 app_metadata."""
     from app.services.auth0 import auth0_service
+    auth_user_id = token_payload["sub"]
     profile = await auth0_service.get_user_profile(auth_user_id)
     preferences = profile.get("app_metadata", {}).get("preferences", {})
     return {"preferences": preferences}
 
 
+class UpdatePreferencesRequest(BaseModel):
+    preferences: dict
+
+
 @router.patch("/user/preferences")
-async def update_preferences(body: dict):
-    """Merge new preference values into the user's Auth0 app_metadata."""
-    auth_user_id = body.get("auth_user_id")
-    preferences = body.get("preferences", {})
-    if not auth_user_id:
-        return {"ok": False, "error": "auth_user_id required"}
+async def update_preferences(
+    body: UpdatePreferencesRequest,
+    token_payload: dict = Depends(require_auth),
+):
+    """Merge new preference values into the authenticated user's Auth0 app_metadata."""
+    auth_user_id = token_payload["sub"]
     from app.services.auth0 import auth0_service
-    ok = await auth0_service.update_app_metadata(auth_user_id, {"preferences": preferences})
+    ok = await auth0_service.update_app_metadata(auth_user_id, {"preferences": body.preferences})
     return {"ok": ok}
 
 
@@ -227,7 +250,8 @@ VIBE_LABELS = [
 
 
 @router.get("/vibe-heatmap")
-async def vibe_heatmap(vibe_index: int):
+@limiter.limit("30/minute")
+async def vibe_heatmap(vibe_index: int, request: Request):
     """
     Return all cafe venues with their score for the given vibe dimension.
     vibe_index: integer 0-47 corresponding to VIBE_LABELS.
@@ -278,7 +302,8 @@ class VoiceSynthRequest(BaseModel):
 
 
 @router.post("/voice/synthesize")
-async def synthesize_voice(request: VoiceSynthRequest):
+@limiter.limit("20/minute")
+async def synthesize_voice(body: VoiceSynthRequest, request: Request):
     """
     Convert text to speech using ElevenLabs.
     Returns an audio/mpeg stream.
@@ -286,8 +311,8 @@ async def synthesize_voice(request: VoiceSynthRequest):
     from app.services.elevenlabs import synthesize_speech
 
     audio_bytes = await synthesize_speech(
-        text=request.text,
-        voice_id=request.voice_id,
+        text=body.text,
+        voice_id=body.voice_id,
     )
 
     if audio_bytes is None:

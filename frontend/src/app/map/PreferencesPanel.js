@@ -63,6 +63,13 @@ export default function PreferencesPanel({ onClose }) {
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
 
+  // Escape key to close
+  useEffect(() => {
+    const handler = (e) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [onClose])
+
   useEffect(() => {
     if (!user?.sub) return
     fetch(`${API}/api/user/preferences?auth_user_id=${encodeURIComponent(user.sub)}`)
@@ -113,6 +120,7 @@ export default function PreferencesPanel({ onClose }) {
           </span>
           <button
             onClick={onClose}
+            aria-label="Close preferences panel"
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'rgba(255,255,255,0.35)', fontSize: 18, lineHeight: 1 }}
           >
             ×
@@ -136,8 +144,22 @@ export default function PreferencesPanel({ onClose }) {
 
         {/* Toggles */}
         {loading ? (
-          <div style={{ fontFamily: BODY, fontSize: 18, color: 'rgba(255,255,255,0.30)', textAlign: 'center', padding: '12px 0' }}>
-            Loading...
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14, padding: '4px 0' }}>
+            {[0, 1, 2].map(i => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ width: '50%', height: 16, background: 'rgba(255,255,255,0.06)', borderRadius: 4, marginBottom: 4, animation: `skeleton-pulse 1.4s ease-in-out ${i * 150}ms infinite` }} />
+                  <div style={{ width: '80%', height: 12, background: 'rgba(255,255,255,0.04)', borderRadius: 4, animation: `skeleton-pulse 1.4s ease-in-out ${i * 150}ms infinite` }} />
+                </div>
+                <div style={{ width: 36, height: 20, background: 'rgba(255,255,255,0.06)', borderRadius: 10, animation: `skeleton-pulse 1.4s ease-in-out ${i * 150}ms infinite` }} />
+              </div>
+            ))}
+            <style dangerouslySetInnerHTML={{ __html: `
+              @keyframes skeleton-pulse {
+                0%, 100% { opacity: 0.5; }
+                50% { opacity: 1; }
+              }
+            `}} />
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>

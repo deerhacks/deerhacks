@@ -22,9 +22,10 @@ The three middle agents (vibe, cost, critic) run concurrently via `asyncio.gathe
 
 **Backend:** FastAPI + LangGraph, Python 3.11+
 **Frontend:** Next.js 14, Mapbox GL JS, Tailwind CSS
-**Auth:** Auth0 (Universal Login + Management API)
+**Auth:** Auth0 (Universal Login, Management API, CIBA, Token Vault)
 **AI:** Google Gemini 2.5 Flash (multimodal) + Gemini 1.5 Flash (text)
 **Discovery:** Google Places Text Search API, Yelp Fusion
+**Actions:** Native Gmail API via `httpx`
 **Risk Data:** OpenWeather API, PredictHQ
 **Persistence:** Snowflake (`VENUE_RISK_EVENTS`, `CAFE_VIBE_VECTORS`)
 **Voice:** ElevenLabs TTS
@@ -183,7 +184,11 @@ Default weights: vibe=0.33, cost=0.40, risk=0.27. These are overridden by whatev
 
 After ranking, Gemini generates `why` and `watch_out` text for each top-3 venue, plus a `global_consensus` — a single comparative sentence highlighting the best pick across price, rating, weather, and vibe.
 
-If the Commander flagged an OAuth requirement, the Synthesiser builds an `action_request` object the frontend uses to trigger an Auth0 consent modal.
+If the Commander flagged an OAuth requirement (e.g., sending an email), the Synthesiser attempts an Auth0 CIBA (Client Initiated Backchannel Authentication) push notification to the user's mobile device.
+- If approved, it retrieves the user's Google OAuth2 token from the Auth0 Token Vault.
+- It then executes the action directly on the backend (e.g., dispatching an email via the native Gmail API using `httpx`).
+- It returns an `oauth_success` payload to the frontend, which renders an auto-dismissing confirmation UI.
+If CIBA fails or is unsupported, it falls back to requesting standard frontend browser consent.
 
 **Output (per venue):**
 ```json
@@ -444,7 +449,7 @@ Root logger and `httpx`/`httpcore` are set to `WARNING` to suppress noise.
 
 ## Notes
 
-- The system recommends venues but executes no actual bookings. OAuth scope detection is live; the consent flow is implemented but no transactional actions are wired up.
+- The system executes real-world actions on behalf of the user. OAuth scope detection is live; transactional actions (like automated email dispatch for bookings) are fully wired up via Auth0 CIBA push notifications and Auth0 Token Vault extraction.
 - Local dev supports a mock auth user (`auth0|local_test`) that bypasses the Auth0 Management API lookup.
 - The vibe heatmap only returns data if `CAFE_VIBE_VECTORS` has been populated (there's a `verify_population` utility for this).
 - Parallel execution (vibe/cost/critic) cuts typical pipeline latency from ~9s to ~2–3s depending on API response times.

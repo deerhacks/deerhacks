@@ -29,6 +29,7 @@ function FilterIcon({ size = 14, color = 'currentColor' }) {
 
 export default function VibeFilter({ onVibeSelect, selectedVibe }) {
   const [open, setOpen] = useState(false)
+  const [search, setSearch] = useState('')
   const rootRef = useRef(null)
 
   useEffect(() => {
@@ -42,6 +43,7 @@ export default function VibeFilter({ onVibeSelect, selectedVibe }) {
 
   const handleSelect = (index, name) => {
     setOpen(false)
+    setSearch('')
     onVibeSelect?.(index, name)
   }
 
@@ -164,9 +166,35 @@ export default function VibeFilter({ onVibeSelect, selectedVibe }) {
             )}
           </div>
 
+          {/* Search input */}
+          <div style={{ padding: '2px 4px 6px' }}>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search vibes..."
+              autoFocus
+              aria-label="Search vibes"
+              style={{
+                width: '100%',
+                padding: '6px 8px',
+                fontFamily: BODY,
+                fontSize: 12,
+                color: 'rgba(255,255,255,0.80)',
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                borderRadius: 6,
+                outline: 'none',
+                boxSizing: 'border-box',
+                caretColor: 'rgba(200,160,255,0.70)',
+              }}
+            />
+          </div>
+
           {/* 3-column grid */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
             {VIBES.map((vibe, i) => {
+              if (search && !vibe.toLowerCase().includes(search.toLowerCase())) return null
               const isSelected = selectedVibe?.index === i
               return (
                 <div

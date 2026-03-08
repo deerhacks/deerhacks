@@ -8,42 +8,71 @@ const BODY = "'Inter', -apple-system, 'Segoe UI', sans-serif"
 // ── Shared constants ──────────────────────────────────────
 
 const AGENT_COLORS = {
-  commander:    '#6ee06e',
-  scout:        '#c8c060',
+  commander: '#6ee06e',
+  scout: '#c8c060',
   vibe_matcher: '#b06ee0',
   cost_analyst: '#60a8e0',
-  critic:       '#60e0c8',
-  synthesiser:  '#e0a060',
-  graph:        '#888888',
-  system:       '#888888',
+  critic: '#60e0c8',
+  synthesiser: '#e0a060',
+  graph: '#888888',
+  system: '#888888',
 }
 
 const AGENT_LABELS = {
-  commander:    'COMMANDER',
-  scout:        'SCOUT',
+  commander: 'COMMANDER',
+  scout: 'SCOUT',
   vibe_matcher: 'VIBE MATCHER',
   cost_analyst: 'COST ANALYST',
-  critic:       'CRITIC',
-  synthesiser:  'SYNTHESISER',
-  graph:        'GRAPH',
-  system:       'SYSTEM',
+  critic: 'CRITIC',
+  synthesiser: 'SYNTHESISER',
+  graph: 'GRAPH',
+  system: 'SYSTEM',
 }
 
 const RANK_COLORS = ['#e8c84a', '#b0b8c4', '#c8905a', 'rgba(255,255,255,0.55)']
 
-const PREFIX_RE = /^\[[A-Z]+\]\s*/
+const PREFIX_RE = /^\[[A-Z_]+\]\s*/
 
 function stripPrefix(msg) {
   return msg.replace(PREFIX_RE, '')
 }
 
+// ── Bug 3: sanitise raw data dumps from agent logs ─────────
+function isRawDataMessage(msg) {
+  if (/^\s*[\{\[]/.test(msg)) return true
+  if (/candidate_venues\s*:/i.test(msg)) return true
+  if (/risk_flags\s*[=:]/i.test(msg)) return true
+  if (/"gp_/.test(msg)) return true
+  if (/\|\s*rating=/i.test(msg)) return true
+  return false
+}
+
+const AGENT_FRIENDLY_STATUS = {
+  scout:        'Scouting nearby venues...',
+  graph:        'Mapping venue connections...',
+  critic:       'Analysing risk factors for venues...',
+  vibe_matcher: 'Matching vibes to your search...',
+  cost_analyst: 'Evaluating costs and value...',
+  commander:    'Orchestrating search pipeline...',
+  synthesiser:  'Synthesising final results...',
+  system:       'Processing...',
+}
+
+function formatLogMessage(msg, agentKey) {
+  const stripped = stripPrefix(msg)
+  if (isRawDataMessage(stripped)) {
+    return AGENT_FRIENDLY_STATUS[agentKey] ?? 'Processing...'
+  }
+  return stripped
+}
+
 // Helper to parse **text** into JSX
 function formatBoldText(text) {
   if (!text) return null;
-  
+
   // Split by **text** and keep the delimiters in the array
   const parts = text.split(/(\*\*.*?\*\*)/g);
-  
+
   return parts.map((part, i) => {
     if (part.startsWith('**') && part.endsWith('**')) {
       // Remove the stars and wrap in bold tag
@@ -86,6 +115,13 @@ const SIDEBAR_STYLES = `
     animation: group-appear 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
   .sidebar-scroll::-webkit-scrollbar { display: none; }
+  @keyframes agent-node-pulse {
+    0%, 100% { box-shadow: 0 0 6px var(--glow-color, rgba(255,255,255,0.06)); }
+    50%       { box-shadow: 0 0 22px var(--glow-color, rgba(255,255,255,0.14)); }
+  }
+  .agent-node-active {
+    animation: agent-node-pulse 1.8s ease-in-out infinite;
+  }
   .log-shimmer {
     background: linear-gradient(
       90deg,
@@ -100,6 +136,31 @@ const SIDEBAR_STYLES = `
     background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: text-shimmer 2.4s linear infinite;
+  }
+
+  @keyframes skeleton-pulse {
+    0%, 100% { opacity: 0.06; }
+    50%      { opacity: 0.12; }
+  }
+  .skeleton-bar {
+    background: rgba(255,255,255,0.10);
+    border-radius: 4px;
+    animation: skeleton-pulse 1.4s ease-in-out infinite;
+  }
+
+  @keyframes venue-card-enter {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .venue-card-hover:hover {
+    background: rgba(255,255,255,0.06) !important;
+  }
+
+  @media (max-width: 640px) {
+    .sidebar-mobile-full {
+      width: 100vw !important;
+    }
   }
 `
 
@@ -135,7 +196,7 @@ function useResizable(initialWidth, minWidth = 280, maxWidth = 700) {
 
 // ── Agent log components ──────────────────────────────────
 
-function AgentGroup({ logs, color, label, isActive, isExpanded, onToggle, isSearching }) {
+function AgentGroup({ agent, logs, color, label, isActive, isExpanded, onToggle, isSearching }) {
   const scrollRef = useRef(null)
 
   useEffect(() => {
@@ -149,15 +210,15 @@ function AgentGroup({ logs, color, label, isActive, isExpanded, onToggle, isSear
 
   return (
     <div
-      className="agent-group-appear"
+      className={`agent-group-appear${isActive ? ' agent-node-active' : ''}`}
       style={{
+        '--glow-color': color + '55',
         margin: '0 12px 6px',
         borderRadius: 8,
         background: isActive
           ? 'rgba(255,255,255,0.04)'
           : 'rgba(255,255,255,0.015)',
         border: `1px solid ${isActive ? color + '22' : 'rgba(255,255,255,0.04)'}`,
-        boxShadow: isActive ? `0 0 12px ${color}11` : 'none',
         transition: 'background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
         overflow: 'hidden',
       }}
@@ -174,19 +235,19 @@ function AgentGroup({ logs, color, label, isActive, isExpanded, onToggle, isSear
         }}
       >
         <div style={{
-          width: 7, height: 7,
+          width: 8, height: 8,
           borderRadius: '50%',
           background: color,
           flexShrink: 0,
-          boxShadow: isActive ? `0 0 6px ${color}88` : 'none',
+          boxShadow: isActive ? `0 0 8px ${color}cc` : `0 0 3px ${color}44`,
           transition: 'box-shadow 0.3s ease',
         }} />
         <span style={{
           fontFamily: MONO,
-          fontWeight: 400,
+          fontWeight: isActive ? 500 : 400,
           fontSize: 14,
           letterSpacing: '0.20em',
-          color: color,
+          color: isActive ? 'rgba(255,255,255,0.92)' : color,
           textTransform: 'uppercase',
           flex: 1,
         }}>
@@ -218,7 +279,7 @@ function AgentGroup({ logs, color, label, isActive, isExpanded, onToggle, isSear
                 whiteSpace: 'nowrap',
               }}
             >
-              {stripPrefix(latestLog.message)}
+              {formatLogMessage(latestLog.message, agent)}
             </div>
           )}
           {hiddenCount > 0 && (
@@ -276,7 +337,7 @@ function AgentGroup({ logs, color, label, isActive, isExpanded, onToggle, isSear
                   wordBreak: 'break-word',
                 }}
               >
-                {stripPrefix(entry.message)}
+                {formatLogMessage(entry.message, agent)}
               </div>
             ))}
           </div>
@@ -325,6 +386,8 @@ function LogsContent({ logs, activeAgent, isSearching }) {
     <div
       ref={scrollRef}
       className="sidebar-scroll"
+      role="log"
+      aria-label="Agent activity log"
       style={{
         flex: 1,
         overflowY: 'auto',
@@ -332,9 +395,23 @@ function LogsContent({ logs, activeAgent, isSearching }) {
         padding: '10px 0 16px',
       }}
     >
+      {agentGroups.length === 0 && isSearching && (
+        <div style={{ padding: '0 12px' }}>
+          {[0, 1, 2].map(i => (
+            <div key={i} style={{ margin: '0 0 6px', padding: '14px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.04)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div className="skeleton-bar" style={{ width: 8, height: 8, borderRadius: '50%', animationDelay: `${i * 200}ms` }} />
+                <div className="skeleton-bar" style={{ width: '40%', height: 14, animationDelay: `${i * 200}ms` }} />
+              </div>
+              <div className="skeleton-bar" style={{ width: '70%', height: 12, marginTop: 8, animationDelay: `${i * 200}ms` }} />
+            </div>
+          ))}
+        </div>
+      )}
       {agentGroups.map((group) => (
         <AgentGroup
           key={group.agent}
+          agent={group.agent}
           logs={group.logs}
           color={group.color}
           label={group.label}
@@ -384,7 +461,7 @@ function ScoreChips({ venue }) {
         fontFamily: BODY, fontWeight: 500, fontSize: 12,
         letterSpacing: '0.04em', color: '#b06ee0',
       }}>
-        ◆{venue.vibe_score != null ? venue.vibe_score.toFixed(2) : '—'}
+        ◆{venue.vibe_score != null ? Number(venue.vibe_score).toFixed(2) : '—'}
       </span>
       <span style={{
         fontFamily: BODY, fontWeight: 500, fontSize: 12,
@@ -397,7 +474,7 @@ function ScoreChips({ venue }) {
           fontFamily: BODY, fontWeight: 500, fontSize: 12,
           letterSpacing: '0.04em', color: '#e8c84a',
         }}>
-          ⭐{venue.rating.toFixed(1)}
+          ⭐{Number(venue.rating).toFixed(1)}
         </span>
       )}
     </div>
@@ -410,6 +487,11 @@ function VenueCard({ venue, rankIdx, isSelected, onSelect }) {
   return (
     <div
       onClick={onSelect}
+      role="button"
+      tabIndex={0}
+      aria-label={`Venue ${rankIdx + 1}: ${venue.name}`}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect() } }}
+      className="venue-card-hover"
       style={{
         padding: '12px 20px',
         cursor: 'pointer',
@@ -417,7 +499,8 @@ function VenueCard({ venue, rankIdx, isSelected, onSelect }) {
           ? '3px solid rgba(255,255,255,0.22)'
           : '3px solid transparent',
         background: isSelected ? 'rgba(255,255,255,0.05)' : 'transparent',
-        transition: 'background 0.2s ease, border-color 0.2s ease',
+        transition: 'background 0.2s ease, border-color 0.2s ease, transform 0.2s ease',
+        animation: `venue-card-enter 0.4s cubic-bezier(0.16,1,0.3,1) ${rankIdx * 60}ms both`,
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -444,7 +527,7 @@ function VenueCard({ venue, rankIdx, isSelected, onSelect }) {
             color: rankColor,
             flexShrink: 0,
           }}>
-            {venue.vibe_score.toFixed(2)}♥
+            {Number(venue.vibe_score).toFixed(2)}♥
           </span>
         )}
       </div>
@@ -497,7 +580,11 @@ function VenueCard({ venue, rankIdx, isSelected, onSelect }) {
           letterSpacing: '0.01em',
           color: '#e0a060',
           marginTop: 5,
-          paddingLeft: 32,
+          marginLeft: 32,
+          padding: '6px 10px',
+          background: 'rgba(224,160,96,0.06)',
+          borderLeft: '2px solid rgba(224,160,96,0.35)',
+          borderRadius: '0 4px 4px 0',
         }}>
           ⚠ {venue.watch_out}
         </div>
@@ -545,6 +632,13 @@ function PersonalizationBadge({ userProfile }) {
 }
 
 function OAuthConsentModal({ actionRequest, onDismiss }) {
+  useEffect(() => {
+    if (!actionRequest) return
+    const handler = (e) => { if (e.key === 'Escape') onDismiss() }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [actionRequest, onDismiss])
+
   if (!actionRequest) return null
 
   const scopeLabels = {
@@ -552,6 +646,8 @@ function OAuthConsentModal({ actionRequest, onDismiss }) {
     'calendar.read': 'Read your calendar',
     'calendar.write': 'Create calendar events',
   }
+
+  const isSuccess = actionRequest.type === 'oauth_success'
 
   return (
     <div style={{
@@ -562,19 +658,28 @@ function OAuthConsentModal({ actionRequest, onDismiss }) {
     }}>
       <div style={{
         background: '#1a1814',
-        border: '1px solid rgba(255,255,255,0.10)',
+        border: isSuccess ? '1px solid rgba(110,224,110,0.30)' : '1px solid rgba(255,255,255,0.10)',
         borderRadius: 12,
         padding: '28px 32px',
         maxWidth: 420,
         width: '90vw',
       }}>
-        <div style={{ fontFamily: MONO, fontSize: 13, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.88)', textTransform: 'uppercase', marginBottom: 12 }}>
-          Permission Required
+        <div style={{
+          fontFamily: MONO,
+          fontSize: 13,
+          letterSpacing: '0.22em',
+          color: isSuccess ? '#6ee06e' : 'rgba(255,255,255,0.88)',
+          textTransform: 'uppercase',
+          marginBottom: 12
+        }}>
+          {isSuccess ? 'SUCCESS' : 'Permission Required'}
         </div>
+
         <div style={{ fontFamily: BODY, fontSize: 14, color: 'rgba(255,255,255,0.60)', lineHeight: 1.55, marginBottom: 16 }}>
           {actionRequest.reason || 'LOCATR needs additional permissions to complete this action.'}
         </div>
-        {actionRequest.scopes?.length > 0 && (
+
+        {!isSuccess && actionRequest.scopes?.length > 0 && (
           <div style={{ marginBottom: 20 }}>
             <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: '0.16em', color: 'rgba(255,255,255,0.35)', marginBottom: 8 }}>REQUESTED SCOPES</div>
             {actionRequest.scopes.map((scope, i) => (
@@ -587,38 +692,75 @@ function OAuthConsentModal({ actionRequest, onDismiss }) {
             ))}
           </div>
         )}
-        <div style={{ display: 'flex', gap: 10 }}>
-          <a
-            href={`/api/auth/login?scope=openid profile email${actionRequest.scopes?.map(s => ' ' + s).join('') ?? ''}`}
-            style={{
-              flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
-              padding: '9px 0 8px',
-              borderRadius: 7, background: 'rgba(255,255,255,0.10)', border: '1px solid rgba(255,255,255,0.18)',
-              fontFamily: MONO, fontSize: 12, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.88)',
-              textTransform: 'uppercase', textDecoration: 'none',
-              cursor: 'pointer',
-            }}
-          >
-            Allow
-          </a>
-          <button
-            onClick={onDismiss}
-            style={{
-              flex: 1, padding: '9px 0 8px',
-              borderRadius: 7, background: 'transparent', border: '1px solid rgba(255,255,255,0.08)',
-              fontFamily: MONO, fontSize: 12, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.35)',
-              textTransform: 'uppercase', cursor: 'pointer',
-            }}
-          >
-            Deny
-          </button>
-        </div>
+
+        {isSuccess && (
+          <div style={{ display: 'flex', marginTop: 10 }}>
+            <button
+              onClick={onDismiss}
+              style={{
+                flex: 1, padding: '10px 0 9px',
+                borderRadius: 7, background: 'rgba(110,224,110,0.10)', border: '1px solid rgba(110,224,110,0.25)',
+                fontFamily: MONO, fontSize: 12, letterSpacing: '0.22em', color: '#6ee06e',
+                textTransform: 'uppercase', cursor: 'pointer',
+                transition: 'background 0.2s ease',
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(110,224,110,0.15)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'rgba(110,224,110,0.10)'}
+            >
+              Close
+            </button>
+          </div>
+        )}
+
+        {!isSuccess && (
+          <div style={{ display: 'flex', gap: 10 }}>
+            <a
+              href={`/api/auth/login?scope=openid profile email${actionRequest.scopes?.map(s => ' ' + s).join('') ?? ''}`}
+              style={{
+                flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                padding: '9px 0 8px',
+                borderRadius: 7, background: 'rgba(255,255,255,0.10)', border: '1px solid rgba(255,255,255,0.18)',
+                fontFamily: MONO, fontSize: 12, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.88)',
+                textTransform: 'uppercase', textDecoration: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              Allow
+            </a>
+            <button
+              onClick={onDismiss}
+              style={{
+                flex: 1, padding: '9px 0 8px',
+                borderRadius: 7, background: 'transparent', border: '1px solid rgba(255,255,255,0.08)',
+                fontFamily: MONO, fontSize: 12, letterSpacing: '0.22em', color: 'rgba(255,255,255,0.35)',
+                textTransform: 'uppercase', cursor: 'pointer',
+              }}
+            >
+              Deny
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )
 }
 
-function ResultsContent({ venues, globalConsensus, selectedIdx, onSelect, onNewSearch, userProfile }) {
+function SkeletonCard() {
+  return (
+    <div style={{ padding: '12px 20px', borderLeft: '3px solid transparent' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div className="skeleton-bar" style={{ width: 24, height: 24, borderRadius: '50%' }} />
+        <div className="skeleton-bar" style={{ flex: 1, height: 16 }} />
+      </div>
+      <div style={{ paddingLeft: 32, marginTop: 6 }}>
+        <div className="skeleton-bar" style={{ width: '60%', height: 12, marginBottom: 6 }} />
+        <div className="skeleton-bar" style={{ width: '80%', height: 12 }} />
+      </div>
+    </div>
+  )
+}
+
+function ResultsContent({ venues = [], globalConsensus, selectedIdx, onSelect, onNewSearch, userProfile }) {
   return (
     <>
       {/* Personalization badge */}
@@ -646,12 +788,29 @@ function ResultsContent({ venues, globalConsensus, selectedIdx, onSelect, onNewS
       {/* Scrollable venue list + footer */}
       <div
         className="sidebar-scroll"
+        role="list"
+        aria-label="Venue results"
         style={{
           flex: 1,
           overflowY: 'auto',
           scrollbarWidth: 'none',
         }}
       >
+        {venues.length === 0 && (
+          <div style={{
+            padding: '40px 20px',
+            textAlign: 'center',
+            fontFamily: BODY,
+            fontSize: 13,
+            color: 'rgba(255,255,255,0.25)',
+            lineHeight: 1.6,
+          }}>
+            No venues matched your search.
+            <br />
+            Try a different query or location.
+          </div>
+        )}
+
         <div style={{ paddingTop: 8, paddingBottom: 4 }}>
           {venues.map((venue, i) => (
             <VenueCard
@@ -713,6 +872,9 @@ function TabButton({ label, isActive, onClick, disabled }) {
     <button
       onClick={onClick}
       disabled={disabled}
+      role="tab"
+      aria-selected={isActive}
+      aria-label={`${label} tab`}
       style={{
         flex: 1,
         background: isActive ? 'rgba(255,255,255,0.08)' : 'transparent',
@@ -776,7 +938,9 @@ export default function Sidebar({
 
       {/* Sidebar panel */}
       <div
-        className="sidebar-enter"
+        className="sidebar-enter sidebar-mobile-full"
+        role="complementary"
+        aria-label="Search results sidebar"
         style={{
           position: 'fixed',
           top: 0,
@@ -893,8 +1057,8 @@ export default function Sidebar({
           pointerEvents: 'none',
         }}>
           <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-            <path d="M4.5 3L1 7L4.5 11" stroke="rgba(255,255,255,0.45)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M9.5 3L13 7L9.5 11" stroke="rgba(255,255,255,0.45)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M4.5 3L1 7L4.5 11" stroke="rgba(255,255,255,0.45)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M9.5 3L13 7L9.5 11" stroke="rgba(255,255,255,0.45)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </div>

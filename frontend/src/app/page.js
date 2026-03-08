@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useUser } from '@auth0/nextjs-auth0/client'
 
@@ -12,10 +11,19 @@ const STYLES = `
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  @keyframes page-fade-out {
+    from { opacity: 1; transform: scale(1); }
+    to   { opacity: 0; transform: scale(0.98); }
+  }
+
   .land-1 { animation: locatr-reveal 0.55s cubic-bezier(0.16,1,0.3,1) 0.05s both; }
   .land-2 { animation: locatr-reveal 0.55s cubic-bezier(0.16,1,0.3,1) 0.15s both; }
   .land-3 { animation: locatr-reveal 0.55s cubic-bezier(0.16,1,0.3,1) 0.26s both; }
   .land-4 { animation: locatr-reveal 0.55s cubic-bezier(0.16,1,0.3,1) 0.40s both; }
+
+  .page-exit {
+    animation: page-fade-out 0.4s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
 
   .cta {
     display: inline-flex;
@@ -31,11 +39,15 @@ const STYLES = `
     color: rgba(255,255,255,0.82);
     text-transform: uppercase;
     text-decoration: none;
-    transition: background 0.2s, border-color 0.2s;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
   }
   .cta:hover {
     background: rgba(255,255,255,0.13);
     border-color: rgba(255,255,255,0.24);
+    transform: translateY(-1px);
+  }
+  .cta:active {
+    transform: scale(0.97);
   }
 `
 
@@ -182,6 +194,13 @@ function Trail() {
 export default function Home() {
   const MONO = "'Barlow Condensed', 'Arial Narrow', sans-serif"
   const { user, isLoading } = useUser()
+  const [exiting, setExiting] = useState(false)
+
+  const handleNavigate = (e) => {
+    e.preventDefault()
+    setExiting(true)
+    setTimeout(() => { window.location.href = '/map' }, 350)
+  }
 
   return (
     <>
@@ -222,7 +241,7 @@ export default function Home() {
         </div>
       )}
 
-      <main style={{
+      <main className={exiting ? 'page-exit' : ''} style={{
         position: 'relative', zIndex: 10,
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
@@ -257,7 +276,7 @@ export default function Home() {
 
         <div className="land-4" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
           {user && (
-            <Link href="/map" className="cta">Get Started</Link>
+            <a href="/map" onClick={handleNavigate} className="cta">Get Started</a>
           )}
           {!user && !isLoading && (
             <a href="/api/auth/login?returnTo=/map" className="cta" style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.08)', fontSize: 14, color: 'rgba(255,255,255,0.50)' }}>

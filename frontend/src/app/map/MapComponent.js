@@ -49,6 +49,18 @@ const GLOBAL_STYLES = `
   }
   .ui-reveal          { animation: locatr-reveal 0.55s cubic-bezier(0.16,1,0.3,1) forwards; }
   .ui-reveal-delayed  { opacity:0; animation: locatr-reveal 0.55s cubic-bezier(0.16,1,0.3,1) 0.14s forwards; }
+
+  @keyframes marker-hover {
+    from { transform: scale(1); }
+    to   { transform: scale(1.12); }
+  }
+
+  @media (max-width: 640px) {
+    .mapboxgl-ctrl-top-right {
+      top: 80px !important;
+      right: 12px !important;
+    }
+  }
 `
 
 function CrosshairIcon({ size = 14, color = 'currentColor' }) {
@@ -111,6 +123,17 @@ function createMarkerEl(rankIdx) {
     userSelect: 'none', pointerEvents: 'auto',
   })
   el.textContent = String(rankIdx + 1)
+
+  // Hover micro-interaction
+  el.addEventListener('mouseenter', () => {
+    el.style.transform = 'scale(1.15)'
+    el.style.boxShadow = `0 0 ${rankIdx === 0 ? '20px 6px' : '14px 4px'} ${color}88`
+  })
+  el.addEventListener('mouseleave', () => {
+    el.style.transform = 'scale(1)'
+    el.style.boxShadow = `0 0 ${rankIdx === 0 ? '14px 4px' : '8px 2px'} ${color}66`
+  })
+
   return el
 }
 
@@ -292,7 +315,12 @@ export default function MapComponent() {
     setAgentLogs([])
     setResults(null)
 
-    const wsUrl = (process.env.NEXT_PUBLIC_WS_URL ?? 'ws://localhost:8000') + '/api/ws/plan'
+    let wsBase = process.env.NEXT_PUBLIC_WS_URL ?? 'ws://localhost:8000'
+    // Enforce encrypted WebSocket in production
+    if (typeof window !== 'undefined' && window.location.protocol === 'https:') {
+      wsBase = wsBase.replace(/^ws:\/\//, 'wss://')
+    }
+    const wsUrl = wsBase + '/api/ws/plan'
     const ws = new WebSocket(wsUrl)
     wsRef.current = ws
 
@@ -340,7 +368,7 @@ export default function MapComponent() {
     const initMap = ([lng, lat]) => {
       setCenter({ lng, lat })
 
-      mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
+      mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
 
       const map = new mapboxgl.Map({
         container: containerRef.current,
@@ -501,9 +529,8 @@ export default function MapComponent() {
         )}
 
         {/* Vibe filter button — anchored to right edge of centered search bar */}
-        {/* 290px = half of 580px (searchbar width), 8px gap */}
         {loaded && (
-          <div style={{
+          <div className="ui-reveal-delayed" style={{
             position: 'absolute',
             top: 24,
             left: 'calc(50% + 298px)',
